@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="red">#fa514c</color>
+
+    <!-- 黄绿色系 -->
+    <!-- 萌黄 -->
+    <color name="cute_yellow">#a3cf62</color>
+    <!-- 绿黄 -->
+    <color name="green_yellow">#89ca30</color>
+    <!-- 扁绿 -->
+    <color name="jade_green">#44a637</color>
+    <!-- 深绿 -->
+    <color name="deep_green">#27541b</color>
+    <!-- 背景用白 -->
+    <color name="background_white">#fbfbfb</color>
+    <!-- 背景用灰 -->
+    <color name="background_gray">#dadada</color>
+    <color name="background_gray_transparent">#0edadada</color>
+    <color name="word_gray">#A4A4A4</color>
+    <!-- ActionBar背景 -->
+    <color name="action_bar_bg">#21A200</color>
+    <!-- 紫 -->
+    <color name="purple">#2b013a</color>
+    <!-- 黑 -->
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="md__transparent">#00000000</color>
+    <color name="md__defaultBackground">#FF555555</color>
+    <color name="blue">#FF0066CC</color>
+    <color name="nullc">#00ffffff</color>
+
+</resources>
