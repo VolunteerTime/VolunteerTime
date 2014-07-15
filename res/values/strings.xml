@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VolunteerTime</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_main_activityw">MainActivityw</string>
+    <string name="title_activity_activity_center">ActivityCenter</string>
+    <string name="title_activity_manage">ManageActivity</string>
+    <string name="title_activity_manage_authority">ManageAuthority</string>
+    <string name="title_activity_manage_member">ManageMember</string>
+    <string name="title_activity_manage_result">ManageResult</string>
+    <string name="title_activity_manage_vote">ManageVote</string>
+    <string name="title_activity_my_publish">MyPublish</string>
+    <string name="title_activity_opinion_feedback">OpinionFeedback</string>
+    <string name="title_activity_personal_info">PersonalInfo</string>
+    <string name="title_activity_results_exhibition">ResultsExhibition</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_volunteer_circle">VolunteerCircle</string>
+    <string name="title_activity_volunteer_member">VolunteerMember</string>
+    <string name="title_activity_vote_center">VoteCenter</string>
+    <string name="title_activity_login">Login</string>
+    <string name="loginusername">账号名</string>
+    <string name="loginpassword">账号密码</string>
+    <string name="loginTopIcon">华农</string>
+    <string name="loginbutton">登陆</string>
+
+</resources>
