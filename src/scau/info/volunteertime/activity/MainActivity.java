@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 
 /**
  * @author ≤Ã≥¨√Ù
+ * 
  *
  */
 public class MainActivity extends ActionBarActivity {
