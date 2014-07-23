@@ -6,6 +6,8 @@
 package scau.info.volunteertime.business;
 
 /**
+ * ResultsµÄBO
+ * 
  * @author ²Ì³¬Ãô
  *
  */
