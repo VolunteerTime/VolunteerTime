@@ -5,7 +5,6 @@
  */
 package scau.info.volunteertime.activity.resultsexhibition;
 
-import cn.trinea.android.common.view.DropDownListView;
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.business.ResultBO;
 import scau.info.volunteertime.util.Pagination;
@@ -20,6 +19,8 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import cn.trinea.android.common.view.DropDownListView;
+import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 
 /**
  * 成果展示的activity
@@ -85,10 +86,23 @@ public class ResultsExhibition extends ActionBarActivity {
 			public void onClick(View v) {
 				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
 						"初步测试");
+				resultsListView.onBottomComplete();
 			}
 		});
-		
+
 		resultsListView.onBottom();
+
+		resultsListView.setOnDropDownListener(new OnDropDownListener() {
+
+			@Override
+			public void onDropDown() {
+				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
+						"初步测试");
+				resultsListView.onDropDownComplete();
+			}
+		});
+
+		resultsListView.onDropDown();
 
 	}
 
