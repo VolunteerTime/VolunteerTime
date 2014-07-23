@@ -23,6 +23,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
  * 成果展示的activity
+ * test1
  * 
  * @author 蔡超敏
  * 
