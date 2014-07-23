@@ -15,12 +15,40 @@ import java.sql.Date;
  */
 public class Result {
 
+	private int id;// 标识id
+
 	private String title;// 题目
 	private String content;// 内容
 	private String image;// 图片
 	private String editor;// 作者
 	private Date publishTime;// 发布时间
 
+	/**
+	 * @param id
+	 * @param title
+	 * @param content
+	 * @param image
+	 * @param editor
+	 * @param publishTime
+	 */
+	public Result(int id, String title, String content, String image,
+			String editor, Date publishTime) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+		this.image = image;
+		this.editor = editor;
+		this.publishTime = publishTime;
+	}
+
+	/**
+	 * @param title
+	 * @param content
+	 * @param image
+	 * @param editor
+	 * @param publishTime
+	 */
 	public Result(String title, String content, String image, String editor,
 			Date publishTime) {
 		super();
@@ -29,6 +57,21 @@ public class Result {
 		this.image = image;
 		this.editor = editor;
 		this.publishTime = publishTime;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public int getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 *            the id to set
+	 */
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	/**
