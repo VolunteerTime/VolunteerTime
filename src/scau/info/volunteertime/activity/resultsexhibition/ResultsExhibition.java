@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 /**
  * @author ≤Ã≥¨√Ù
- *
+ * 
  */
 public class ResultsExhibition extends ActionBarActivity {
 
@@ -25,11 +25,6 @@ public class ResultsExhibition extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_results_exhibition);
-
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
 	}
 
 	@Override
