@@ -24,5 +24,9 @@
     <string name="loginpassword">账号密码</string>
     <string name="loginTopIcon">华农</string>
     <string name="loginbutton">登陆</string>
+    
+    <!-- 可折叠TextView的String -->
+    <string name="desc_shrinkup">收起</string>
+    <string name="desc_spread">显示更多</string>
 
 </resources>
