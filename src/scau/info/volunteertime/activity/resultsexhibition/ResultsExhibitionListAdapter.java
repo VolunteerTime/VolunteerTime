@@ -53,7 +53,7 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	 */
 	@Override
 	public int getCount() {
-		if (resultsPagination != null) {
+		if (resultsPagination != null && resultsPagination.getRecords() != null) {
 			return resultsPagination.getRecords().size();
 		} else {
 			return -1;
@@ -67,7 +67,7 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	 */
 	@Override
 	public Object getItem(int position) {
-		if (resultsPagination != null) {
+		if (resultsPagination != null && resultsPagination.getRecords() != null) {
 			return resultsPagination.getRecords().get(position);
 		} else {
 			return null;

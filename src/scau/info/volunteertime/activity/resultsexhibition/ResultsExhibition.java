@@ -48,6 +48,8 @@ public class ResultsExhibition extends ActionBarActivity {
 
 		Log.d("ResultsExhibition", "create");
 
+		resultsListView = (DropDownListView) findViewById(R.id.results_exhibition_list);
+
 		hasMore = true;// 有更多才显示，没有则不显示
 
 		resultBO = new ResultBO();// 取得resultBO
