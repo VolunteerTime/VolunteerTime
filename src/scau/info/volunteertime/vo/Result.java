@@ -5,7 +5,6 @@
  */
 package scau.info.volunteertime.vo;
 
-import java.sql.Date;
 
 /**
  * 成果展示的VO
@@ -21,7 +20,7 @@ public class Result {
 	private String content;// 内容
 	private String image;// 图片
 	private String editor;// 作者
-	private Date publishTime;// 发布时间
+	private String publishTime;// 发布时间
 
 	/**
 	 * @param id
@@ -32,7 +31,7 @@ public class Result {
 	 * @param publishTime
 	 */
 	public Result(int id, String title, String content, String image,
-			String editor, Date publishTime) {
+			String editor, String publishTime) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -50,7 +49,7 @@ public class Result {
 	 * @param publishTime
 	 */
 	public Result(String title, String content, String image, String editor,
-			Date publishTime) {
+			String publishTime) {
 		super();
 		this.title = title;
 		this.content = content;
@@ -137,7 +136,7 @@ public class Result {
 	/**
 	 * @return the publishTime
 	 */
-	public Date getPublishTime() {
+	public String getPublishTime() {
 		return publishTime;
 	}
 
@@ -145,7 +144,7 @@ public class Result {
 	 * @param publishTime
 	 *            the publishTime to set
 	 */
-	public void setPublishTime(Date publishTime) {
+	public void setPublishTime(String publishTime) {
 		this.publishTime = publishTime;
 	}
 

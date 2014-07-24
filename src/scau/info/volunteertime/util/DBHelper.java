@@ -49,8 +49,8 @@ public class DBHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL("CREATE TABLE IF NOT EXISTS Result"
-				+ "(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR,"
-				+ " image VARCHAR, content TEXT, editor VARCHAR , publishTime Date )");
+				+ "(id INTEGER PRIMARY KEY, title VARCHAR,"
+				+ " image VARCHAR, content TEXT, editor VARCHAR , publishTime VARCHAR )");
 	}
 
 	/*

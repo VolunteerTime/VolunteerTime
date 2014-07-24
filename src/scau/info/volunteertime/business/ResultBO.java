@@ -9,6 +9,10 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.OpenableColumns;
+
 import scau.info.volunteertime.util.Pagination;
 import scau.info.volunteertime.vo.Result;
 
@@ -20,6 +24,9 @@ import scau.info.volunteertime.vo.Result;
  */
 public class ResultBO {
 
+	/**
+	 * 构造方法，初始化静态数据
+	 */
 	public ResultBO() {
 		List<Result> allResults = new ArrayList<Result>();
 		for (int i = 0; i < 30; i++) {// 建立包含30个result的list
@@ -29,7 +36,7 @@ public class ResultBO {
 							"测试title" + i,
 							"测试内容：什么东西啊，我不会写很多东西的，这个是第" + i + "个例子",
 							"http://img.hb.aicdn.com/fda4bb25fc546ed22c9ff137ac72b7ba27e62e9916225-2ywtVp_fw658",
-							"chaoKing" + i, new Date(i * 100000)));
+							"chaoKing" + i, new Date(i * 100000).toGMTString()));
 		}
 	}
 

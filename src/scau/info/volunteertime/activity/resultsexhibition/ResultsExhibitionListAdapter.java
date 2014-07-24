@@ -112,7 +112,7 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		Log.d("1", "ok");
 
 		holder.publishTime.setText(resultsPagination.getRecords().get(position)
-				.getPublishTime().toGMTString());
+				.getPublishTime());
 
 		Log.d("2", "ok");
 		return view;
