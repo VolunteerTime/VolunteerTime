@@ -1,8 +1,71 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    >
+
+    	    <LinearLayout 
+    android:id="@+id/menu"
+    android:layout_alignParentTop="true"
+    android:background="@color/blue"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <Button android:layout_width="wrap_content"  android:layout_height="wrap_content" android:text="活动中心"/>
+     <Button android:layout_width="wrap_content"  android:layout_height="wrap_content" android:text="投票中心"/>
+      <Button android:layout_width="wrap_content"  android:layout_height="wrap_content" android:text="投票中心"/>
+       <Button android:layout_width="wrap_content"  android:layout_height="wrap_content" android:text="投票中心"/>
+        <Button android:layout_width="wrap_content"  android:layout_height="wrap_content" android:text="投票中心"/>
+    </LinearLayout>
+    
+<LinearLayout 
+	android:layout_below="@id/menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="scau.info.volunteertime.activity.activitycenter.ActivityCenter"
-    tools:ignore="MergeRootFrame" />
+    android:orientation="vertical"
+   
+  >
+ 
+	<LinearLayout     android:id="@+id/container" android:layout_width="match_parent" android:layout_marginTop="-35dp"  android:layout_marginBottom="-35dp"    android:layout_height="wrap_content" android:orientation="vertical">
+	    
+	    <TextView  android:gravity="center" android:textSize="30dp" android:id="@+id/fill"  android:text="正在刷新" android:layout_width="match_parent" android:layout_height="wrap_content"></TextView>
 
+	<ListView   android:id="@+id/android:list"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent" 
+    android:clickable="false"
+    android:descendantFocusability="beforeDescendants"
+    android:layout_weight="18" 
+    > 
+         </ListView>
+         
+         <TextView  android:gravity="center" android:textSize="30dp" android:id="@+id/addmore"  android:text="加载更多" android:layout_width="match_parent" android:layout_height="wrap_content"></TextView>
+	
+	</LinearLayout>
+
+ 
+
+          
+</LinearLayout>
+
+	
+	<RelativeLayout android:visibility="invisible" android:id="@+id/whole_comment" android:layout_height="wrap_content" android:layout_width="wrap_content">
+	<EditText
+	    android:id="@+id/edit"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    
+	    android:layout_alignParentBottom="true"
+	    android:layout_marginBottom="0dp" 
+	    android:text="dfffffffffffffffffffffffff" />
+		
+	  <Button android:layout_toRightOf="@id/edit" android:layout_width="wrap_content" android:layout_height="wrap_content"
+	      android:text="发表"
+	      android:layout_alignParentBottom="true"
+	      android:layout_alignParentRight="true"
+	      />
+ 
+	</RelativeLayout>
+
+</RelativeLayout>

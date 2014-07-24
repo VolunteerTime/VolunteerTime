@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+ <LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    >
+    
+<ImageButton android:id="@+id/imageButton" android:layout_width="20dp" android:layout_height="20dp" android:layout_weight="1"/>
+
+<LinearLayout android:layout_width="0dp" android:layout_weight="7" android:layout_height="wrap_content" 
+    		   android:orientation="vertical">
+    <TextView android:id="@+id/name" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+   
+    <TextView android:id="@+id/content" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+    
+ <RelativeLayout android:layout_width="match_parent" android:layout_weight="7" android:layout_height="wrap_content" 
+    		    >
+  
+    <TextView android:text="19:34" android:id="@+id/time" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
+   
+  <Button android:layout_alignParentRight="true" android:layout_marginLeft="30dp"  android:id="@+id/commentButton" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="评价"/>
+     <Button android:layout_toLeftOf="@id/commentButton" android:focusable="false"  android:focusableInTouchMode="false" android:layout_marginLeft="26dp"  android:id="@+id/participate" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="参加"/>
+    
+    
+</RelativeLayout>
+<TextView android:id="@+id/activity_comment" android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@color/background_gray"/>
+ 
+ 
+ 
+ 
+ </LinearLayout>
+</LinearLayout>
+</LinearLayout>
