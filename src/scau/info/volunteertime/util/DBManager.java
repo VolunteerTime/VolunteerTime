@@ -68,7 +68,6 @@ public class DBManager {
 		cv.put("image", result.getImage());
 		cv.put("content", result.getContent());
 		cv.put("editor", result.getEditor());
-		cv.put("publishTime", result.getPublishTime());
 		db.update("result", cv, "id = ?",
 				new String[] { String.valueOf(result.getId()) });
 	}
@@ -79,7 +78,7 @@ public class DBManager {
 	 * @param result
 	 */
 	public void deleteOldResult(int id) {
-		db.delete("result", "id = ?", new String[] { String.valueOf(id) });
+		db.delete("result", "age = ?", new String[] { String.valueOf(id) });
 	}
 
 	/**
