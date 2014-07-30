@@ -103,56 +103,22 @@ public class ActivityAdapter extends BaseAdapter {
 			ImageButton imageButton=(ImageButton)rowView.findViewById(R.id.imageButton);
 			TextView time=(TextView)rowView.findViewById(R.id.time);
 			TextView content=(TextView)rowView.findViewById(R.id.content);
-			TextView name=(TextView)rowView.findViewById(R.id.name);
-			 Button participate=(Button)rowView.findViewById(R.id.participate);
-			TextView commentT=(TextView)rowView.findViewById(R.id.activity_comment);
+			TextView name=(TextView)rowView.findViewById(R.id.name);  
 			Button commentButton=(Button)rowView.findViewById(R.id.commentButton);
-			String comment="";
-			ArrayList<String> al=data.getComment();
-			for(String i:al)
-			{
-				comment=comment+i+"\n";
-			}
-			
-			commentT.setText(comment);
+
+		 
 			imageButton.setImageResource(R.drawable.action_help);		//添加头像
 			time.setText(data.getTime());								//添加时间
 			content.setText(data.getContent());							//添加活动内容
 			name.setText(data.getName());								//添加发起人的名字
 			rowViews.put(position, rowView);	//保存数据作为缓存
+			 
 			
-			participate.setOnClickListener(new participateListener(position));
-			
-			commentButton.setOnClickListener(new OnClickListener() {		//按下评论会弹出评论窗口
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					Message msg=activityCenterHandler.obtainMessage();
-					msg.arg2=3;
-					msg.arg1=3; 
-					msg.sendToTarget();
-				}
-			});
+		
 		}
 		 
 		return rowView;
-	}
-	class participateListener implements OnClickListener{ 
-		boolean isPartIn=data.getIsPartIn(); 
-		int id;
-	 
-		public participateListener(int p) { 
-		id=p;
-		} 
-		public void onClick(View v) { 
-			Message msg=activityCenterHandler.obtainMessage();
-			msg.arg2=1;
-			msg.arg1=id;
-			msg.sendToTarget();
-			}
-		}
-		
+	} 
 		 
 
 }

@@ -13,8 +13,16 @@ import java.util.List;
 
 
 
+
+
+
+
+
+
+import cn.trinea.android.common.view.DropDownListView;
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.vo.ActivityData;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.Fragment;
@@ -28,11 +36,14 @@ import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.text.AndroidCharacter;
 import android.text.Layout;
+import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -47,10 +58,10 @@ import android.widget.Toast;
  * @author 蔡超敏
  *
  */
-public class ActivityCenter extends ListActivity  {
+public class ActivityCenter extends Activity  {
 
 	   
-	ListView listview;
+	 DropDownListView listview;
 	View container;
 	ActivityAdapter adapter;
 	PageRecord getData=new PageRecord();	//用来获取更多数据来填充listView
@@ -61,7 +72,7 @@ public class ActivityCenter extends ListActivity  {
 		 
 		container=findViewById(R.id.container);
 	 
-		 listview=(ListView)findViewById(android.R.id.list);
+		 listview=(DropDownListView)findViewById(R.id.listView);
 		
 	 	 Animation animation=AnimationUtils.loadAnimation(ActivityCenter.this, R.anim.set);
 	 // View menu=findViewById(R.id.menu);
@@ -92,7 +103,8 @@ public class ActivityCenter extends ListActivity  {
 			list.add(a3); 
 			list.add(a4); 
 			list.add(a5); 
-			list.add(a6); 		list.add(a7); 
+			list.add(a6); 		
+			list.add(a7); 
 			list.add(a8); 
 			list.add(a9); 
 			list.add(a10); 
@@ -105,10 +117,33 @@ public class ActivityCenter extends ListActivity  {
 			list.add(a17); 
 		
 		adapter=new ActivityAdapter(this,list,handler );
-		ListView listView=getListView(); 
-		listView.setAdapter(adapter); 
-		listView.setOnTouchListener(new listViewOnTouch(true));
- 
+		listview.setAdapter(adapter);  
+		listview.setOnDragListener(new OnDragListener() {
+			
+			@Override
+			public boolean onDrag(View v, DragEvent event) {
+				// TODO Auto-generated method stub
+				listview.onDropDownComplete("哈哈");
+				return false;
+			}
+		});
+		
+	 
+		listview.setOnBottomListener(new  OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				Message msg=handler.obtainMessage();
+				
+				List<ActivityData> data=getData.getRecords();
+				if(data==null) msg.arg1=-1;
+				else list.addAll(data);
+				
+				msg.arg2=2;
+				msg.sendToTarget();
+			}
+		});
 	}
 	
 	
@@ -136,20 +171,7 @@ public class ActivityCenter extends ListActivity  {
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_activity_center,
-					container, false);
-			return rootView;
-		}
-	}
-
+ 
 	/* (non-Javadoc)
 	 * @see android.view.View.OnTouchListener#onTouch(android.view.View, android.view.MotionEvent)
 	 */
@@ -161,16 +183,17 @@ public class ActivityCenter extends ListActivity  {
 		public void handleMessage(android.os.Message msg) {
 			
 			if(msg.arg2==3)  //如果收到3那么就是要打开评论窗口
-			{
-				findViewById(R.id.whole_comment).setVisibility(View.VISIBLE);
-				
+			{ 
 			}
 			else if(msg.arg2==2)		//如果收到arg2 收到2那就是要加载更多数据
 			{	
 				if(msg.arg1==-1)  //如果msg.arg1收到-1那么就是没有更多数据了
-					Toast.makeText(getApplicationContext(), "没有更多数据了", 1).show();
+					{Toast.makeText(getApplicationContext(), "没有更多数据了", 1).show();
+					listview.setOnBottomStyle(false);
+					}
 				else 
-				adapter.notifyDataSetChanged();
+				{adapter.notifyDataSetChanged();
+				listview.onBottomComplete();}
 			}
 			else if(msg.arg2==1)		//如果收到arg2 收到1那就是要打开对话框显示活动详情
 			{
@@ -189,117 +212,7 @@ public class ActivityCenter extends ListActivity  {
 		};
 	};
 
-	public void reflesh(final int time,final int start,int k)
-	{
-		 	System.out.println(time+"   "+start);
-				for(int i=time;i*k<=start*k;i+=k)
-				{System.out.println(i);
-					
-					Message msg=handler.obtainMessage();
-					msg.arg1=i;
-					msg.sendToTarget();
-					try {
-						Thread.sleep(1);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					System.out.println(i);
-				}  
-	}
-	float ey=0;
-	class listViewOnTouch implements OnTouchListener
-	{
-		boolean flag; //flag为true时，这个是在顶部往下拉的时候，为FALSE是在底部往上拉的时候
-		 
-		public listViewOnTouch(boolean flag) {
-			this.flag=flag;
-		}
-		public boolean onTouch(View v, MotionEvent event) { 
-			//System.out.println(event.getY());
-			
-			
-			System.out.println(container.getScrollY()+"  !!!  "+listview.getFirstVisiblePosition()+"   "+listview.getLastVisiblePosition()+"   "+listview.getCount());
-			boolean flag;
-			if(listview.getScrollY()==0&&listview.getFirstVisiblePosition()!=0&&listview.getLastVisiblePosition()!=listview.getCount()-1) return false;
-			if(listview.getFirstVisiblePosition()==0||listview.getScrollY()<0) flag=true;
-			else flag=false;
-			System.out.println("通过");
-			
-			switch(event.getAction())
-			{
-			case MotionEvent.ACTION_DOWN:ey=event.getY();  System.out.println("拉dfdfdfdf来了"+container.getScrollY()+"  "+ey);  break;
-			case MotionEvent.ACTION_UP: 
-				{
-					Thread thread = null;
-					System.out.println("scrollY= "+container.getScrollY()+"  "+flag);
-					if(flag)
-					{ 
-						
-						if(container.getScrollY()<=-70) {
-						
-					 	thread=new Thread(new refleshRunnable(true,true));
-					 } else {System.out.println("小于70"+container.getScrollY());
-						thread=new Thread(new refleshRunnable(false,true));
-					 		}
-					}
-					else{//System.out.println("oooo "+container.getScrollY());
-						 if(container.getScrollY()>=70) {
-						 	thread=new Thread(new refleshRunnable(true,false));
-					 	} else {
-					 		thread=new Thread(new refleshRunnable(false,false));
-					 	}
-					}
-					thread.start();
-				} 
-			} 
-			if(flag)
-			{if(ey!=0&&event.getY()>ey) container.scrollTo(0, - (int) ((event.getY()-ey)/5));	 System.out.println(event.getY()+"   "+ey+"  k= "+flag);
-			}else
-			{	
-				if(ey!=0&&event.getY()<ey) container.scrollTo(0,  -(int) ((event.getY()-ey)/5));	 System.out.println(event.getY()+"   "+ey+"  k= "+flag);
-				
-			}
-			return false;
-		}
-	}
-	
-	
-	class refleshRunnable implements   Runnable  {
-		boolean flag; //是否进行刷新操作，若下拉距离合适就进行刷新，否则不刷新
-		boolean head;// 判断是向下拉还是向上拉，顶部向下拉是负数，否则是正数
-		
-		public refleshRunnable(boolean flag,boolean head) {
-			// TODO Auto-generated constructor stub
-			this.flag=flag;
-			this.head=head;
-		}
-		public void run() { 
-			try {
-				int k;
-				if(head) k=1;
-				else k=-1;
-				if(flag)
-				{reflesh((int)container.getScrollY(),-100*k,k); 
-				System.out.println("sleep   3000");
-						//向服务器拿更多的数据，并添加进去
-				Message msg=handler.obtainMessage();
-				
-				List<ActivityData> data=getData.getRecords();
-				if(data==null) msg.arg1=-1;
-				else list.addAll(data);
-				
-				msg.arg2=2;
-				msg.sendToTarget();
-				Thread.sleep(3000); 
-				}
-				
-				 reflesh((int)container.getScrollY(),0,k); 
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			};
-		}
-	} 
+ 
+	 
 
 }
