@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-
+	android:descendantFocusability= "blocksDescendants"
     >
 
  <LinearLayout android:layout_width="match_parent"
@@ -11,19 +11,20 @@
     android:orientation="horizontal"
     >
     
-<ImageButton android:id="@+id/imageButton" android:layout_width="20dp" android:layout_height="20dp" android:layout_weight="1"/>
+<ImageButton android:clickable="true"  android:focusable = "false" android:id="@+id/imageButton" android:layout_width="20dp" android:layout_height="20dp" android:layout_weight="1"/>
 
 <LinearLayout android:layout_width="0dp" android:layout_weight="7" android:layout_height="wrap_content" 
     		   android:orientation="vertical">
     <TextView  android:textSize="15dp" android:id="@+id/name" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
    
     <TextView android:textSize="15dp"  android:id="@+id/content" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
-    
+         <TextView android:text="评论评论评论" android:layout_width="match_parent" android:layout_height="wrap_content" android:id="@+id/commentContent"  ></TextView>
+  
  <RelativeLayout android:layout_width="match_parent" android:layout_weight="7" android:layout_height="wrap_content" 
     		    >
   
-   
-  <Button  android:layout_alignParentBottom="true"   android:id="@+id/commentButton" android:layout_width="150dp" android:layout_height="20dp" android:text="评价"/>
+<Button  android:focusable = "false" android:clickable="true"  android:layout_alignParentBottom="true"   android:id="@+id/commentButton"  android:layout_width="150dp" android:layout_height="30dp" android:text="评价"/>
+
   <TextView android:layout_alignParentRight="true" android:text="19:34" android:id="@+id/time" android:layout_width="wrap_content" android:layout_height="wrap_content"></TextView>
    
     
