@@ -95,6 +95,7 @@ public class ResultsExhibition extends ActionBarActivity {
 			public void onClick(View v) {
 				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
 						"≥ı≤Ω≤‚ ‘");
+				new GetDataTask(false).execute();
 				resultsListView.onBottomComplete();
 			}
 		});
@@ -107,6 +108,7 @@ public class ResultsExhibition extends ActionBarActivity {
 			public void onDropDown() {
 				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
 						"≥ı≤Ω≤‚ ‘");
+				new GetDataTask(true).execute();
 				resultsListView.onDropDownComplete();
 			}
 		});
@@ -234,7 +236,7 @@ public class ResultsExhibition extends ActionBarActivity {
 				if (resultsPagination == null
 						|| resultsPagination.getRecords() == null) {
 					Log.d("resultsPagination", "1");
-					 resultsPagination = resultBO.getDownData(1);
+					resultsPagination = resultBO.getDownData(1);
 					Log.d("resultsPagination", "resultsPagination == nullŒ™ "
 							+ (resultsPagination == null));
 				} else {
