@@ -57,7 +57,7 @@ public class ActivityDetail extends Dialog implements OnPageChangeListener{
          listViews = new ArrayList<View>();
         for(int i=0;i<5;i++)
         {ImageView imageView=new ImageView(getContext());
-        imageView.setBackgroundResource(R.drawable.dfdfdf);
+        imageView.setBackgroundResource(R.drawable.ab_bottom_solid_maintheme);
         listViews.add(imageView);
         }
         viewPager.startAutoScroll();

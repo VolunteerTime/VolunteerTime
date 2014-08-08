@@ -8,6 +8,7 @@ package scau.info.volunteertime.activity;
 import java.util.HashMap;
  
 
+
 import com.capricorn.ArcMenu; 
 import com.viewpagerindicator.PageIndicator;
 import com.viewpagerindicator.TitlePageIndicator;
@@ -27,6 +28,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -63,6 +65,11 @@ public class MainActivity extends ActionBarActivity {
         
         ArcMenu arcMenu2 = (ArcMenu) findViewById(R.id.arc_menu_2);	//5¸öÐ¡µã
         
+        
+        WindowManager manager = getWindowManager();
+        int width = manager.getDefaultDisplay().getWidth();
+        int height = manager.getDefaultDisplay().getHeight();
+        arcMenu2.setWindowSize(width,height);
         initArcMenu(arcMenu2, ITEM_DRAWABLES);
         
         map.put(0, new ActivityCenter());
@@ -89,6 +96,7 @@ public class MainActivity extends ActionBarActivity {
 		 
     }
     private void initArcMenu(ArcMenu menu, int[] itemDrawables) {
+    	menu.scrollBy(0, -100);
         final int itemCount = itemDrawables.length;
         for (int i = 0; i < itemCount; i++) {
             ImageView item = new ImageView(this);
