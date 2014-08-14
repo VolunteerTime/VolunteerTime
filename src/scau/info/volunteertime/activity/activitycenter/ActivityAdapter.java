@@ -64,14 +64,12 @@ public class ActivityAdapter extends BaseAdapter {
 	private List<ActivityData> info=null;
 	private Map<Integer,View> rowViews=new HashMap<Integer,View>();
 	private Context context=null;
-	Handler activityCenterHandler;
 	commentClickListener commentListener;
 	
 	public Handler getHandler(){ return adapterHandler;}
 	
-	public ActivityAdapter(Context context,List<ActivityData> list,Handler handler,ToolTipRelativeLayout mToolTipFrameLayout)
+	public ActivityAdapter(Context context,List<ActivityData> list,ToolTipRelativeLayout mToolTipFrameLayout)
 	{
-		activityCenterHandler=handler;
 		this.info=list;
 		this.context=context;
 		this.mToolTipFrameLayout=mToolTipFrameLayout;
@@ -155,22 +153,7 @@ public class ActivityAdapter extends BaseAdapter {
 		  
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-			String []content={"aaa:哈哈哈哈哈","我说:哈哈哈哈","它说:奇奇怪怪的","模块:奋斗奋斗奋斗奋斗","控件:看见看见看见宏观"};
-			String kk="";
-			int[] masterViewScreenPosition = new int[2];
-			v.getLocationOnScreen(masterViewScreenPosition); 	//得到按钮的位置
-			
-			Message msg=activityCenterHandler.obtainMessage();
-			msg.arg2=3;
-			 
-			   if (mGreenToolTipView == null) {
-	                addGreenToolTipView(v); 
-	                 
-			   } else {
-	                mGreenToolTipView.remove();
-	                addGreenToolTipView(v); 
-	            }
-			   msg.sendToTarget();
+
 		}
 		
 	}

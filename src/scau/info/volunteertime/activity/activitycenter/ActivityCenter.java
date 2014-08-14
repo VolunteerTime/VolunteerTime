@@ -11,16 +11,23 @@ import java.util.List;
 import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 
 import cn.trinea.android.common.util.ListUtils;
+import cn.trinea.android.common.util.ToastUtils;
 import cn.trinea.android.common.view.DropDownListView;
 import scau.info.volunteertime.R;
+import scau.info.volunteertime.activity.resultsexhibition.ResultsExhibitionListAdapter;
+import scau.info.volunteertime.util.NetworkStateUtil;
+import scau.info.volunteertime.util.Pagination;
 import scau.info.volunteertime.vo.ActivityData; 
+import scau.info.volunteertime.vo.Result;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog; 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message; 
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -52,7 +59,11 @@ public class ActivityCenter extends Fragment  {
 	View container;
 	ActivityAdapter adapter;
 	  ToolTipRelativeLayout mToolTipFrameLayout;
-	PageRecord getData=new PageRecord();	//用来获取更多数据来填充listView
+	 
+	private Pagination<ActivityData> resultsPagination;// 装载当前内容
+	private Pagination<ActivityData> nextResultsPagination;// 作为装载下一页内容的中介
+	
+	
 	List<ActivityData> list=new ArrayList<ActivityData>();
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -93,8 +104,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	 ActivityData a14=new ActivityData("name","哥们刚失恋，去一家餐厅吃饭，刚好后面有一对情吕在唧唧我我的，好不亲热。","2014-07-22","eee");
 	 ActivityData a15=new ActivityData("name","“我靠，哥们不用这样吧！”他以为我怕了还点头，我快速拿起钱跟钱包就走，尼玛追了我两条街还没追上被我跑","2014-07-22","eee");
 	 ActivityData a16=new ActivityData("name","一对男女的对话：男：为什么你看上我啊？女：因为你长得帅埃男：帅又不能当饭吃。女：但是不帅的话，对着会吃不下饭。","2014-07-22","eee");
-	 ActivityData a17=new ActivityData("name","1.校长和英语老师一起去法国某中学访问,校长在礼堂讲话,英语老师做翻译","2009-9-26","eee");
-	 ActivityData a18=new ActivityData("name","笔记本说:我给你说个笑话呗。茶杯说:好啊好啊。笔记本说:从前有个茶杯,脑子进水了。茶杯:","5小时前","eee");
+	 ActivityData a17=new ActivityData("name","1.校长和英语老师一起去法国某中学访问,校长在礼堂讲话,英语老师做翻译","2009-9-26","eee"); 
 	 
 		list.add(a1); 
 		list.add(a2); 
@@ -107,14 +117,15 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		list.add(a9); 
 		list.add(a10); 
 		list.add(a11); 
-		list.add(a12); 		list.add(a18); 
+		list.add(a12); 		
 		list.add(a13); 
 		list.add(a14); 
 		list.add(a15); 
 		list.add(a16); 
 		list.add(a17); 
 	
-	adapter=new ActivityAdapter(getActivity(),list,handler,mToolTipFrameLayout );
+	adapter=new ActivityAdapter(getActivity(),list,mToolTipFrameLayout );
+	
 	
 	listview.setOnItemClickListener(new OnItemClickListener() {
 
@@ -159,8 +170,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		@Override
 		public void onScroll(AbsListView view, int firstVisibleItem,
 				int visibleItemCount, int totalItemCount) {
-		 
-			// TODO Auto-generated method stub
+		  
 			if(now!=firstVisibleItem)
 			{Message msg=adapterHandler.obtainMessage();
 			msg.arg2=3;
@@ -174,15 +184,7 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 		
 		@Override
 		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			Message msg=handler.obtainMessage();
-			
-			List<ActivityData> data=getData.getRecords();
-			if(data==null) msg.arg1=-1;
-			else list.addAll(data);
-			
-			msg.arg2=2;
-			msg.sendToTarget();
+			// TODO Auto-generated method stub  
 		}
 	});
 
@@ -215,31 +217,115 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	 * @see android.view.View.OnTouchListener#onTouch(android.view.View, android.view.MotionEvent)
 	 */
 	 
-
-	public Handler getHandler(){return handler;}
-	Handler handler=new Handler(){
-		
-		public void handleMessage(android.os.Message msg) {
-			
-			if(msg.arg2==3)  //如果收到3那么就是要打开评论窗口
-			{ 
-				ActivityData data=list.get(msg.arg1); 
-				 
-				 
-			}
-			else if(msg.arg2==2)		//如果收到arg2 收到2那就是要加载更多数据
-			{	
-				if(msg.arg1==-1)  //如果msg.arg1收到-1那么就是没有更多数据了
-					{Toast.makeText(getActivity(), "没有更多数据了", 1).show();
-					listview.setOnBottomStyle(false);
-					}
-				else 
-				{adapter.notifyDataSetChanged();
-				listview.onBottomComplete();}
-			} 
-		};
-	};
-
-  
-
+ 
+ 
+//	private class GetDataTask extends AsyncTask<Void, Void, Void> {
+//
+//		private boolean isConnect;
+//		private boolean isDropDown;
+//
+//		public GetDataTask(boolean isDropDown) {
+//			this.isDropDown = isDropDown;
+//		}
+//
+//		/*
+//		 * (non-Javadoc)
+//		 * 
+//		 * @see android.os.AsyncTask#doInBackground(Params[])
+//		 */
+//		@Override
+//		protected Void doInBackground(Void... params) {
+//			isConnect = NetworkStateUtil.isNetworkAvailable(getActivity());// 获取连接状况
+//			if (!isConnect) {// 无网络或无更多数据则取消任务
+//				Log.d("doInBackground", "isConnect not");
+//				cancel(true);
+//				return null;
+//			}
+//			doInBackgroundFunction();
+//			return null;
+//		}
+//
+//		/*
+//		 * (non-Javadoc)
+//		 * 
+//		 * @see android.os.AsyncTask#onCancelled()
+//		 */
+//		@Override
+//		protected void onCancelled() {
+//			cancelledFunction();
+//			super.onCancelled();
+//		}
+//
+//		/*
+//		 * (non-Javadoc)
+//		 * 
+//		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+//		 */
+//		@Override
+//		protected void onPostExecute(Void result) {
+//			if (isCancelled()) {
+//				Log.d("Cancle", "call");
+//				cancelledFunction();
+//			} else {
+//				postFunction(result);
+//			}
+//			super.onPostExecute(result);
+//		}
+//
+//		/**
+//		 * @param result
+//		 */
+//		private void postFunction(Void result) {
+//			if (isDropDown) {
+//
+//			} else {
+//				if (resultsPagination != null
+//						&& resultsPagination.getRecords() != null)
+//					Log.d("couponsMessagesAdapter", resultsPagination
+//							.getRecords().size() + "");
+//				
+//				
+//				adapter.notifyDataSetChanged();
+//				Log.d("couponsMessagesAdapter", "2");
+//				// should call onBottomComplete function of DropDownListView at
+//				// end of on bottom complete.
+//				listview.onBottomComplete();
+//				Log.d("couponsMessagesAdapter", "结束");
+//			}
+//		}
+//
+//		/**
+//		 * 
+//		 */
+//		private void cancelledFunction() {
+//			if (!isConnect) {
+//				ToastUtils.show(getActivity(), "网络连接出现问题");
+//			} else if (!hasMore) {
+//				listview.setFooterNoMoreText("没有更多促销信息了哦~");
+//				ToastUtils.show(getActivity(), "没有更多促销信息了哦~");
+//			}
+//			listview.onBottomComplete();
+//		}
+//
+//		/**
+//		 * 
+//		 */
+//		private void doInBackgroundFunction() {
+//			if (isDropDown) {
+//
+//			} else {
+//			 
+//				nextResultsPagination=new .getDownData(1);
+//					resultsPagination
+//							.setCurrentPageNumber(nextResultsPagination
+//									.getCurrentPageNumber());
+//					resultsPagination.getRecords().addAll(
+//							nextResultsPagination.getRecords());
+//
+//				 
+//			}
+//		}
+//
+//	}
+ 
 }

@@ -7,10 +7,7 @@
 	android:layout_height="fill_parent"> 
 	 
 
-
-                 
-                 
-                 
+ 
 		<LinearLayout android:layout_width="fill_parent"
 	 android:id="@+id/header_layout"
 		android:orientation="vertical" android:layout_height="fill_parent">
