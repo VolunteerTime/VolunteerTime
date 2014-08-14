@@ -42,7 +42,7 @@ public class VoteCenter extends Fragment {
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
-	static int ScreenWidth;
+	
 	myArrayAdapter listAdapter;
 	
 	
@@ -52,17 +52,7 @@ public class VoteCenter extends Fragment {
 	 */
 	/* (non-Javadoc)
 	 * @see android.support.v4.app.Fragment#onStart()
-	 */
-	@Override
-	public void onStart() {
-		// TODO Auto-generated method stub
-		WindowManager manager = getActivity().getWindowManager();
-	  	  ScreenWidth = manager.getDefaultDisplay().getWidth(); ;
-	  	  
-	  	System.out.println("µÃµ½À²£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡£¡+"+"  "+ScreenWidth);
-	  	
-		super.onStart();
-	}
+	 */ 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) { 		
@@ -80,15 +70,7 @@ public class VoteCenter extends Fragment {
 			// listen for events in the two buttons for every list item.
 			// the 'position' var will tell which list item is clicked
 			 
-			Button testButton=(Button)view.findViewById(R.id.testButton);
-			testButton.setOnClickListener(new OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					// TODO Auto-generated method stub
-					listAdapter.notifyDataSetChanged();
-				}
-			});
+	 
 			return view;
 	
 	}

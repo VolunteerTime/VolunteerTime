@@ -7,12 +7,7 @@
     android:layout_height="match_parent"  >
     
     
-    
-    
-    <Button android:layout_width="match_parent"
-        	android:layout_height="wrap_content"
-        	android:text="button"
-        	android:id="@+id/testButton"></Button>
+     
     
 	<com.tjerkw.slideexpandable.library.DropDownExpandableListView
 	 android:id="@+id/listView"

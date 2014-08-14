@@ -29,7 +29,9 @@ import java.util.List;
 
 
 
+
 import scau.info.volunteertime.R;
+import scau.info.volunteertime.activity.MainActivity;
 import scau.info.volunteertime.vo.VoteData;
 import android.content.Context;
 import android.graphics.Color;
@@ -207,7 +209,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
         progress.setBackgroundColor(Pcolor[i%Pcolor.length]);
         
         int votes=votedata.get(position).getVotes().get(i++);	
-        int pro=(int)(VoteCenter.ScreenWidth*0.8*votes/allVotes); 	//设置每个投票选项的比例，需要用到屏幕宽度
+        int pro=(int)(MainActivity.ScreenWidth*0.8*votes/allVotes); 	//设置每个投票选项的比例，需要用到屏幕宽度
         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(pro,16);	//每个投票选项的长度为20
         layoutParams.setMargins(30, 0, 30, 0);
         

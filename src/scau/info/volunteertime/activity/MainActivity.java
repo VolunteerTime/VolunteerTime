@@ -1,10 +1,11 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) ï¿½ï¿½ï¿½ï¿½Å©Òµï¿½ï¿½Ñ§ï¿½ï¿½Ï¢Ñ§Ôºï¿½Ì³ï¿½ï¿½ï¿½2014ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2014-7-15
  */
 package scau.info.volunteertime.activity;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import com.capricorn.ArcMenu;
@@ -14,17 +15,20 @@ import com.viewpagerindicator.TitlePageIndicator;
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.activitycenter.ActivityCenter;
 import scau.info.volunteertime.activity.resultsexhibition.ResultsExhibitionFragment;
+import scau.info.volunteertime.activity.votecenter.VoteCenter;
 import android.app.LocalActivityManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -34,11 +38,12 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author ï¿½Ì³ï¿½ï¿½ï¿½
  * 
  */
 public class MainActivity extends ActionBarActivity {
 
+	public static int ScreenWidth;
 	private static final int[] ITEM_DRAWABLES = {
 			R.drawable.ab_bottom_solid_maintheme,
 			R.drawable.ab_bottom_solid_maintheme,
@@ -52,8 +57,8 @@ public class MainActivity extends ActionBarActivity {
 	PageIndicator mIndicator;
 	/** Called when the activity is first created. */
 
-	HashMap<Integer, Fragment> map = new HashMap<Integer, Fragment>();// ·Å³ÌĞòµÄÃ¿Ò»¸öFragment
-	HashMap<Integer, String> mapTitle = new HashMap<Integer, String>();// Ã¿Ò»¸öFragmentµÄtitile
+	HashMap<Integer, Fragment> map = new HashMap<Integer, Fragment>();//æ”¾ç¨‹åºçš„æ¯ä¸€ä¸ªFragment 
+	HashMap<Integer, String> mapTitle = new HashMap<Integer, String>();//æ¯ä¸€ä¸ªFragmentçš„titile 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -62,25 +67,26 @@ public class MainActivity extends ActionBarActivity {
 		// System.out.println("!!!!!!!!!!");
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
-		ArcMenu arcMenu2 = (ArcMenu) findViewById(R.id.arc_menu_2); // 5¸öĞ¡µã
+		ArcMenu arcMenu2 = (ArcMenu) findViewById(R.id.arc_menu_2); //5ä¸ªå°ç‚¹
 
 		WindowManager manager = getWindowManager();
-		int width = manager.getDefaultDisplay().getWidth();
+		  ScreenWidth = manager.getDefaultDisplay().getWidth();
 		int height = manager.getDefaultDisplay().getHeight();
-		arcMenu2.setWindowSize(width, height);
+	 
+		arcMenu2.setWindowSize(ScreenWidth, height);
 		initArcMenu(arcMenu2, ITEM_DRAWABLES);
 
 		map.put(0, new ResultsExhibitionFragment());
 		map.put(1, new ActivityCenter());
-		map.put(2, new ActivityCenter());
+		map.put(2, new VoteCenter());
 		map.put(3, new ActivityCenter());
 		map.put(4, new ActivityCenter());
 
-		mapTitle.put(0, "³É¹ûÕ¹Ê¾");
-		mapTitle.put(1, "»î¶¯ÖĞĞÄ");
-		mapTitle.put(2, "»î¶¯ÖĞĞÄ");
-		mapTitle.put(3, "»î¶¯ÖĞĞÄ");
-		mapTitle.put(4, "»î¶¯ÖĞĞÄ");
+		mapTitle.put(0, "ä½œå“å±•ç¤º");
+		mapTitle.put(1, "æ´»åŠ¨ä¸­å¿ƒ");
+		mapTitle.put(2, "æŠ•ç¥¨ä¸­å¿ƒ");
+		mapTitle.put(3, "æ´»åŠ¨ä¸­å¿ƒ");
+		mapTitle.put(4, "æ´»åŠ¨ä¸­å¿ƒ");
 
 		viewFlow = (ViewPager) findViewById(R.id.guidePages);
 		MainAdapter adapter = new MainAdapter(fragmentManager, map, mapTitle);
@@ -88,9 +94,23 @@ public class MainActivity extends ActionBarActivity {
 
 		mIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		mIndicator.setViewPager(viewFlow);
+		
+		getOverflowMenu();//å¼ºåˆ¶æ˜¾ç¤ºèœå•çš„ä¸‰ä¸ªç‚¹
 
 	}
-
+    private void getOverflowMenu() {		//å¼ºåˆ¶æ˜¾ç¤ºèœå•çš„ä¸‰ä¸ªç‚¹
+        try {
+           ViewConfiguration config = ViewConfiguration.get(this);
+           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+           if(menuKeyField != null) {
+               menuKeyField.setAccessible(true);
+               menuKeyField.setBoolean(config, false);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
+    
 	private void initArcMenu(ArcMenu menu, int[] itemDrawables) {
 		menu.scrollBy(0, -100);
 		final int itemCount = itemDrawables.length;
@@ -99,7 +119,7 @@ public class MainActivity extends ActionBarActivity {
 			item.setImageResource(itemDrawables[i]);
 
 			final int position = i;
-			menu.addItem(item, new OnClickListener() { // Ã¿¸öĞ¡²Ëµ¥ÏîµÄ¼àÌıÆ÷
+			menu.addItem(item, new OnClickListener() { //æ¯ä¸ªå°èœå•é¡¹çš„ç›‘å¬å™¨
 
 						@Override
 						public void onClick(View v) {
@@ -116,8 +136,14 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
+	 
+		MenuItemCompat.setShowAsAction(menu.add("ä¸ªäººä¿¡æ¯") 
+                .setIcon(android.R.drawable.ic_menu_rotate), MenuItemCompat.SHOW_AS_ACTION_NEVER);
+		MenuItemCompat.setShowAsAction(menu.add("No.41") 
+                .setIcon(android.R.drawable.ic_menu_rotate), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+
+	        return true; 
+	         
 	}
 
 	@Override

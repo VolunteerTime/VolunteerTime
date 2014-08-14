@@ -82,7 +82,6 @@ public class ActivityDetail extends Dialog implements OnPageChangeListener{
 		@Override
 		public int getCount() {
 			// TODO Auto-generated method stub
-			System.out.println("!!!!!!  "+listViews.size());
 			return listViews.size();
 		} 
 		@Override
@@ -92,7 +91,6 @@ public class ActivityDetail extends Dialog implements OnPageChangeListener{
 		} 
 		public Object instantiateItem(View arg0, int arg1) { 
             // TODO Auto-generated method stub 
-			System.out.println("@@@@@@@@@@");;
             ((ViewPager) arg0).addView(listViews.get(arg1)); 
             return listViews.get(arg1); 
         } 

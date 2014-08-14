@@ -153,7 +153,18 @@ public class ActivityAdapter extends BaseAdapter {
 		  
 		public void onClick(View v) {
 			// TODO Auto-generated method stub
-
+			 
+			int[] masterViewScreenPosition = new int[2];
+			v.getLocationOnScreen(masterViewScreenPosition); 	//得到按钮的位置
+			  
+			 
+			   if (mGreenToolTipView == null) {
+	                addGreenToolTipView(v); 
+	                 
+			   } else {
+	                mGreenToolTipView.remove();
+	                addGreenToolTipView(v); 
+	            } 
 		}
 		
 	}
