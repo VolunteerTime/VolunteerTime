@@ -5,7 +5,6 @@
  */
 package scau.info.volunteertime.vo;
 
-
 /**
  * 成果展示的VO
  * 
@@ -24,6 +23,13 @@ public class Result {
 
 	/**
 	 * @param id
+	 */
+	public Result(int id) {
+		this.id = id;
+	}
+
+	/**
+	 * @param id
 	 * @param title
 	 * @param content
 	 * @param image
@@ -32,7 +38,6 @@ public class Result {
 	 */
 	public Result(int id, String title, String content, String image,
 			String editor, String publishTime) {
-		super();
 		this.id = id;
 		this.title = title;
 		this.content = content;
@@ -50,7 +55,6 @@ public class Result {
 	 */
 	public Result(String title, String content, String image, String editor,
 			String publishTime) {
-		super();
 		this.title = title;
 		this.content = content;
 		this.image = image;
@@ -146,6 +150,21 @@ public class Result {
 	 */
 	public void setPublishTime(String publishTime) {
 		this.publishTime = publishTime;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object o) {
+		if (o instanceof Result) {
+			if (((Result) o).getId() == this.getId()) {
+				return true;
+			}
+		}
+		return super.equals(o);
 	}
 
 }

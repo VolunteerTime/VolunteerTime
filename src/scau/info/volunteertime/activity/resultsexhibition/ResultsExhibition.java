@@ -236,7 +236,7 @@ public class ResultsExhibition extends ActionBarActivity {
 				if (resultsPagination == null
 						|| resultsPagination.getRecords() == null) {
 					Log.d("resultsPagination", "1");
-					resultsPagination = resultBO.getDownData(1);
+//					resultsPagination = resultBO.getDownData(1);
 					Log.d("resultsPagination", "resultsPagination == nullΪ "
 							+ (resultsPagination == null));
 				} else {

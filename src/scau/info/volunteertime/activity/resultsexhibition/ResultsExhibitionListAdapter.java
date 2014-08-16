@@ -46,54 +46,43 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		this.mContext = context;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.Adapter#getCount()
-	 */
 	@Override
 	public int getCount() {
-		if (resultsPagination != null && resultsPagination.getRecords() != null) {
-			return resultsPagination.getRecords().size();
+		if (resultsPagination != null
+				&& resultsPagination.getPageSize() <= resultsPagination
+						.getRecords().size()) {
+			Log.d("ResultsExhibitionListAdapter-getCount", "1="
+					+ resultsPagination.getPageSize() + ":"
+					+ resultsPagination.getRecords().size());
+			return resultsPagination.getPageSize();
 		} else {
-			return -1;
+			Log.d("ResultsExhibitionListAdapter-getCount", "2");
+			return 0;
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.Adapter#getItem(int)
-	 */
 	@Override
 	public Object getItem(int position) {
-		if (resultsPagination != null && resultsPagination.getRecords() != null) {
-			return resultsPagination.getRecords().get(position);
-		} else {
-			return null;
-		}
+		return position;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.Adapter#getItemId(int)
-	 */
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.widget.Adapter#getView(int, android.view.View,
-	 * android.view.ViewGroup)
-	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		ViewHolder holder;
+		Log.d("ResultsExhibitionListAdapter-getView", position
+				+ (resultsPagination.getCurrentPageNumber() - 1)
+				* resultsPagination.getPageSize() + "");
+		Log.d("ResultsExhibitionListAdapter-getView", resultsPagination
+				.getRecords().size() + "");
+		Result result = resultsPagination.getRecords().get(
+				position + (resultsPagination.getCurrentPageNumber() - 1)
+						* resultsPagination.getPageSize());
 		if (view == null) {
 			view = inflater.inflate(R.layout.item_results_exhibition, null);
 			holder = new ViewHolder();
@@ -106,13 +95,10 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
-		holder.articleContent.setDesc(
-				resultsPagination.getRecords().get(position).getContent(),
-				BufferType.NORMAL);
+		holder.articleContent.setDesc(result.getContent(), BufferType.NORMAL);
 		Log.d("1", "ok");
 
-		holder.publishTime.setText(resultsPagination.getRecords().get(position)
-				.getPublishTime());
+		holder.publishTime.setText(result.getPublishTime());
 
 		Log.d("2", "ok");
 		return view;

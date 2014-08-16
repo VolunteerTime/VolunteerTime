@@ -5,12 +5,17 @@
  */
 package scau.info.volunteertime.activity.resultsexhibition;
 
+import java.util.ArrayList;
+
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.business.ResultBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
 import scau.info.volunteertime.util.Pagination;
 import scau.info.volunteertime.vo.Result;
 import android.app.Activity;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -34,6 +39,8 @@ public class ResultsExhibitionFragment extends Fragment {
 
 	private Pagination<Result> resultsPagination;// 装载当前内容
 	private Pagination<Result> nextResultsPagination;// 作为装载下一页内容的中介
+
+	private int currentPageSize = 10;
 
 	private DropDownListView resultsListView;
 
@@ -126,6 +133,7 @@ public class ResultsExhibitionFragment extends Fragment {
 				resultsListView.onDropDownComplete();
 			}
 		});
+		resultsListView.onDropDownComplete();
 
 		return view;
 	}
@@ -134,6 +142,9 @@ public class ResultsExhibitionFragment extends Fragment {
 
 		private boolean isConnect;
 		private boolean isDropDown;
+
+		private int firstId;
+		private int endId;
 
 		public GetDataTask(boolean isDropDown) {
 			this.isDropDown = isDropDown;
@@ -152,6 +163,7 @@ public class ResultsExhibitionFragment extends Fragment {
 				cancel(true);
 				return null;
 			}
+			Log.d("GetDataTask-doInBackground", "in");
 			doInBackgroundFunction();
 			return null;
 		}
@@ -190,21 +202,7 @@ public class ResultsExhibitionFragment extends Fragment {
 			if (isDropDown) {
 
 			} else {
-				if (resultsPagination != null
-						&& resultsPagination.getRecords() != null)
-					Log.d("couponsMessagesAdapter", resultsPagination
-							.getRecords().size() + "");
-				if (nextResultsPagination == null) {
-					resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(
-							activity, resultsPagination);
-					resultsListView.setAdapter(resultsExhibitionListAdapter);
-				}
 				resultsExhibitionListAdapter.notifyDataSetChanged();
-				Log.d("couponsMessagesAdapter", "2");
-				// should call onBottomComplete function of DropDownListView at
-				// end of on bottom complete.
-				resultsListView.onBottomComplete();
-				Log.d("couponsMessagesAdapter", "结束");
 			}
 		}
 
@@ -218,7 +216,6 @@ public class ResultsExhibitionFragment extends Fragment {
 				resultsListView.setFooterNoMoreText("没有更多促销信息了哦~");
 				ToastUtils.show(activity, "没有更多促销信息了哦~");
 			}
-			resultsListView.onBottomComplete();
 		}
 
 		/**
@@ -228,29 +225,81 @@ public class ResultsExhibitionFragment extends Fragment {
 			if (isDropDown) {
 
 			} else {
-				if (resultsPagination == null
-						|| resultsPagination.getRecords() == null) {
-					Log.d("resultsPagination", "1");
-					resultsPagination = resultBO.getDownData(1);
-					Log.d("resultsPagination", "resultsPagination == null为 "
-							+ (resultsPagination == null));
+				ArrayList<Result> results;
+				if (resultsPagination.getAmountOfRecorders() == 0) {
+					SQLiteDatabase db = activity.openOrCreateDatabase(
+							"volunteertimedatabase.db", Context.MODE_PRIVATE,
+							null);
+					Cursor c = db.rawQuery("SELECT * FROM results", null);
+					results = new ArrayList<Result>();
+					c.moveToFirst();
+					// firstId = c.getInt(c.getColumnIndex("id"));
+					while (!c.isAfterLast()) {
+						Result result = new Result(c.getInt(c
+								.getColumnIndex("id")), c.getString(c
+								.getColumnIndex("title")), c.getString(c
+								.getColumnIndex("content")), c.getString(c
+								.getColumnIndex("image")), c.getString(c
+								.getColumnIndex("editor")), c.getString(c
+								.getColumnIndex("publishTime")));
+						results.add(result);
+						c.moveToNext();
+					}
+					// c.moveToLast();
+					// endId = c.getInt(c.getColumnIndex("id"));
+					Log.d("ResultsExhibitionFragment-doInBackgroundFunction",
+							"firstId = " + firstId + "; endId = " + endId);
+					c.close();
+					db.close();
+					resultsPagination.getRecords().addAll(results);
+					resultsPagination.setCurrentPageNumber(1);
+					resultsPagination.setPageSize(currentPageSize);
+
+					if (resultsPagination.getAmountOfRecorders() == 0) {
+						Log.d("doInBackgroundFunction", "getNewData1");
+						results = new ArrayList<Result>();
+						results = (ArrayList<Result>) resultBO
+								.getNewData(currentPageSize);
+						if (results != null)
+							resultsPagination.getRecords().addAll(results);
+						Log.d("doInBackgroundFunction", "getNewData2");
+					} else if (resultsPagination.getAmountOfRecorders() < currentPageSize) {
+						ArrayList<Integer> integers = resultBO.update(firstId,
+								endId);
+
+						for (Integer i : integers) {
+							resultsPagination.getRecords()
+									.remove(new Result(i));
+						}
+
+						results = new ArrayList<Result>();
+						results = (ArrayList<Result>) resultBO
+								.getDownData(endId);
+						if (results != null)
+							resultsPagination.getRecords().addAll(results);
+					}
 				} else {
-					// nextResultsPagination = resultBO.getDownData();
-
-					hasMore = nextResultsPagination.getRecords().size() > resultsPagination
-							.getRecords().size();
-					Log.d("doInBackground", "hasMore= " + hasMore);
-
-					resultsPagination
-							.setCurrentPageNumber(nextResultsPagination
-									.getCurrentPageNumber());
-					resultsPagination.getRecords().addAll(
-							nextResultsPagination.getRecords());
-
+					if (currentPageSize < resultsPagination
+							.getAmountOfRecorders()) {
+						if (currentPageSize * 2 <= resultsPagination
+								.getAmountOfRecorders()) {
+							currentPageSize *= 2;
+							resultsPagination.setPageSize(currentPageSize);
+						} else {
+							currentPageSize = resultsPagination
+									.getAmountOfRecorders();
+							resultsPagination.setPageSize(currentPageSize);
+						}
+					} else {
+						results = new ArrayList<Result>();
+						results = (ArrayList<Result>) resultBO
+								.getDownData(endId);
+						if (results != null)
+							resultsPagination.getRecords().addAll(results);
+					}
 				}
 			}
 		}
-
 	}
 
 }

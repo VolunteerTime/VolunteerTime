@@ -21,12 +21,6 @@
         <activity
             android:name="scau.info.volunteertime.activity.MainActivity"
             android:label="@string/app_name" >
-            
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name="scau.info.volunteertime.activity.activitycenter.ActivityCenter"
@@ -87,6 +81,15 @@
         <activity
             android:name="scau.info.volunteertime.activity.login.Login"
             android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name="scau.info.volunteertime.activity.LoadActivity"
+            android:theme="@android:style/Theme.NoTitleBar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
