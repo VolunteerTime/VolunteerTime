@@ -190,7 +190,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
         {	
         TextView textView=new TextView(context); 
        
-        textView.setText(s); 
+        textView.setText(i+". "+s); 
         textView.setTextSize(ITEM_FONT_SIZE);
         textView.setLines(1);
         textView.setPadding(30, 19, 30, 3);
@@ -207,7 +207,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
         
         ImageView progress=new ImageView(context);
         progress.setBackgroundColor(Pcolor[i%Pcolor.length]);
-        
+        System.out.println("dkfjaksdjfkdjkkkkkkkkk  "+i);
         int votes=votedata.get(position).getVotes().get(i++);	
         int pro=(int)(MainActivity.ScreenWidth*0.8*votes/allVotes); 	//设置每个投票选项的比例，需要用到屏幕宽度
         LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(pro,16);	//每个投票选项的长度为20
@@ -255,14 +255,14 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
 			}
 		});
         ArrayList<String> sum=votedata.get(position).getChoice();
-        
+        int j=1;
         for(String i:sum)
         {RadioButton radioButton=(RadioButton) inflater.inflate(R.layout.radio_button,parent,false);
        
          radioButton.setLayoutParams(layoutParams);
          radioButton.setPadding(30, 0, 30, 0);
          radioButton.setTextSize(ITEM_FONT_SIZE);
-         radioButton.setText(i);
+         radioButton.setText((j++)+". "+i);
          radioButton.setLines(1);
         radioGroup.addView(radioButton);
         }

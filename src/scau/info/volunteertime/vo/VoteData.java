@@ -1,25 +1,26 @@
-/**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
- * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014Äê8ÔÂ14ÈÕ
- */
 package scau.info.volunteertime.vo;
+
+/**
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
+ * 
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014å¹´8æœˆ14æ—¥
+ */ 
 
 import java.util.ArrayList;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  *
  */
 public class VoteData {
 	
-	private int number;	//Í¶Æ±±àºÅ
-	private boolean single; //µ¥Ñ¡ÊÇtrue£¬¸´Ñ¡ÊÇfalse
-	private String	title;	//ÆÀÂÛµÄÖ÷Ìâ
-	private ArrayList<String> choice;	//Í¶Æ±Ñ¡Ïî
-	private ArrayList<Integer>	votes;		//¶ÔÓ¦µÄÍ¶Æ±½á¹û
-	private boolean checked=false;		//ÊÇ·ñÒÑ¾­Ñ¡Ôñ¹ıÁË£¬´Ó±¾µØÊı¾İ¿â»ñµÃ,Èç¹û
-	public boolean isChange=false;	//ÅĞ¶ÏÊÇ·ñ°´ÏÂÁË°´¼ü£¬Èç¹û°´ÏÂÁËÄÇÃ´»á±ä³Étrue£¬±ä³Étrue»­Ãæ»á¸Ä±ä£¬µ«ºÜ¿ìÓÖ»á±ä³Éfalse
+	private int id;	//æŠ•ç¥¨ç¼–å·
+	private boolean single; //å•é€‰æ˜¯trueï¼Œå¤é€‰æ˜¯false
+	private String	title;	//è¯„è®ºçš„ä¸»é¢˜
+	private ArrayList<String> choice;	//æŠ•ç¥¨é€‰é¡¹
+	private ArrayList<Integer>	votes;		//å¯¹åº”çš„æŠ•ç¥¨ç»“æœ
+	private boolean checked=false;		//æ˜¯å¦å·²ç»é€‰æ‹©è¿‡äº†ï¼Œä»æœ¬åœ°æ•°æ®åº“è·å¾—,å¦‚æœ
+	public boolean isChange=false;	//åˆ¤æ–­æ˜¯å¦æŒ‰ä¸‹äº†æŒ‰é”®ï¼Œå¦‚æœæŒ‰ä¸‹äº†é‚£ä¹ˆä¼šå˜æˆtrueï¼Œå˜æˆtrueç”»é¢ä¼šæ”¹å˜ï¼Œä½†å¾ˆå¿«åˆä¼šå˜æˆfalse
 	
 	public void setChecked(boolean checked)
 	{
@@ -35,13 +36,13 @@ public class VoteData {
 		checked=!checked;
 	}
 	
-	public int getNumber()
+	public int getId()
 	{
-		return number;
+		return id;
 	}
-	public void setNumber(int num)
+	public void setId(int num)
 	{
-		number=num;
+		id=num;
 	}
 	
 	

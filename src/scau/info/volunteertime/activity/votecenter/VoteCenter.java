@@ -1,19 +1,24 @@
-/**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
- * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
- */
 package scau.info.volunteertime.activity.votecenter;
-  
+
+/**
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
+ * 
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
+ */ 
+import java.net.URL;
 import java.util.ArrayList;
+
+import org.apache.http.HttpConnection;
 
 import com.tjerkw.slideexpandable.library.ActionSlideExpandableListView;
 import com.tjerkw.slideexpandable.library.DropDownExpandableListView;
 import com.tjerkw.slideexpandable.library.SlideExpandableListAdapter; 
 
 import scau.info.volunteertime.R;
+import scau.info.volunteertime.business.voteCenterBO;
 import scau.info.volunteertime.vo.VoteData;
 import android.database.DataSetObserver;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment; 
 import android.view.Gravity;
@@ -34,7 +39,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  *
  */
 public class VoteCenter extends Fragment {
@@ -44,7 +49,7 @@ public class VoteCenter extends Fragment {
 	 */
 	
 	myArrayAdapter listAdapter;
-	
+	ArrayList<VoteData> votesDate=new ArrayList<VoteData>();
 	
 	
 	/* (non-Javadoc)
@@ -61,24 +66,56 @@ public class VoteCenter extends Fragment {
 		 
 			// get a reference to the listview, needed in order
 			// to call setItemActionListener on it
+		
 		DropDownExpandableListView list = (DropDownExpandableListView)view.findViewById(R.id.listView);
 
-			// fill the list with data
-		 	listAdapter=buildDummyData();
-			list.setAdapter(listAdapter);
-
-			// listen for events in the two buttons for every list item.
-			// the 'position' var will tell which list item is clicked
-			 
+		// fill the list with data
+	 	listAdapter=buildDummyData();
+		list.setAdapter(listAdapter);
+		
+	 
+				// TODO Auto-generated method stub
+		new myAsynctask().execute(0);
+				
+				
+				// listen for events in the two buttons for every list item.
+				// the 'position' var will tell which list item is clicked
+	 
+		
 	 
 			return view;
 	
 	}
-	
+
+			
+		class myAsynctask extends AsyncTask<Integer, Integer, Integer>{
+
+			/* (non-Javadoc)
+			 * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
+			 */
+			@Override
+			protected Integer doInBackground(Integer... params) {
+				// TODO Auto-generated method stub
+				System.out.println("å‡†å¤‡å–æ•°æ®");
+				 votesDate.addAll(new voteCenterBO().getVotesData(0));
+				return null;
+			}
+			/* (non-Javadoc)
+			 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+			 */
+			@Override
+			protected void onPostExecute(Integer result) {
+				// TODO Auto-generated method stub
+				listAdapter.notifyDataSetChanged();
+				super.onPostExecute(result);
+			}
+
+				 
+				
+			}
 	public myArrayAdapter buildDummyData() {
-		 
-		ArrayList<VoteData> votesDate=getData();
- 
+		  
+	 
 		return new myArrayAdapter(
 				getActivity(),
 				R.layout.activity_vote_center_expandable_list_item,
@@ -87,6 +124,7 @@ public class VoteCenter extends Fragment {
 		);
 	}
 	
+	/*
 	private ArrayList<VoteData> getData()
 	{
 	 
@@ -96,10 +134,10 @@ public class VoteCenter extends Fragment {
 			VoteData data=new VoteData();
 			data.setNumber(0);
 			ArrayList<String> stringData=new ArrayList<String>();
-						stringData.add("1.ÎÒÏ²»¶´òÀºÇò");
-						stringData.add("2.ÎÒÏ²»¶´òÓğÃ«Çò");
-						stringData.add("3.ÎÒÏ²»¶´òÅÅÇò");
-						stringData.add("4.ÎÒÏ²»¶´ò±ù°ôÇò"); 
+						stringData.add("1.æˆ‘å–œæ¬¢æ‰“ç¯®çƒ");
+						stringData.add("2.æˆ‘å–œæ¬¢æ‰“ç¾½æ¯›çƒ");
+						stringData.add("3.æˆ‘å–œæ¬¢æ‰“æ’çƒ");
+						stringData.add("4.æˆ‘å–œæ¬¢æ‰“å†°æ£’çƒ"); 
 			ArrayList<Integer> votes=new ArrayList<Integer>();
 						votes.add(20);
 						votes.add(40);
@@ -109,16 +147,16 @@ public class VoteCenter extends Fragment {
 			data.setVotes(votes);
 			data.setChoice(stringData);
 			data.setSingle(true);
-			data.setTitle("ÄãÏ²»¶µÄÔË¶¯ÊÇÊ²Ã´"); 
+			data.setTitle("ä½ å–œæ¬¢çš„è¿åŠ¨æ˜¯ä»€ä¹ˆ"); 
 			
 			votesDate.add(data);
 		 
 			VoteData data1=new VoteData();
 			data1.setNumber(1);
 			ArrayList<String> stringData1=new ArrayList<String>();
-						stringData1.add("1.Ñ¡ÏîAAAAAA");
-						stringData1.add("2.Ñ¡Ïîbbbbbb");
-						stringData1.add("3.Ñ¡ÏîCCCCCC"); 
+						stringData1.add("1.é€‰é¡¹AAAAAA");
+						stringData1.add("2.é€‰é¡¹bbbbbb");
+						stringData1.add("3.é€‰é¡¹CCCCCC"); 
 			ArrayList<Integer> votes1=new ArrayList<Integer>();
 						votes1.add(20);
 						votes1.add(40);
@@ -127,18 +165,18 @@ public class VoteCenter extends Fragment {
 			data1.setVotes(votes1);
 			data1.setChoice(stringData1);
 			data1.setSingle(true);
-			data1.setTitle("ÄãÏ²»¶µÄÑ¡ÏîÊÇÊ²Ã´"); 
+			data1.setTitle("ä½ å–œæ¬¢çš„é€‰é¡¹æ˜¯ä»€ä¹ˆ"); 
 			
 			votesDate.add(data1);
 			
 			VoteData data2=new VoteData();
 			data2.setNumber(2);
 			ArrayList<String> stringData2=new ArrayList<String>();
-						stringData2.add("1.Ğ¡Ñ§");
-						stringData2.add("2.³õÖĞ");
-						stringData2.add("3.¸ßÖĞ");
-						stringData2.add("4.´óÑ§");
-						stringData2.add("5.±ÏÒµÖ®ºó");
+						stringData2.add("1.å°å­¦");
+						stringData2.add("2.åˆä¸­");
+						stringData2.add("3.é«˜ä¸­");
+						stringData2.add("4.å¤§å­¦");
+						stringData2.add("5.æ¯•ä¸šä¹‹å");
 			ArrayList<Integer> votes2=new ArrayList<Integer>();
 						votes2.add(20);
 						votes2.add(40);
@@ -149,7 +187,7 @@ public class VoteCenter extends Fragment {
 			
 			data2.setChoice(stringData2);
 			data2.setSingle(true);
-			data2.setTitle("ÄãµÄ³õÁµÊ±Ê²Ã´Ê±ºò"); 
+			data2.setTitle("ä½ çš„åˆæ‹æ—¶ä»€ä¹ˆæ—¶å€™"); 
 			System.out.println("hahhahahahahahhahaha"+data2.getVotes());
 			votesDate.add(data2);
 			
@@ -169,7 +207,7 @@ public class VoteCenter extends Fragment {
 			data3.setVotes(votes3);
 			data3.setChoice(stringData3);
 			data3.setSingle(true);
-			data3.setTitle("Äã²âÊÔ¶øÒÑ²»Òª½ÏÕæ"); 
+			data3.setTitle("ä½ æµ‹è¯•è€Œå·²ä¸è¦è¾ƒçœŸ"); 
 			
 			votesDate.add(data3);
 			
@@ -177,10 +215,10 @@ public class VoteCenter extends Fragment {
 			VoteData data4=new VoteData();
 			data4.setNumber(4);
 			ArrayList<String> stringData4=new ArrayList<String>();
-						stringData4.add("1.ÎÒÏ²»¶´òÀºÇò");
-						stringData4.add("2.ÎÒÏ²»¶´òÓğÃ«Çò");
-						stringData4.add("3.ÎÒÏ²»¶´òÅÅÇò");
-						stringData4.add("4.ÎÒÏ²»¶´ò±ù°ôÇò"); 
+						stringData4.add("1.æˆ‘å–œæ¬¢æ‰“ç¯®çƒ");
+						stringData4.add("2.æˆ‘å–œæ¬¢æ‰“ç¾½æ¯›çƒ");
+						stringData4.add("3.æˆ‘å–œæ¬¢æ‰“æ’çƒ");
+						stringData4.add("4.æˆ‘å–œæ¬¢æ‰“å†°æ£’çƒ"); 
 			ArrayList<Integer> votes4=new ArrayList<Integer>();
 						votes4.add(20);
 						votes4.add(40);
@@ -191,7 +229,7 @@ public class VoteCenter extends Fragment {
 			
 			data4.setChoice(stringData4);
 			data4.setSingle(true);
-			data4.setTitle("ÄãÏ²»¶µÄÔË¶¯ÊÇÊ²Ã´"); 
+			data4.setTitle("ä½ å–œæ¬¢çš„è¿åŠ¨æ˜¯ä»€ä¹ˆ"); 
 			
 			votesDate.add(data4);
 			
@@ -201,5 +239,6 @@ public class VoteCenter extends Fragment {
 		return votesDate;
  
 	}
+	*/
 
 }
