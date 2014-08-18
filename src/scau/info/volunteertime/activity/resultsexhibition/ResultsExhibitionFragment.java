@@ -278,9 +278,8 @@ public class ResultsExhibitionFragment extends Fragment {
 					"firstTime =" + firstTime);
 			results = resultBO.getDropDownData(firstTime, currentPageSize);
 			if (results != null) {
-				Pagination<Result> temp = new Pagination<Result>();
-				temp.setRecords(results);
-				sortedLinkList.addAll(temp.getRecords());
+				sortedLinkList.addAll(results);
+				toSaveDataInDatabase();
 			}
 			Log.d("doInBackgroundFunction", "toGetUpdateDataFromNet2");
 		}
@@ -344,7 +343,7 @@ public class ResultsExhibitionFragment extends Fragment {
 					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
 			for (Result result : results) {
 				db.execSQL(
-						"INSERT INTO results(id ,title ,content ,image  ,editor ,publishTime) VALUES(?,?,?,?,?,?)",
+						"REPLACE INTO results(id ,title ,content ,image  ,editor ,publishTime) VALUES(?,?,?,?,?,?)",
 						new Object[] { result.getId(), result.getTitle(),
 								result.getContent(), result.getImage(),
 								result.getEditor(), result.getPublishTime() });
