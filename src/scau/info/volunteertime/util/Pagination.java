@@ -26,6 +26,11 @@ public class Pagination<T> {
 		records = new ArrayList<T>();
 	}
 
+	public List<T> getcurrentPageRecords() {
+		return records.subList((currentPageNumber - 1) * pageSize,
+				currentPageNumber * pageSize);
+	}
+
 	/**
 	 * ·µ»Ø¼ÇÂ¼ÄÚÈİlist
 	 * 
