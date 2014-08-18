@@ -12,9 +12,9 @@ import java.util.List;
  * @author 蔡超敏
  * 
  */
-public class Pagination<T> {
+public class Pagination<VolunteertimeData> {
 
-	private List<T> records; // 当前分页的记录集合
+	private List<VolunteertimeData> records; // 当前分页的记录集合
 
 	private int currentPageNumber; // 当前分页
 
@@ -23,10 +23,10 @@ public class Pagination<T> {
 	private int pageSize; // 每页的记录数
 
 	public Pagination() {
-		records = new ArrayList<T>();
+		records = new ArrayList<VolunteertimeData>();
 	}
 
-	public List<T> getcurrentPageRecords() {
+	public List<VolunteertimeData> getcurrentPageRecords() {
 		return records.subList((currentPageNumber - 1) * pageSize,
 				currentPageNumber * pageSize);
 	}
@@ -36,7 +36,7 @@ public class Pagination<T> {
 	 * 
 	 * @return List
 	 */
-	public List<T> getRecords() {
+	public List<VolunteertimeData> getRecords() {
 		return records;
 	}
 
@@ -45,7 +45,7 @@ public class Pagination<T> {
 	 * 
 	 * @param records
 	 */
-	public void setRecords(List<T> records) {
+	public void setRecords(List<VolunteertimeData> records) {
 		this.records = records;
 	}
 
