@@ -4,7 +4,7 @@ package scau.info.volunteertime.util;
  * Copyright (c) 华南农业大学信息学院蔡超敏2014版权所有
  * 
  * 文件创建时间：2014年8月17日
- */ 
+ */
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -12,23 +12,20 @@ import java.util.LinkedList;
 import java.util.List;
 
 import scau.info.volunteertime.vo.VolunteertimeData;
- 
 
 /**
  * @author 林锡鑫
  * @param <Data>
- *
+ * 
  */
 public class SortedLinkList implements Comparator<VolunteertimeData> {
 
 	LinkedList<VolunteertimeData> sortedLinkList = new LinkedList<VolunteertimeData>();
-	
-	public LinkedList<VolunteertimeData>  getList()
-	{
+
+	public LinkedList<VolunteertimeData> getList() {
 		return sortedLinkList;
 	}
-	
-	
+
 	public boolean remove(VolunteertimeData object) {
 		return sortedLinkList.remove(object);
 	}
@@ -43,7 +40,7 @@ public class SortedLinkList implements Comparator<VolunteertimeData> {
 		for (VolunteertimeData i : list) {
 			sortedLinkList.remove(i);
 		}
-		
+
 		sortedLinkList.addAll(list);
 
 		nsort();
@@ -83,10 +80,9 @@ public class SortedLinkList implements Comparator<VolunteertimeData> {
 	 */
 	public void add(VolunteertimeData item) {
 		// TODO Auto-generated method stub
-	//	System.out.println(item.getDate());
+		// System.out.println(item.getDate());
 		sortedLinkList.remove(item.getId());
 		sortedLinkList.add(item);
-		
 
 	}
 
@@ -98,6 +94,10 @@ public class SortedLinkList implements Comparator<VolunteertimeData> {
 		return sortedLinkList.size();
 	}
 
+	public boolean isEmpty() {
+		return sortedLinkList.isEmpty();
+	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -106,7 +106,7 @@ public class SortedLinkList implements Comparator<VolunteertimeData> {
 	@Override
 	public int compare(VolunteertimeData lhs, VolunteertimeData rhs) {
 		// TODO Auto-generated method stub
-		if( lhs.getDate() < rhs.getDate())
+		if (lhs.getDate() < rhs.getDate())
 			return 1;
 		else if (lhs.getDate() > rhs.getDate())
 			return -1;
