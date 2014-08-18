@@ -87,8 +87,8 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 
 	}
 
-	public VolunteertimeData get(int i) {
-		return sortedLinkList.get(i);
+	public T get(int i) {
+		return (T) sortedLinkList.get(i);
 	}
 
 	public int size() {
