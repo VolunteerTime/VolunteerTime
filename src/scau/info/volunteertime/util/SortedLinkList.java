@@ -18,7 +18,8 @@ import scau.info.volunteertime.vo.VolunteertimeData;
  * @param <Data>
  * 
  */
-public class SortedLinkList implements Comparator<VolunteertimeData> {
+public class SortedLinkList<T extends VolunteertimeData> implements
+		Comparator<VolunteertimeData> {
 
 	LinkedList<VolunteertimeData> sortedLinkList = new LinkedList<VolunteertimeData>();
 
@@ -35,7 +36,7 @@ public class SortedLinkList implements Comparator<VolunteertimeData> {
 		return sortedLinkList;
 	}
 
-	public List<VolunteertimeData> addAll(List<VolunteertimeData> list) {
+	public List<VolunteertimeData> addAll(List<T> list) {
 
 		for (VolunteertimeData i : list) {
 			sortedLinkList.remove(i);
