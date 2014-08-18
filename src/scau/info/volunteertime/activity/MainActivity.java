@@ -1,7 +1,7 @@
 /**
- * Copyright (c) ����ũҵ��ѧ��ϢѧԺ�̳���2014��Ȩ����
+ * Copyright (c) 华南农业大学信息学院蔡超敏2014版权所有
  * 
- * �ļ�����ʱ�䣺2014-7-15
+ * 文件创建时间：2014-7-15
  */
 package scau.info.volunteertime.activity;
 
@@ -38,7 +38,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * @author �̳���
+ * @author 蔡超敏
  * 
  */
 public class MainActivity extends ActionBarActivity {
@@ -57,8 +57,8 @@ public class MainActivity extends ActionBarActivity {
 	PageIndicator mIndicator;
 	/** Called when the activity is first created. */
 
-	HashMap<Integer, Fragment> map = new HashMap<Integer, Fragment>();//放程序的每一个Fragment 
-	HashMap<Integer, String> mapTitle = new HashMap<Integer, String>();//每一个Fragment的titile 
+	HashMap<Integer, Fragment> map = new HashMap<Integer, Fragment>();// 鏀剧▼搴忕殑姣忎竴涓狥ragment
+	HashMap<Integer, String> mapTitle = new HashMap<Integer, String>();// 姣忎竴涓狥ragment鐨則itile
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,12 +67,12 @@ public class MainActivity extends ActionBarActivity {
 		// System.out.println("!!!!!!!!!!");
 		FragmentManager fragmentManager = getSupportFragmentManager();
 
-		ArcMenu arcMenu2 = (ArcMenu) findViewById(R.id.arc_menu_2); //5个小点
+		ArcMenu arcMenu2 = (ArcMenu) findViewById(R.id.arc_menu_2); // 5涓皬鐐�
 
 		WindowManager manager = getWindowManager();
-		  ScreenWidth = manager.getDefaultDisplay().getWidth();
+		ScreenWidth = manager.getDefaultDisplay().getWidth();
 		int height = manager.getDefaultDisplay().getHeight();
-	 
+
 		arcMenu2.setWindowSize(ScreenWidth, height);
 		initArcMenu(arcMenu2, ITEM_DRAWABLES);
 
@@ -94,23 +94,25 @@ public class MainActivity extends ActionBarActivity {
 
 		mIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
 		mIndicator.setViewPager(viewFlow);
-		
-		getOverflowMenu();//强制显示菜单的三个点
+
+		getOverflowMenu();// 寮哄埗鏄剧ず鑿滃崟鐨勪笁涓偣
 
 	}
-    private void getOverflowMenu() {		//强制显示菜单的三个点
-        try {
-           ViewConfiguration config = ViewConfiguration.get(this);
-           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-           if(menuKeyField != null) {
-               menuKeyField.setAccessible(true);
-               menuKeyField.setBoolean(config, false);
-           }
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-   }
-    
+
+	private void getOverflowMenu() { // 寮哄埗鏄剧ず鑿滃崟鐨勪笁涓偣
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class
+					.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	private void initArcMenu(ArcMenu menu, int[] itemDrawables) {
 		menu.scrollBy(0, -100);
 		final int itemCount = itemDrawables.length;
@@ -119,7 +121,7 @@ public class MainActivity extends ActionBarActivity {
 			item.setImageResource(itemDrawables[i]);
 
 			final int position = i;
-			menu.addItem(item, new OnClickListener() { //每个小菜单项的监听器
+			menu.addItem(item, new OnClickListener() { // 姣忎釜灏忚彍鍗曢」鐨勭洃鍚櫒
 
 						@Override
 						public void onClick(View v) {
@@ -136,14 +138,16 @@ public class MainActivity extends ActionBarActivity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
-	 
-		MenuItemCompat.setShowAsAction(menu.add("个人信息") 
-                .setIcon(android.R.drawable.ic_menu_rotate), MenuItemCompat.SHOW_AS_ACTION_NEVER);
-		MenuItemCompat.setShowAsAction(menu.add("No.41") 
-                .setIcon(android.R.drawable.ic_menu_rotate), MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
 
-	        return true; 
-	         
+		MenuItemCompat.setShowAsAction(
+				menu.add("个人信息").setIcon(android.R.drawable.ic_menu_rotate),
+				MenuItemCompat.SHOW_AS_ACTION_NEVER);
+		MenuItemCompat.setShowAsAction(
+				menu.add("No.41").setIcon(android.R.drawable.ic_menu_rotate),
+				MenuItemCompat.SHOW_AS_ACTION_ALWAYS);
+
+		return true;
+
 	}
 
 	@Override
