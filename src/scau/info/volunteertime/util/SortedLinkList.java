@@ -22,7 +22,13 @@ import scau.info.volunteertime.vo.VolunteertimeData;
 public class SortedLinkList implements Comparator<VolunteertimeData> {
 
 	LinkedList<VolunteertimeData> sortedLinkList = new LinkedList<VolunteertimeData>();
-
+	
+	public LinkedList<VolunteertimeData>  getList()
+	{
+		return sortedLinkList;
+	}
+	
+	
 	public boolean remove(VolunteertimeData object) {
 		return sortedLinkList.remove(object);
 	}
@@ -78,6 +84,7 @@ public class SortedLinkList implements Comparator<VolunteertimeData> {
 	public void add(VolunteertimeData item) {
 		// TODO Auto-generated method stub
 	//	System.out.println(item.getDate());
+		sortedLinkList.remove(item.getId());
 		sortedLinkList.add(item);
 		
 
