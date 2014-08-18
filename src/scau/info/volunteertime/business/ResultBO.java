@@ -72,18 +72,29 @@ public class ResultBO {
 		return null;
 	}
 
-	public ArrayList<Result> getDownData(Date date, int currentPageSize) {
-
-		return null;
-	}
-
 	/**
-	 * @param firstId
-	 * @param endId
-	 * @return
+	 * @param firstTime
+	 * @param currentPageSize
+	 * @return ArrayList<Result>
 	 */
-	public ArrayList<Integer> update(String firstDate, String endDate) {
-		// TODO Auto-generated method stub
+	public ArrayList<Result> getDropDownData(String firstTime,
+			int currentPageSize) {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 2 + "");
+		maps.put("currentPageSize", currentPageSize + "");
+		maps.put("firstTime", firstTime);
+
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+
+		Log.d("getDownData", "获取信息列表" + currentPageSize + ":" + jsonStr);
+
+		try {
+			return jsonToList(jsonStr);
+		} catch (ParseException e) {
+			Log.d("ResultBO-getDropDownData", "ParseException-err");
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -123,9 +134,9 @@ public class ResultBO {
 			JSONObject jsonResults = new JSONObject(jsonStr); // 根据字符串转成JSONObject对象
 			jaryProducts = jsonResults.getJSONArray("records");
 			pageSize = jsonResults.getInt("pageSize"); // 得到pagesize的值
-			
-			Log.d("ResultBO-jsonToPagination", "获取信息列表" + pageSize + ":" + jsonStr);
 
+			Log.d("ResultBO-jsonToPagination", "获取信息列表" + pageSize + ":"
+					+ jsonStr);
 
 			ArrayList<Result> list = new ArrayList<Result>(); // 得到Result的List
 			JSONObject jsonResult = null; // 用于保存CheapCard的json对象
@@ -141,6 +152,8 @@ public class ResultBO {
 				result.setImage(jsonResult.getString("image"));
 				result.setEditor(jsonResult.getString("editor"));
 				list.add(result);
+				
+				Log.d("jsonToList", "getPublishTime = "+result.getPublishTime()+" : result.getDate = "+result.getDate());
 			}
 
 			return list;
@@ -150,4 +163,5 @@ public class ResultBO {
 		}
 		return null;
 	}
+
 }

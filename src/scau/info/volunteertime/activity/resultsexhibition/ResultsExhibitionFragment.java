@@ -65,6 +65,8 @@ public class ResultsExhibitionFragment extends Fragment {
 
 		resultBO = new ResultBO();// 取得resultBO
 		resultsPagination = new Pagination<Result>();
+		resultsPagination.setCurrentPageNumber(currentPageNumber);
+		resultsPagination.setPageSize(currentPageSize);
 		sortedLinkList = new SortedLinkList();
 
 		resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(
@@ -161,7 +163,7 @@ public class ResultsExhibitionFragment extends Fragment {
 		@Override
 		protected Void doInBackground(Void... params) {
 			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// 获取连接状况
-			if (!isConnect || !hasMore) {// 无网络或无更多数据则取消任务
+			if (!isConnect) {// 无网络或无更多数据则取消任务
 				Log.d("doInBackground", "isConnect not");
 				cancel(true);
 				return null;
@@ -237,8 +239,18 @@ public class ResultsExhibitionFragment extends Fragment {
 			Log.d("doInBackgroundFunction",
 					"getSumPage = " + resultsPagination.getSumPage());
 			if (isDropDown) {
-				
+				if (sortedLinkList.isEmpty()) {
+					toGetNewDataFromNet();
+					toAddDataFromPagination();
+				} else {
+					toGetUpdateDataFromNet();
+				}
 			} else {
+				if (!hasMore) {// 无网络或无更多数据则取消任务
+					Log.d("doInBackground", "hasMore not");
+					cancel(true);
+					return;
+				}
 				if (sortedLinkList.isEmpty()) {
 					toCheckDatabase();
 					if (resultsPagination.getAmountOfRecorders() == 0) {
@@ -253,6 +265,24 @@ public class ResultsExhibitionFragment extends Fragment {
 					toGetDataFromNet();
 				}
 			}
+		}
+
+		/**
+		 * 
+		 */
+		private void toGetUpdateDataFromNet() {
+			Log.d("doInBackgroundFunction", "toGetUpdateDataFromNet1");
+
+			firstTime = sortedLinkList.get(0).getPublishTime() + "";
+			Log.d("doInBackgroundFunction-toGetUpdateDataFromNet",
+					"firstTime =" + firstTime);
+			results = resultBO.getDropDownData(firstTime, currentPageSize);
+			if (results != null) {
+				Pagination<Result> temp = new Pagination<Result>();
+				temp.setRecords(results);
+				sortedLinkList.addAll(temp.getRecords());
+			}
+			Log.d("doInBackgroundFunction", "toGetUpdateDataFromNet2");
 		}
 
 		/**
@@ -284,9 +314,12 @@ public class ResultsExhibitionFragment extends Fragment {
 			Log.d("doInBackgroundFunction",
 					"toAddDataFromPagination PageNumber="
 							+ resultsPagination.getCurrentPageNumber());
-			sortedLinkList.addAll(resultsPagination.getcurrentPageRecords());
-			resultsPagination.setCurrentPageNumber(resultsPagination
-					.getCurrentPageNumber() + 1);
+			if (resultsPagination.getAmountOfRecorders() != 0) {
+				sortedLinkList
+						.addAll(resultsPagination.getcurrentPageRecords());
+				resultsPagination.setCurrentPageNumber(resultsPagination
+						.getCurrentPageNumber() + 1);
+			}
 		}
 
 		/**
@@ -347,8 +380,6 @@ public class ResultsExhibitionFragment extends Fragment {
 			c.close();
 			db.close();
 			resultsPagination.getRecords().addAll(results);
-			resultsPagination.setCurrentPageNumber(currentPageNumber);
-			resultsPagination.setPageSize(currentPageSize);
 		}
 	}
 

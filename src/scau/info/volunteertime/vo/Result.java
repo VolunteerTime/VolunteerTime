@@ -21,8 +21,6 @@ public class Result implements VolunteertimeData {
 	private String editor;// 作者
 	private long publishTime;// 发布时间
 
-	private long date;
-
 	/**
 	 * @param id
 	 */
@@ -46,7 +44,6 @@ public class Result implements VolunteertimeData {
 		this.image = image;
 		this.editor = editor;
 		this.publishTime = publishTime;
-		date = publishTime;
 	}
 
 	/**
@@ -63,7 +60,6 @@ public class Result implements VolunteertimeData {
 		this.image = image;
 		this.editor = editor;
 		this.publishTime = publishTime;
-		date = publishTime;
 	}
 
 	/**
@@ -178,7 +174,7 @@ public class Result implements VolunteertimeData {
 	 */
 	@Override
 	public long getDate() {
-		return date;
+		return getPublishTime();
 	}
 
 	/*
@@ -188,7 +184,7 @@ public class Result implements VolunteertimeData {
 	 */
 	@Override
 	public void setDate(long Date) {
-		this.date = Date;
+		setPublishTime(Date);
 	}
 
 }
