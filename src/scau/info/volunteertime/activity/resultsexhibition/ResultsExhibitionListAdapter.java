@@ -5,10 +5,12 @@
  */
 package scau.info.volunteertime.activity.resultsexhibition;
 
+import java.sql.Date;
+
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.util.CollapsibleTextView;
-import scau.info.volunteertime.util.Pagination;
+import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.Result;
 import android.content.Context;
 import android.util.Log;
@@ -33,14 +35,14 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private ImageCache IMAGE_CACHE;// 图片缓存
 	private Ding9App ding9App;
-	private Pagination<Result> resultsPagination;// 成果数据
+	private SortedLinkList<Result> sortedLinkList;
 	private Context mContext;
 
 	public ResultsExhibitionListAdapter(Context context,
-			Pagination<Result> resultsPagination) {
+			SortedLinkList<Result> sortedLinkList) {
 		super();
 		this.inflater = LayoutInflater.from(context);
-		this.resultsPagination = resultsPagination;
+		this.sortedLinkList = sortedLinkList;
 		this.ding9App = (Ding9App) context.getApplicationContext();
 		this.IMAGE_CACHE = ding9App.IMAGE_CACHE;
 		this.mContext = context;
@@ -48,13 +50,8 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-		if (resultsPagination != null
-				&& resultsPagination.getPageSize() <= resultsPagination
-						.getRecords().size()) {
-			Log.d("ResultsExhibitionListAdapter-getCount", "1="
-					+ resultsPagination.getPageSize() + ":"
-					+ resultsPagination.getRecords().size());
-			return resultsPagination.getPageSize();
+		if (sortedLinkList != null) {
+			return sortedLinkList.size();
 		} else {
 			Log.d("ResultsExhibitionListAdapter-getCount", "2");
 			return 0;
@@ -75,14 +72,9 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
 		ViewHolder holder;
-		Log.d("ResultsExhibitionListAdapter-getView", position
-				+ (resultsPagination.getCurrentPageNumber() - 1)
-				* resultsPagination.getPageSize() + "");
-		Log.d("ResultsExhibitionListAdapter-getView", resultsPagination
-				.getRecords().size() + "");
-		Result result = resultsPagination.getRecords().get(
-				position + (resultsPagination.getCurrentPageNumber() - 1)
-						* resultsPagination.getPageSize());
+
+		Log.d("ResultsExhibitionListAdapter-getView", "position = " + position);
+		Result result = sortedLinkList.get(position);
 		if (view == null) {
 			view = inflater.inflate(R.layout.item_results_exhibition, null);
 			holder = new ViewHolder();
@@ -96,11 +88,9 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 			holder = (ViewHolder) view.getTag();
 		}
 		holder.articleContent.setDesc(result.getContent(), BufferType.NORMAL);
-		Log.d("1", "ok");
 
-		holder.publishTime.setText(result.getPublishTime());
+		holder.publishTime.setText(new Date(result.getDate()).toLocaleString());
 
-		Log.d("2", "ok");
 		return view;
 
 	}

@@ -94,7 +94,7 @@ public class DBManager {
 					c.getString(c.getColumnIndex("title")), c.getString(c
 							.getColumnIndex("content")), c.getString(c
 							.getColumnIndex("image")), c.getString(c
-							.getColumnIndex("editor")), c.getString(c
+							.getColumnIndex("editor")), c.getLong(c
 							.getColumnIndex("publishTime")));
 			Results.add(result);
 		}

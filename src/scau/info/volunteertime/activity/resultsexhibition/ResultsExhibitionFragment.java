@@ -11,6 +11,7 @@ import scau.info.volunteertime.R;
 import scau.info.volunteertime.business.ResultBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
 import scau.info.volunteertime.util.Pagination;
+import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.Result;
 import android.app.Activity;
 import android.content.Context;
@@ -37,10 +38,11 @@ import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
  */
 public class ResultsExhibitionFragment extends Fragment {
 
+	private SortedLinkList<Result> sortedLinkList;
 	private Pagination<Result> resultsPagination;// 装载当前内容
-	private Pagination<Result> nextResultsPagination;// 作为装载下一页内容的中介
 
-	private int currentPageSize = 10;
+	private int currentPageSize = 8;
+	private int currentPageNumber = 1;
 
 	private DropDownListView resultsListView;
 
@@ -63,9 +65,10 @@ public class ResultsExhibitionFragment extends Fragment {
 
 		resultBO = new ResultBO();// 取得resultBO
 		resultsPagination = new Pagination<Result>();
+		sortedLinkList = new SortedLinkList();
 
 		resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(
-				activity, resultsPagination);// 成果数据传给Adapter
+				activity, sortedLinkList);// 成果数据传给Adapter
 
 	}
 
@@ -117,7 +120,6 @@ public class ResultsExhibitionFragment extends Fragment {
 				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
 						"初步测试");
 				new GetDataTask(false).execute();
-				resultsListView.onBottomComplete();
 			}
 		});
 
@@ -130,7 +132,6 @@ public class ResultsExhibitionFragment extends Fragment {
 				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
 						"初步测试");
 				new GetDataTask(true).execute();
-				resultsListView.onDropDownComplete();
 			}
 		});
 		resultsListView.onDropDownComplete();
@@ -143,8 +144,10 @@ public class ResultsExhibitionFragment extends Fragment {
 		private boolean isConnect;
 		private boolean isDropDown;
 
-		private int firstId;
-		private int endId;
+		private String firstTime;
+		private String endTime;
+
+		ArrayList<Result> results = null;
 
 		public GetDataTask(boolean isDropDown) {
 			this.isDropDown = isDropDown;
@@ -158,7 +161,7 @@ public class ResultsExhibitionFragment extends Fragment {
 		@Override
 		protected Void doInBackground(Void... params) {
 			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// 获取连接状况
-			if (!isConnect) {// 无网络或无更多数据则取消任务
+			if (!isConnect || !hasMore) {// 无网络或无更多数据则取消任务
 				Log.d("doInBackground", "isConnect not");
 				cancel(true);
 				return null;
@@ -200,9 +203,13 @@ public class ResultsExhibitionFragment extends Fragment {
 		 */
 		private void postFunction(Void result) {
 			if (isDropDown) {
+				resultsExhibitionListAdapter.notifyDataSetChanged();
 
+				resultsListView.onDropDownComplete();
 			} else {
 				resultsExhibitionListAdapter.notifyDataSetChanged();
+
+				resultsListView.onBottomComplete();
 			}
 		}
 
@@ -216,89 +223,132 @@ public class ResultsExhibitionFragment extends Fragment {
 				resultsListView.setFooterNoMoreText("没有更多促销信息了哦~");
 				ToastUtils.show(activity, "没有更多促销信息了哦~");
 			}
+			if (isDropDown) {
+				resultsListView.onDropDownComplete();
+			} else {
+				resultsListView.onBottomComplete();
+			}
 		}
 
 		/**
 		 * 
 		 */
 		private void doInBackgroundFunction() {
+			Log.d("doInBackgroundFunction",
+					"getSumPage = " + resultsPagination.getSumPage());
 			if (isDropDown) {
-
+				
 			} else {
-				ArrayList<Result> results;
-				if (resultsPagination.getAmountOfRecorders() == 0) {
-					SQLiteDatabase db = activity.openOrCreateDatabase(
-							"volunteertimedatabase.db", Context.MODE_PRIVATE,
-							null);
-					Cursor c = db.rawQuery("SELECT * FROM results", null);
-					results = new ArrayList<Result>();
-					c.moveToFirst();
-					// firstId = c.getInt(c.getColumnIndex("id"));
-					while (!c.isAfterLast()) {
-						Result result = new Result(c.getInt(c
-								.getColumnIndex("id")), c.getString(c
-								.getColumnIndex("title")), c.getString(c
-								.getColumnIndex("content")), c.getString(c
-								.getColumnIndex("image")), c.getString(c
-								.getColumnIndex("editor")), c.getString(c
-								.getColumnIndex("publishTime")));
-						results.add(result);
-						c.moveToNext();
-					}
-					// c.moveToLast();
-					// endId = c.getInt(c.getColumnIndex("id"));
-					Log.d("ResultsExhibitionFragment-doInBackgroundFunction",
-							"firstId = " + firstId + "; endId = " + endId);
-					c.close();
-					db.close();
-					resultsPagination.getRecords().addAll(results);
-					resultsPagination.setCurrentPageNumber(1);
-					resultsPagination.setPageSize(currentPageSize);
-
+				if (sortedLinkList.isEmpty()) {
+					toCheckDatabase();
 					if (resultsPagination.getAmountOfRecorders() == 0) {
-						Log.d("doInBackgroundFunction", "getNewData1");
-						results = new ArrayList<Result>();
-						results = (ArrayList<Result>) resultBO
-								.getNewData(currentPageSize);
-						if (results != null)
-							resultsPagination.getRecords().addAll(results);
-						Log.d("doInBackgroundFunction", "getNewData2");
-					} else if (resultsPagination.getAmountOfRecorders() < currentPageSize) {
-						ArrayList<Integer> integers = resultBO.update(firstId,
-								endId);
-
-						for (Integer i : integers) {
-							resultsPagination.getRecords()
-									.remove(new Result(i));
-						}
-
-						results = new ArrayList<Result>();
-						results = (ArrayList<Result>) resultBO
-								.getDownData(endId);
-						if (results != null)
-							resultsPagination.getRecords().addAll(results);
+						toGetNewDataFromNet();
 					}
-				} else {
-					if (currentPageSize < resultsPagination
-							.getAmountOfRecorders()) {
-						if (currentPageSize * 2 <= resultsPagination
-								.getAmountOfRecorders()) {
-							currentPageSize *= 2;
-							resultsPagination.setPageSize(currentPageSize);
-						} else {
-							currentPageSize = resultsPagination
-									.getAmountOfRecorders();
-							resultsPagination.setPageSize(currentPageSize);
-						}
-					} else {
-						results = new ArrayList<Result>();
-						results = (ArrayList<Result>) resultBO
-								.getDownData(endId);
-						if (results != null)
-							resultsPagination.getRecords().addAll(results);
-					}
+					toAddDataFromPagination();
+				} else if (resultsPagination.getCurrentPageNumber() <= resultsPagination
+						.getSumPage()) {
+					toAddDataFromPagination();
+				} else if (resultsPagination.getCurrentPageNumber() > resultsPagination
+						.getSumPage()) {
+					toGetDataFromNet();
 				}
 			}
+		}
+
+		/**
+		 * 
+		 */
+		private void toGetDataFromNet() {
+			Log.d("doInBackgroundFunction", "toGetDataFromNet");
+			results = new ArrayList<Result>();
+			endTime = resultsPagination.getLastData().getPublishTime() + "";
+			Log.d("doInBackgroundFunction-toGetDataFromNet", "endTime ="
+					+ endTime);
+			results = (ArrayList<Result>) resultBO.getDownData(endTime,
+					currentPageSize);
+			if (results != null && results.size() != 0) {
+				resultsPagination.setRecords(results);
+				resultsPagination.setCurrentPageNumber(currentPageNumber);
+				toSaveDataInDatabase();
+			} else {
+				Log.d("Cancel", "no more data");
+				hasMore = false;
+				cancel(true);
+			}
+		}
+
+		/**
+		 * 
+		 */
+		private void toAddDataFromPagination() {
+			Log.d("doInBackgroundFunction",
+					"toAddDataFromPagination PageNumber="
+							+ resultsPagination.getCurrentPageNumber());
+			sortedLinkList.addAll(resultsPagination.getcurrentPageRecords());
+			resultsPagination.setCurrentPageNumber(resultsPagination
+					.getCurrentPageNumber() + 1);
+		}
+
+		/**
+		 * 
+		 */
+		private void toGetNewDataFromNet() {
+			Log.d("doInBackgroundFunction", "getNewData1");
+			results = new ArrayList<Result>();
+			results = (ArrayList<Result>) resultBO.getNewData(currentPageSize);
+			if (results != null) {
+				resultsPagination.getRecords().addAll(results);
+				toSaveDataInDatabase();
+			}
+			Log.d("doInBackgroundFunction", "getNewData2");
+		}
+
+		/**
+		 * @param results
+		 */
+		private void toSaveDataInDatabase() {
+			SQLiteDatabase db = activity.openOrCreateDatabase(
+					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
+			for (Result result : results) {
+				db.execSQL(
+						"INSERT INTO results(id ,title ,content ,image  ,editor ,publishTime) VALUES(?,?,?,?,?,?)",
+						new Object[] { result.getId(), result.getTitle(),
+								result.getContent(), result.getImage(),
+								result.getEditor(), result.getPublishTime() });
+			}
+			db.close();
+		}
+
+		/**
+		 * 
+		 */
+		private void toCheckDatabase() {
+			SQLiteDatabase db = activity.openOrCreateDatabase(
+					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
+			Cursor c = db.rawQuery(
+					"SELECT * FROM results ORDER BY publishTime DESC", null);
+			results = new ArrayList<Result>();
+			if (c.moveToFirst())
+				firstTime = c.getString(c.getColumnIndex("publishTime"));
+			while (!c.isAfterLast()) {
+				Result result = new Result(c.getInt(c.getColumnIndex("id")),
+						c.getString(c.getColumnIndex("title")), c.getString(c
+								.getColumnIndex("content")), c.getString(c
+								.getColumnIndex("image")), c.getString(c
+								.getColumnIndex("editor")), c.getLong(c
+								.getColumnIndex("publishTime")));
+				results.add(result);
+				c.moveToNext();
+			}
+			if (c.moveToLast())
+				endTime = c.getString(c.getColumnIndex("publishTime"));
+			Log.d("ResultsExhibitionFragment-doInBackgroundFunction",
+					"firstTime = " + firstTime + "; endTime = " + endTime);
+			c.close();
+			db.close();
+			resultsPagination.getRecords().addAll(results);
+			resultsPagination.setCurrentPageNumber(currentPageNumber);
+			resultsPagination.setPageSize(currentPageSize);
 		}
 	}
 

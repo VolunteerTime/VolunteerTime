@@ -62,8 +62,8 @@ public class ResultsExhibition extends ActionBarActivity {
 		resultBO = new ResultBO();// 取得resultBO
 		resultsPagination = new Pagination<Result>();
 
-		resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(this,
-				resultsPagination);// 成果数据传给Adapter
+		// resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(this,
+		// resultsPagination);// 成果数据传给Adapter
 
 		resultsListView.setAdapter(resultsExhibitionListAdapter);
 
@@ -200,8 +200,9 @@ public class ResultsExhibition extends ActionBarActivity {
 					Log.d("couponsMessagesAdapter", resultsPagination
 							.getRecords().size() + "");
 				if (nextResultsPagination == null) {
-					resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(
-							activity, resultsPagination);
+					// resultsExhibitionListAdapter = new
+					// ResultsExhibitionListAdapter(
+					// activity, resultsPagination);
 					resultsListView.setAdapter(resultsExhibitionListAdapter);
 				}
 				resultsExhibitionListAdapter.notifyDataSetChanged();
@@ -236,7 +237,7 @@ public class ResultsExhibition extends ActionBarActivity {
 				if (resultsPagination == null
 						|| resultsPagination.getRecords() == null) {
 					Log.d("resultsPagination", "1");
-//					resultsPagination = resultBO.getDownData(1);
+					// resultsPagination = resultBO.getDownData(1);
 					Log.d("resultsPagination", "resultsPagination == null为 "
 							+ (resultsPagination == null));
 				} else {

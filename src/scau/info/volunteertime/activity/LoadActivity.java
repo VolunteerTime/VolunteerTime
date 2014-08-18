@@ -115,7 +115,7 @@ public class LoadActivity extends Activity {
 		SQLiteDatabase db = openOrCreateDatabase("volunteertimedatabase.db",
 				Context.MODE_PRIVATE, null);
 		// ´´½¨results±í
-		db.execSQL("CREATE TABLE IF NOT EXISTS results(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, content VARCHAR, image  VARCHAR, editor VARCHAR, publishTime VARCHAR)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS results(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, content VARCHAR, image  VARCHAR, editor VARCHAR, publishTime BIGINT)");
 		db.close();
 	}
 

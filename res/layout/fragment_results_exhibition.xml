@@ -9,8 +9,7 @@
     <cn.trinea.android.common.view.DropDownListView
         android:id="@+id/results_exhibition_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:divider="@null"
+        android:layout_height="wrap_content"
         listViewAttr:isAutoLoadOnBottom="true"
         listViewAttr:isDropDownStyle="true"
         listViewAttr:isOnBottomStyle="true" />

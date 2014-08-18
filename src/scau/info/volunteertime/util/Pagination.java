@@ -27,8 +27,16 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	public List<VolunteertimeData> getcurrentPageRecords() {
+		if (currentPageNumber * pageSize > records.size()) {
+			return records.subList((currentPageNumber - 1) * pageSize,
+					records.size());
+		}
 		return records.subList((currentPageNumber - 1) * pageSize,
 				currentPageNumber * pageSize);
+	}
+
+	public VolunteertimeData getLastData() {
+		return records.get(records.size() - 1);
 	}
 
 	/**

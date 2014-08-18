@@ -11,7 +11,7 @@ package scau.info.volunteertime.vo;
  * @author 蔡超敏
  * 
  */
-public class Result {
+public class Result implements VolunteertimeData {
 
 	private int id;// 标识id
 
@@ -19,7 +19,9 @@ public class Result {
 	private String content;// 内容
 	private String image;// 图片
 	private String editor;// 作者
-	private String publishTime;// 发布时间
+	private long publishTime;// 发布时间
+
+	private long date;
 
 	/**
 	 * @param id
@@ -37,13 +39,14 @@ public class Result {
 	 * @param publishTime
 	 */
 	public Result(int id, String title, String content, String image,
-			String editor, String publishTime) {
+			String editor, long publishTime) {
 		this.id = id;
 		this.title = title;
 		this.content = content;
 		this.image = image;
 		this.editor = editor;
 		this.publishTime = publishTime;
+		date = publishTime;
 	}
 
 	/**
@@ -54,12 +57,13 @@ public class Result {
 	 * @param publishTime
 	 */
 	public Result(String title, String content, String image, String editor,
-			String publishTime) {
+			long publishTime) {
 		this.title = title;
 		this.content = content;
 		this.image = image;
 		this.editor = editor;
 		this.publishTime = publishTime;
+		date = publishTime;
 	}
 
 	/**
@@ -140,7 +144,7 @@ public class Result {
 	/**
 	 * @return the publishTime
 	 */
-	public String getPublishTime() {
+	public long getPublishTime() {
 		return publishTime;
 	}
 
@@ -148,7 +152,7 @@ public class Result {
 	 * @param publishTime
 	 *            the publishTime to set
 	 */
-	public void setPublishTime(String publishTime) {
+	public void setPublishTime(long publishTime) {
 		this.publishTime = publishTime;
 	}
 
@@ -165,6 +169,26 @@ public class Result {
 			}
 		}
 		return super.equals(o);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see scau.info.volunteertime.vo.VolunteertimeData#getDate()
+	 */
+	@Override
+	public long getDate() {
+		return date;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see scau.info.volunteertime.vo.VolunteertimeData#setDate(long)
+	 */
+	@Override
+	public void setDate(long Date) {
+		this.date = Date;
 	}
 
 }
