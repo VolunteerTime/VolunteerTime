@@ -13,24 +13,35 @@
         android:padding="5dip" >
 
         <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
-
-            <scau.info.volunteertime.util.CollapsibleTextView
-                android:id="@+id/results_exhibition_content"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+            android:orientation="horizontal" >
 
             <TextView
-                android:id="@+id/results_exhibition_time"
+                android:id="@+id/results_exhibition_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:textColor="#666666"
-                android:textSize="14sp" />
+                android:singleLine="true"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/results_exhibition_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="TextView" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/results_exhibition_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/linear"
+            android:text="TextView" />
     </RelativeLayout>
 
 </LinearLayout>

@@ -9,7 +9,6 @@ import java.sql.Date;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.application.Ding9App;
-import scau.info.volunteertime.util.CollapsibleTextView;
 import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.Result;
 import android.content.Context;
@@ -78,7 +77,9 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		if (view == null) {
 			view = inflater.inflate(R.layout.item_results_exhibition, null);
 			holder = new ViewHolder();
-			holder.articleContent = (CollapsibleTextView) view
+			holder.title = (TextView) view
+					.findViewById(R.id.results_exhibition_title);
+			holder.articleContent = (TextView) view
 					.findViewById(R.id.results_exhibition_content);
 			holder.publishTime = (TextView) view
 					.findViewById(R.id.results_exhibition_time);
@@ -87,7 +88,9 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
-		holder.articleContent.setDesc(result.getContent(), BufferType.NORMAL);
+		holder.title.setText("["+result.getTitle()+"]");
+
+		holder.articleContent.setText(result.getContent());
 
 		holder.publishTime.setText(new Date(result.getDate()).toLocaleString());
 
@@ -96,7 +99,8 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	}
 
 	static class ViewHolder {
-		CollapsibleTextView articleContent;
+		TextView title;
+		TextView articleContent;
 		TextView publishTime;
 	}
 
