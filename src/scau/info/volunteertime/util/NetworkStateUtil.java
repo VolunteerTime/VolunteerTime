@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.util;
 
@@ -10,16 +10,16 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class NetworkStateUtil {
 
 	/**
-	 * ¼ì²âÍøÂçÊÇ·ñ¿ÉÓÃ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param context
-	 * @return true,¿ÉÓÃ ; false,²»¿ÉÓÃ
+	 * @return true,ï¿½ï¿½ï¿½ï¿½ ; false,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 
 	public static boolean isNetworkAvailable(Context context) {
@@ -37,7 +37,7 @@ public class NetworkStateUtil {
 	}
 
 	/**
-	 * ÊÇ·ñÁ¬½ÓwifiÍøÂç
+	 * ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½wifiï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param context
 	 * @return
@@ -57,7 +57,7 @@ public class NetworkStateUtil {
 	}
 
 	/**
-	 * ÊÇ·ñÁ¬½ÓÒÆ¶¯ÍøÂç
+	 * ï¿½Ç·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param context
 	 * @return
@@ -77,11 +77,11 @@ public class NetworkStateUtil {
 	}
 
 	/**
-	 * »ñÈ¡ÍøÂçÀàĞÍ
+	 * ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param context
-	 * @return TYPE_MOBILE,ÒÆ¶¯ÍøÂç£» TYPE_WIFI,wifiÍøÂç£» TYPE_WIMAX,³ÇÓòÍø£»
-	 *         TYPE_ETHERNET,ÒÔÌ«Íø£» TYPE_BLUETOOTH£¬À¶ÑÀ
+	 * @return TYPE_MOBILE,ï¿½Æ¶ï¿½ï¿½ï¿½ï¿½ç£» TYPE_WIFI,wifiï¿½ï¿½ï¿½ç£» TYPE_WIMAX,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 *         TYPE_ETHERNET,ï¿½ï¿½Ì«ï¿½ï¿½ï¿½ï¿½ TYPE_BLUETOOTHï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 
 	public static int getConnectedType(Context context) {

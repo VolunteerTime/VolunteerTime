@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-23
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-23
  */
 package scau.info.volunteertime.activity.resultsexhibition;
 
@@ -21,17 +21,18 @@ import android.widget.TextView;
 import cn.trinea.android.common.service.impl.ImageCache;
 
 /**
- * ³É¹ûÕ¹Ê¾ÖĞµÄListViewÊÊÅäÆ÷(×÷Îª
- * Ò»¸ö¼¸ºõËùÓĞÓÃµ½ListViewµÄÀı×Ó£¬ÏÔÊ¾ImageCacheºÍding9AppµÄÓÃ·¨£¬ÆäÊµImageCache¸üÊÊºÏ×÷ÎªÒ»¸ö¾²Ì¬¶ÔÏó
- * £¬ÕâÀïÖ»ÊÇÌî³ä¶ÔÏó£¬¿ÉÈçÓĞ¸üºÃµÄÓÅ»¯·½·¨¾Í½øĞĞÓÅ»¯)
+ * ï¿½É¹ï¿½Õ¹Ê¾ï¿½Ğµï¿½ListViewï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½Îª
+ * Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ãµï¿½ListViewï¿½ï¿½ï¿½ï¿½ï¿½Ó£ï¿½ï¿½ï¿½Ê¾ImageCacheï¿½ï¿½ding9App
+ * ï¿½ï¿½ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ÊµImageCacheï¿½ï¿½ï¿½Êºï¿½ï¿½ï¿½ÎªÒ»ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ó£¬¿ï¿½ï¿½ï¿½ï¿½Ğ¸ï¿½ï¿½Ãµï¿½ï¿½Å»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í½ï¿½ï¿½ï¿½ï¿½Å»ï¿½)
  * 
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class ResultsExhibitionListAdapter extends BaseAdapter {
 
 	private LayoutInflater inflater;
-	private ImageCache IMAGE_CACHE;// Í¼Æ¬»º´æ
+	private ImageCache IMAGE_CACHE;// Í¼Æ¬ï¿½ï¿½ï¿½ï¿½
 	private Ding9App ding9App;
 	private LinkedList<Result> linkedList;
 	private Context mContext;

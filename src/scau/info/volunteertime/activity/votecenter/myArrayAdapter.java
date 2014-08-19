@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014Äê8ÔÂ14ÈÕ
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.activity.votecenter;
 
@@ -55,7 +55,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author æ—é”¡é‘«
  * @param <VoteData>
  *
  */
@@ -67,12 +67,12 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
 	 * @param textViewResourceId
 	 * @param objects
 	 */
-	final int ITEM_FONT_SIZE=15;	//Ñ¡Ïî×ÖÌå´óĞ¡
-	final int TITLE_FONT_SIZE=18;//±êÌâ×ÖÌå´óĞ¡
+	final int ITEM_FONT_SIZE=15;	//Ñ¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¡
+	final int TITLE_FONT_SIZE=18;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¡
 	int Pcolor[];
-	HashMap<Integer,View> map=new HashMap< Integer,View>(); //»º´æ
+	HashMap<Integer,View> map=new HashMap< Integer,View>(); //ï¿½ï¿½ï¿½ï¿½
 	
-	List<VoteData> votedata;//adapterÀïÃæµÄÊı¾İ
+	List<VoteData> votedata;//adapterï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	Context context;
 	int layout;
 	LayoutInflater inflater; 
@@ -116,7 +116,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
         ruler.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
 	 *
 	 */
-	private int getAllVotes(ArrayList<Integer> votes)	//µÃµ½ËùÓĞÍ¶Æ±·½±ãÍ³¼Æ±ÈÀı
+	private int getAllVotes(ArrayList<Integer> votes)	//ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½Í¶Æ±ï¿½ï¿½ï¿½ï¿½Í³ï¿½Æ±ï¿½ï¿½ï¿½
 	{
 		int sum=0;
 		
@@ -132,13 +132,13 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
 		 System.out.println("position"+position+"   "+votedata.get(position).getVotes());
 		
         View view=map.get(position);
-        if(votedata.get(position).isChange)	//Èç¹ûÊÇÍ¶Æ±ÁË£¬ĞèÒª¸ü»»»­Ãæ
+        if(votedata.get(position).isChange)	//ï¿½ï¿½ï¿½ï¿½ï¿½Í¶Æ±ï¿½Ë£ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {	
         	
 
         	
         	view=this.inflater.inflate(layout, parent, false);
-            TextView  text = (TextView) view.findViewById(R.id.voteTitle); //ÏÔÊ¾Í¶Æ±Ö÷Ìâ
+            TextView  text = (TextView) view.findViewById(R.id.voteTitle); //ï¿½ï¿½Ê¾Í¶Æ±ï¿½ï¿½ï¿½ï¿½
             text.setTextSize(TITLE_FONT_SIZE);
             text.setPadding(5, 5, 5, 0);
             text.setText(votedata.get(position).getTitle());
@@ -156,7 +156,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
          
         ViewGroup expandable=(ViewGroup)view.findViewById(R.id.expandable);
         
-        TextView  text = (TextView) view.findViewById(R.id.voteTitle); //ÏÔÊ¾Í¶Æ±Ö÷Ìâ
+        TextView  text = (TextView) view.findViewById(R.id.voteTitle); //ï¿½ï¿½Ê¾Í¶Æ±ï¿½ï¿½ï¿½ï¿½
         text.setText(votedata.get(position).getTitle());
         text.setTextSize(TITLE_FONT_SIZE);
         text.setPadding(5, 5, 5, 0);
@@ -197,7 +197,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
         
         expandable.addView(textView);
         
-        LinearLayout layout=new LinearLayout(context);	//ÓÃÀ´×°ÔØÑÕÉ«½ø¶ÈÌõºÍ°Ù·Ö±È
+        LinearLayout layout=new LinearLayout(context);	//ï¿½ï¿½ï¿½ï¿½×°ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í°Ù·Ö±ï¿½
       
         layout.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,19));
         layout.setPadding(0, 0, 0, 0);
@@ -209,22 +209,22 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
         progress.setBackgroundColor(Pcolor[i%Pcolor.length]);
         System.out.println("dkfjaksdjfkdjkkkkkkkkk  "+i);
         int votes=votedata.get(position).getVotes().get(i++);	
-        int pro=(int)(MainActivity.ScreenWidth*0.8*votes/allVotes); 	//ÉèÖÃÃ¿¸öÍ¶Æ±Ñ¡ÏîµÄ±ÈÀı£¬ĞèÒªÓÃµ½ÆÁÄ»¿í¶È
-        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(pro,16);	//Ã¿¸öÍ¶Æ±Ñ¡ÏîµÄ³¤¶ÈÎª20
+        int pro=(int)(MainActivity.ScreenWidth*0.8*votes/allVotes); 	//ï¿½ï¿½ï¿½ï¿½Ã¿ï¿½ï¿½Í¶Æ±Ñ¡ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ãµï¿½ï¿½ï¿½Ä»ï¿½ï¿½ï¿½
+        LinearLayout.LayoutParams layoutParams=new LinearLayout.LayoutParams(pro,16);	//Ã¿ï¿½ï¿½Í¶Æ±Ñ¡ï¿½ï¿½Ä³ï¿½ï¿½ï¿½Îª20
         layoutParams.setMargins(30, 0, 30, 0);
         
         
         
         
         
-        ScaleAnimation   scaleAnimation=new ScaleAnimation(0f,1f,1f,1f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f);//Ã÷³Ì¶È£¬´Ó1-0
+        ScaleAnimation   scaleAnimation=new ScaleAnimation(0f,1f,1f,1f,Animation.RELATIVE_TO_SELF,0f,Animation.RELATIVE_TO_SELF,0f);//ï¿½ï¿½ï¿½Ì¶È£ï¿½ï¿½ï¿½1-0
         scaleAnimation.setDuration(300);
        progress.setAnimation(scaleAnimation);
         progress.setLayoutParams(layoutParams); 
         
         TextView pen=new TextView(context);
-      //  System.out.println("°Ù·Ö±È°¡£¡£¡£¡  "+votes*100/allVotes); 
-        pen.setText(votes*100/allVotes+"%");	//°Ù·Ö±È
+      //  System.out.println("ï¿½Ù·Ö±È°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  "+votes*100/allVotes); 
+        pen.setText(votes*100/allVotes+"%");	//ï¿½Ù·Ö±ï¿½
        pen.setTextSize(14);   
        pen.setPadding(0, -8, 0, 0);
         layout.addView(progress);
@@ -248,7 +248,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData>{
 			
 			@Override
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				System.out.println("Í¶Æ±ÁË"+group.getTag());
+				System.out.println("Í¶Æ±ï¿½ï¿½"+group.getTag());
 				votedata.get((Integer) group.getTag()).isChange=true;
 				notifyDataSetChanged();
 				// TODO Auto-generated method stub

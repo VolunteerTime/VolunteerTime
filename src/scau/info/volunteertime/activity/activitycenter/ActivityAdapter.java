@@ -1,23 +1,16 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ÐÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓÐ
+ * Copyright (c) ï¿½ï¿½ï¿½ï¿½Å©Òµï¿½ï¿½Ñ§ï¿½ï¿½Ï¢Ñ§Ôºï¿½Ì³ï¿½ï¿½ï¿½2014ï¿½ï¿½È¨ï¿½ï¿½ï¿½ï¿½
  * 
- * ÎÄ¼þ´´½¨Ê±¼ä£º2014Äê7ÔÂ22ÈÕ
+ * ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ä£º2014ï¿½ï¿½7ï¿½ï¿½22ï¿½ï¿½
  */
 package scau.info.volunteertime.activity.activitycenter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.nhaarman.supertooltips.ToolTip;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-import com.nhaarman.supertooltips.ToolTipView;
-
 import scau.info.volunteertime.R;
-import scau.info.volunteertime.activity.MainActivity;
 import scau.info.volunteertime.vo.ActivityData;
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
@@ -25,15 +18,18 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;  
-import android.webkit.WebView.FindListener;
+import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.nhaarman.supertooltips.ToolTip;
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.nhaarman.supertooltips.ToolTipView;
+
 /**
- * @author ÁÖÎýöÎ
+ * @author æž—é”¡é‘«
  *
  */
 public class ActivityAdapter extends BaseAdapter {
@@ -46,11 +42,11 @@ public class ActivityAdapter extends BaseAdapter {
 	 * @param to
 	 */ 
 	private ActivityData data;
-	Handler adapterHandler=new Handler(){ 				//µÃµ½ActivityCenterµÄÏûÏ¢À´ÅÐ¶ÏÊÇ·ñremoveÆÀÂÛ¿ò
+	Handler adapterHandler=new Handler(){ 				//ï¿½Ãµï¿½ActivityCenterï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½ï¿½Ð¶ï¿½ï¿½Ç·ï¿½removeï¿½ï¿½ï¿½Û¿ï¿½
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
-			if(msg.arg2==3) //Ö¤Ã÷ÊÇ´«À´Î»ÖÃÒªÀ´¸Ä±äÆÀÂÛ¿òµÄÎ»ÖÃµÄ
+			if(msg.arg2==3) //Ö¤ï¿½ï¿½ï¿½Ç´ï¿½ï¿½ï¿½Î»ï¿½ï¿½Òªï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½ï¿½Û¿ï¿½ï¿½Î»ï¿½Ãµï¿½
 			{ 
 				if(mGreenToolTipView!=null)
 					{mGreenToolTipView.remove(); 
@@ -85,7 +81,7 @@ public class ActivityAdapter extends BaseAdapter {
 	@Override
 	public int getCount() {
 		// TODO Auto-generated method stub
-		System.out.println("µÃµ½³¤¶È"+info.size());
+		System.out.println("ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½"+info.size());
 		return info.size();
 	}
 
@@ -137,11 +133,11 @@ public class ActivityAdapter extends BaseAdapter {
 			commentButton.setTag(position);
 			
 			commentButton.setOnClickListener(commentListener);
-			imageButton.setImageResource(R.drawable.action_help);		//Ìí¼ÓÍ·Ïñ
-			time.setText(data.getTime());								//Ìí¼ÓÊ±¼ä
-			content.setText(data.getContent());							//Ìí¼Ó»î¶¯ÄÚÈÝ
-			name.setText(data.getName());								//Ìí¼Ó·¢ÆðÈËµÄÃû×Ö
-			rowViews.put(position, rowView);	//±£´æÊý¾Ý×÷Îª»º´æ
+			imageButton.setImageResource(R.drawable.action_help);		//ï¿½ï¿½ï¿½Í·ï¿½ï¿½
+			time.setText(data.getTime());								//ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+			content.setText(data.getContent());							//ï¿½ï¿½Ó»î¶¯ï¿½ï¿½ï¿½ï¿½
+			name.setText(data.getName());								//ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½ï¿½
+			rowViews.put(position, rowView);	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½
 			  
 		
 		}
@@ -155,7 +151,7 @@ public class ActivityAdapter extends BaseAdapter {
 			// TODO Auto-generated method stub
 			 
 			int[] masterViewScreenPosition = new int[2];
-			v.getLocationOnScreen(masterViewScreenPosition); 	//µÃµ½°´Å¥µÄÎ»ÖÃ
+			v.getLocationOnScreen(masterViewScreenPosition); 	//ï¿½Ãµï¿½ï¿½ï¿½Å¥ï¿½ï¿½Î»ï¿½ï¿½
 			  
 			 
 			   if (mGreenToolTipView == null) {

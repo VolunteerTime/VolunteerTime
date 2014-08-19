@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-23
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.business;
 
@@ -21,9 +21,9 @@ import android.util.Log;
 import cn.trinea.android.common.util.HttpUtils;
 
 /**
- * ResultsµÄBO
+ * Resultsï¿½ï¿½BO
  * 
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class ResultBO {
@@ -31,23 +31,23 @@ public class ResultBO {
 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 	/**
-	 * ¹¹Ôì·½·¨£¬³õÊ¼»¯¾²Ì¬Êı¾İ
+	 * ï¿½ï¿½ï¿½ì·½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ì¬ï¿½ï¿½ï¿½ï¿½
 	 */
 	public ResultBO() {
 		// List<Result> allResults = new ArrayList<Result>();
-		// for (int i = 0; i < 30; i++) {// ½¨Á¢°üº¬30¸öresultµÄlist
+		// for (int i = 0; i < 30; i++) {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½30ï¿½ï¿½resultï¿½ï¿½list
 		// allResults
 		// .add(new Result(
 		// i,
-		// "²âÊÔtitle" + i,
-		// "²âÊÔÄÚÈİ£ºÊ²Ã´¶«Î÷°¡£¬ÎÒ²»»áĞ´ºÜ¶à¶«Î÷µÄ£¬Õâ¸öÊÇµÚ" + i + "¸öÀı×Ó",
+		// "ï¿½ï¿½ï¿½ï¿½title" + i,
+		// "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½Ê²Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò²ï¿½ï¿½ï¿½Ğ´ï¿½Ü¶à¶«ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½" + i + "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
 		// "http://img.hb.aicdn.com/fda4bb25fc546ed22c9ff137ac72b7ba27e62e9916225-2ywtVp_fw658",
 		// "chaoKing" + i, new Date(i * 100000).toGMTString()));
 		// }
 	}
 
 	/**
-	 * ·µ»ØendDateÇ°µÄÊı¾İ
+	 * ï¿½ï¿½ï¿½ï¿½endDateÇ°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param endTime
 	 * @return ArrayList<Result>
@@ -61,7 +61,7 @@ public class ResultBO {
 		String jsonStr = HttpUtils.httpPostString(
 				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
 
-		Log.d("getDownData", "»ñÈ¡ĞÅÏ¢ÁĞ±í" + currentPageSize + ":" + jsonStr);
+		Log.d("getDownData", "ï¿½ï¿½È¡ï¿½ï¿½Ï¢ï¿½Ğ±ï¿½" + currentPageSize + ":" + jsonStr);
 
 		try {
 			return jsonToList(jsonStr);
@@ -87,7 +87,7 @@ public class ResultBO {
 		String jsonStr = HttpUtils.httpPostString(
 				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
 
-		Log.d("getDownData", "»ñÈ¡ĞÅÏ¢ÁĞ±í" + currentPageSize + ":" + jsonStr);
+		Log.d("getDownData", "ï¿½ï¿½È¡ï¿½ï¿½Ï¢ï¿½Ğ±ï¿½" + currentPageSize + ":" + jsonStr);
 
 		try {
 			return jsonToList(jsonStr);
@@ -99,7 +99,7 @@ public class ResultBO {
 	}
 
 	/**
-	 * µÚÒ»´Î¸üĞÂÊı¾İ£¬¸üĞÂµÄÊÇ×îÇ°ÃæcurrentPageSizeÌõÊı¾İ
+	 * ï¿½ï¿½Ò»ï¿½Î¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½Âµï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½currentPageSizeï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param currentPageSize
 	 * @return ArrayList<Result>
@@ -131,15 +131,15 @@ public class ResultBO {
 		JSONArray jaryProducts = null;
 		int pageSize = 10;
 		try {
-			JSONObject jsonResults = new JSONObject(jsonStr); // ¸ù¾İ×Ö·û´®×ª³ÉJSONObject¶ÔÏó
+			JSONObject jsonResults = new JSONObject(jsonStr); // ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½×ªï¿½ï¿½JSONObjectï¿½ï¿½ï¿½ï¿½
 			jaryProducts = jsonResults.getJSONArray("records");
-			pageSize = jsonResults.getInt("pageSize"); // µÃµ½pagesizeµÄÖµ
+			pageSize = jsonResults.getInt("pageSize"); // ï¿½Ãµï¿½pagesizeï¿½ï¿½Öµ
 
-			Log.d("ResultBO-jsonToPagination", "»ñÈ¡ĞÅÏ¢ÁĞ±í" + pageSize + ":"
+			Log.d("ResultBO-jsonToPagination", "ï¿½ï¿½È¡ï¿½ï¿½Ï¢ï¿½Ğ±ï¿½" + pageSize + ":"
 					+ jsonStr);
 
-			ArrayList<Result> list = new ArrayList<Result>(); // µÃµ½ResultµÄList
-			JSONObject jsonResult = null; // ÓÃÓÚ±£´æCheapCardµÄjson¶ÔÏó
+			ArrayList<Result> list = new ArrayList<Result>(); // ï¿½Ãµï¿½Resultï¿½ï¿½List
+			JSONObject jsonResult = null; // ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½CheapCardï¿½ï¿½jsonï¿½ï¿½ï¿½ï¿½
 			Result result;
 
 			for (int i = 0; i < jaryProducts.length(); i++) {
@@ -159,7 +159,7 @@ public class ResultBO {
 			return list;
 		} catch (JSONException e) {
 			e.printStackTrace();
-			Log.d("debug", "·şÎñÆ÷·µ»Ø·Çjson");
+			Log.d("debug", "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø·ï¿½json");
 		}
 		return null;
 	}

@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-8-19
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-8-19
  */
 package scau.info.volunteertime.activity;
 
@@ -9,7 +9,7 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class ActionItem {

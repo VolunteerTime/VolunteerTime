@@ -1,22 +1,22 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.business;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class BOConstant {
-	// ÑéÖ¤ÓÃ»§·µ»ØÖµ
-	// ´óÓÚ0£ºµÇÂ½ÕıÈ·£¬·µ»Øid 0£ºÕËºÅÃÜÂëÎª¿Õ -1£ºÃÜÂë²»ÕıÈ· -2£ºÕËºÅ²»´æÔÚ
-	public static final int REP_VAR_PARA_ERR = 0;// ÕÊºÅÃÜÂëÎª¿Õ
-	public static final int PASSWORD_ERROR = -1;// ÃÜÂë²»ºÏ·¨
-	public static final int USER_NOT_EXIST = -2;// ÓÃ»§²»´æÔÚ
-	public static final int USER_NOT_ACTIVATED = -3;// ÓÃ»§Î´¼¤»î
-	public static final int USER_REGISTER_SUCCESS = 1;// ÓÃ»§×¢²á³É¹¦
+	// éªŒè¯ç”¨æˆ·è¿”å›å€¼
+	// å¤§äº0ï¼šç™»é™†æ­£ç¡®ï¼Œè¿”å›id 0ï¼šè´¦å·å¯†ç ä¸ºç©º -1ï¼šå¯†ç ä¸æ­£ç¡® -2ï¼šè´¦å·ä¸å­˜åœ¨
+	public static final int REP_VAR_PARA_ERR = 0;// å¸å·å¯†ç ä¸ºç©º
+	public static final int PASSWORD_ERROR = -1;// å¯†ç ä¸åˆæ³•
+	public static final int USER_NOT_EXIST = -2;// ç”¨æˆ·ä¸å­˜åœ¨
+	public static final int USER_NOT_ACTIVATED = -3;// ç”¨æˆ·æœªæ¿€æ´»
+	public static final int USER_REGISTER_SUCCESS = 1;// ç”¨æˆ·æ³¨å†ŒæˆåŠŸ
 
 	public static final String ROOT_URL = "http://192.168.173.1:8080";
 

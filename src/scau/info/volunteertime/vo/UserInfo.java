@@ -1,28 +1,28 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.vo;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class UserInfo {
 	private int id;
-	private String userId;// Ñ§ÉúºÅ
+	private String userId;// Ñ§ï¿½ï¿½ï¿½ï¿½
 	private String userName;
 
 	private String email;
-	private String cellPhone;// ³¤ºÅ
-	private String briefPhone;// ¶ÌºÅ
-	private String telephone;// ¹Ì¶¨µç»°
-	private String address;// µØÖ·
-	private String gradeAndMajor;// Äê¼¶ºÍ×¨Òµ
+	private String cellPhone;// ï¿½ï¿½ï¿½ï¿½
+	private String briefPhone;// ï¿½Ìºï¿½
+	private String telephone;// ï¿½Ì¶ï¿½ï¿½ç»°
+	private String address;// ï¿½ï¿½Ö·
+	private String gradeAndMajor;// ï¿½ê¼¶ï¿½ï¿½×¨Òµ
 
 	/**
-	 * ´´½¨Ò»¸ö¹¹Ôì·½·¨
+	 * ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ì·½ï¿½ï¿½
 	 * 
 	 * @param id
 	 * @param userId

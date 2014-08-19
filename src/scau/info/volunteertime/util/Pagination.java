@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-21
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-21
  */
 package scau.info.volunteertime.util;
 
@@ -9,18 +9,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class Pagination<VolunteertimeData> {
 
-	private List<VolunteertimeData> records; // µ±Ç°·ÖÒ³µÄ¼ÇÂ¼¼¯ºÏ
+	private List<VolunteertimeData> records; // ï¿½ï¿½Ç°ï¿½ï¿½Ò³ï¿½Ä¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
 
-	private int currentPageNumber; // µ±Ç°·ÖÒ³
+	private int currentPageNumber; // ï¿½ï¿½Ç°ï¿½ï¿½Ò³
 
-	// private int amountOfRecorders; // ¼ÇÂ¼×ÜÊı
+	// private int amountOfRecorders; // ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
 
-	private int pageSize; // Ã¿Ò³µÄ¼ÇÂ¼Êı
+	private int pageSize; // Ã¿Ò³ï¿½Ä¼ï¿½Â¼ï¿½ï¿½
 
 	public Pagination() {
 		records = new ArrayList<VolunteertimeData>();
@@ -40,7 +40,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	/**
-	 * ·µ»Ø¼ÇÂ¼ÄÚÈİlist
+	 * ï¿½ï¿½ï¿½Ø¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½list
 	 * 
 	 * @return List
 	 */
@@ -49,7 +49,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	/**
-	 * ÉèÖÃ¼ÇÂ¼ÄÚÈİlist
+	 * ï¿½ï¿½ï¿½Ã¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½list
 	 * 
 	 * @param records
 	 */
@@ -58,7 +58,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	/**
-	 * ·µ»Øµ±Ç°Ò³µÄÒ³Âë
+	 * ï¿½ï¿½ï¿½Øµï¿½Ç°Ò³ï¿½ï¿½Ò³ï¿½ï¿½
 	 * 
 	 * @return int
 	 */
@@ -67,7 +67,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	/**
-	 * ÉèÖÃµ±Ç°Ò³µÄÒ³Âë
+	 * ï¿½ï¿½ï¿½Ãµï¿½Ç°Ò³ï¿½ï¿½Ò³ï¿½ï¿½
 	 * 
 	 * @param currentPageNumber
 	 */
@@ -76,7 +76,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	/**
-	 * ·µ»Ø¼ÇÂ¼×ÜÊı
+	 * ï¿½ï¿½ï¿½Ø¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @return int
 	 */
@@ -85,7 +85,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	// /**
-	// * ÉèÖÃ¼ÇÂ¼×ÜÊı
+	// * ï¿½ï¿½ï¿½Ã¼ï¿½Â¼ï¿½ï¿½ï¿½ï¿½
 	// *
 	// * @param amountOfRecorders
 	// */
@@ -94,7 +94,7 @@ public class Pagination<VolunteertimeData> {
 	// }
 
 	/**
-	 * ·µ»ØÃ¿Ò³µÄ¼ÇÂ¼Êı
+	 * ï¿½ï¿½ï¿½ï¿½Ã¿Ò³ï¿½Ä¼ï¿½Â¼ï¿½ï¿½
 	 * 
 	 * @return int
 	 */
@@ -103,7 +103,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	/**
-	 * ÉèÖÃÃ¿Ò³µÄ¼ÇÂ¼Êı
+	 * ï¿½ï¿½ï¿½ï¿½Ã¿Ò³ï¿½Ä¼ï¿½Â¼ï¿½ï¿½
 	 * 
 	 * @param pageSize
 	 */
@@ -112,7 +112,7 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	/**
-	 * ·µ»Ø×ÜÒ³Êı
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½
 	 * 
 	 * @return int
 	 */

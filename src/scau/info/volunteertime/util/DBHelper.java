@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-24
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-24
  */
 package scau.info.volunteertime.util;
 
@@ -11,15 +11,16 @@ import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * DBHelper¼Ì³ĞÁËSQLiteOpenHelper£¬×÷ÎªÎ¬»¤ºÍ¹ÜÀíÊı¾İ¿âµÄ»ùÀà Ä¿Ç°Ö»ÓĞResultÕâ¸ö±í£¬Èç¹ûÒª¼Ó±íÇë°´ÕÕ¹æ·¶
+ * DBHelperï¿½Ì³ï¿½ï¿½ï¿½SQLiteOpenHelperï¿½ï¿½ï¿½ï¿½ÎªÎ¬ï¿½ï¿½ï¿½Í¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½Ä»ï¿½ï¿½ï¿½
+ * Ä¿Ç°Ö»ï¿½ï¿½Resultï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½Ó±ï¿½ï¿½ë°´ï¿½Õ¹æ·¶
  * 
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-	private static final String DATABASE_NAME = "scau_volunteertime.db";// Êı¾İ¿âÃû
-	private static final int DATABASE_VERSION = 1;// °æ±¾ºÅ
+	private static final String DATABASE_NAME = "scau_volunteertime.db";// ï¿½ï¿½ï¿½İ¿ï¿½ï¿½ï¿½
+	private static final int DATABASE_VERSION = 1;// ï¿½æ±¾ï¿½ï¿½
 
 	/**
 	 * @param context

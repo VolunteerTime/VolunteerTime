@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-8-14
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-8-14
  */
 package scau.info.volunteertime.activity;
 
@@ -18,7 +18,7 @@ import android.os.Message;
 import android.util.Log;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class LoadActivity extends Activity {
@@ -27,16 +27,16 @@ public class LoadActivity extends Activity {
 
 	private static final int GO_HOME = 1000;
 	private static final int GO_GUIDE = 1001;
-	// ÑÓ³Ù3Ãë
+	// ï¿½Ó³ï¿½3ï¿½ï¿½
 	// private static final long SPLASH_DELAY_MILLIS = 1500;
 
 	private static final String SHAREDPREFERENCES_NAME = "first_start_info";
 
-	// ±£´æµÚÒ»´ÎÆô¶¯Èí¼şµÄÊı¾İ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	SharedPreferences preferences;
 
 	/**
-	 * Handler:Ìø×ªµ½²»Í¬½çÃæ
+	 * Handler:ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½Í¬ï¿½ï¿½ï¿½ï¿½
 	 */
 	private Handler mHandler = new Handler() {
 
@@ -65,16 +65,16 @@ public class LoadActivity extends Activity {
 	}
 
 	private void init() {
-		// ¶ÁÈ¡SharedPreferencesÖĞĞèÒªµÄÊı¾İ
-		// Ê¹ÓÃSharedPreferencesÀ´¼ÇÂ¼³ÌĞòµÄÊ¹ÓÃ´ÎÊı
+		// ï¿½ï¿½È¡SharedPreferencesï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		// Ê¹ï¿½ï¿½SharedPreferencesï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã´ï¿½ï¿½ï¿½
 		preferences = getSharedPreferences(SHAREDPREFERENCES_NAME, MODE_PRIVATE);
 
-		// È¡µÃÏàÓ¦µÄÖµ£¬Èç¹ûÃ»ÓĞ¸ÃÖµ£¬ËµÃ÷»¹Î´Ğ´Èë£¬ÓÃtrue×÷ÎªÄ¬ÈÏÖµ
+		// È¡ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½Ğ¸ï¿½Öµï¿½ï¿½Ëµï¿½ï¿½ï¿½ï¿½Î´Ğ´ï¿½ë£¬ï¿½ï¿½trueï¿½ï¿½ÎªÄ¬ï¿½ï¿½Öµ
 		isFirstIn = preferences.getBoolean("isFirstStart", true);
 
-		// ÅĞ¶Ï³ÌĞòÓëµÚ¼¸´ÎÔËĞĞ£¬Èç¹ûÊÇµÚÒ»´ÎÔËĞĞÔòÌø×ªµ½Òıµ¼½çÃæ£¬·ñÔòÌø×ªµ½Ö÷½çÃæ
+		// ï¿½Ğ¶Ï³ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½Çµï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		if (!isFirstIn) {
-			// Ê¹ÓÃHandlerµÄpostDelayed·½·¨£¬3ÃëºóÖ´ĞĞÌø×ªµ½MainActivity
+			// Ê¹ï¿½ï¿½Handlerï¿½ï¿½postDelayedï¿½ï¿½ï¿½ï¿½ï¿½ï¿½3ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½ï¿½×ªï¿½ï¿½MainActivity
 			mHandler.sendEmptyMessage(GO_HOME);
 		} else {
 			setGuided();
@@ -85,18 +85,18 @@ public class LoadActivity extends Activity {
 
 	/**
 	 * 
-	 * method desc£ºÉèÖÃÒÑ¾­Òıµ¼¹ıÁË£¬ÏÂ´ÎÆô¶¯²»ÓÃÔÙ´ÎÒıµ¼
+	 * method descï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½Â´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù´ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private void setGuided() {
 		Editor editor = preferences.edit();
-		// ´æÈëÊı¾İ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		editor.putBoolean("isFirstStart1", false);
-		// Ìá½»ĞŞ¸Ä
+		// ï¿½á½»ï¿½Ş¸ï¿½
 		editor.commit();
 	}
 
 	private void goHome() {
-		Log.d("LoadActivity-goHome", "ÕâÀï½«Ö´ĞĞµÇÂ½²Ù×÷");
+		Log.d("LoadActivity-goHome", "ï¿½ï¿½ï¿½ï½«Ö´ï¿½Ğµï¿½Â½ï¿½ï¿½ï¿½ï¿½");
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 		finish();
@@ -109,12 +109,12 @@ public class LoadActivity extends Activity {
 	}
 
 	/**
-	 * ³õÊ¼»¯Êı¾İ¿â
+	 * ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½İ¿ï¿½
 	 */
 	private void initializeDatabase() {
 		SQLiteDatabase db = openOrCreateDatabase("volunteertimedatabase.db",
 				Context.MODE_PRIVATE, null);
-		// ´´½¨results±í
+		// ï¿½ï¿½ï¿½ï¿½resultsï¿½ï¿½
 		db.execSQL("CREATE TABLE IF NOT EXISTS results(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, content VARCHAR, image  VARCHAR, editor VARCHAR, publishTime BIGINT)");
 		db.close();
 	}

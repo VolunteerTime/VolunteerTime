@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014Äê8ÔÂ18ÈÕ
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-8-18
  */
 package scau.info.volunteertime.activity;
 
@@ -32,7 +32,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author æ—é”¡é‘«
  *
  */
 public class MainActivityFragment extends Fragment{
@@ -53,9 +53,9 @@ public class MainActivityFragment extends Fragment{
 		LocalActivityManager manager = null;
 		PageIndicator mIndicator;
 		
-		private ArrayList<Fragment> fragments=new ArrayList<Fragment>();  //·Å³ÌĞòµÄÃ¿Ò»¸öFragment 
+		private ArrayList<Fragment> fragments=new ArrayList<Fragment>();  //ï¿½Å³ï¿½ï¿½ï¿½ï¿½Ã¿Ò»ï¿½ï¿½Fragment 
 		
-		private ArrayList<String> title=new ArrayList<String>(); //Ã¿Ò»¸öFragmentµÄtitile 
+		private ArrayList<String> title=new ArrayList<String>(); //Ã¿Ò»ï¿½ï¿½Fragmentï¿½ï¿½titile 
 
 		/* (non-Javadoc)
 		 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
@@ -64,7 +64,7 @@ public class MainActivityFragment extends Fragment{
 		public void onCreate(Bundle savedInstanceState) {
 			// TODO Auto-generated method stub
 		
-			System.out.println("Õâ¸öÓĞ±»µ÷ÓÃÂğ¡·¡·¡·¡·¡·¡·¡·¡·¡·¡·¡·¡·¡·¡·¡·");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½Ğ±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ğ¡·¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			super.onCreate(savedInstanceState);
 		}
 	@Override
@@ -86,7 +86,7 @@ public class MainActivityFragment extends Fragment{
         mView=inflater.inflate(R.layout.fragment_main, container, false);
 		FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
 
-		ArcMenu arcMenu2 = (ArcMenu) mView.findViewById(R.id.arc_menu_2); //5¸öĞ¡µã
+		ArcMenu arcMenu2 = (ArcMenu) mView.findViewById(R.id.arc_menu_2); //5ï¿½ï¿½Ğ¡ï¿½ï¿½
 
 		WindowManager manager = getActivity().getWindowManager();
 		MainActivity.ScreenWidth = manager.getDefaultDisplay().getWidth();
@@ -102,11 +102,11 @@ public class MainActivityFragment extends Fragment{
 	//	map.put(3, new ActivityCenter());
 	//	map.put(4, new ActivityCenter());
 
-		title.add( "×÷Æ·Õ¹Ê¾");
-		title.add( "»î¶¯ÖĞĞÄ");
-		title.add( "Í¶Æ±ÖĞĞÄ");
-		title.add("»î¶¯ÖĞĞÄ");
-		title.add( "»î¶¯ÖĞĞÄ");
+		title.add( "ï¿½ï¿½Æ·Õ¹Ê¾");
+		title.add( "ï¿½î¶¯ï¿½ï¿½ï¿½ï¿½");
+		title.add( "Í¶Æ±ï¿½ï¿½ï¿½ï¿½");
+		title.add("ï¿½î¶¯ï¿½ï¿½ï¿½ï¿½");
+		title.add( "ï¿½î¶¯ï¿½ï¿½ï¿½ï¿½");
 		 System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!11111!!!!!");
 		viewFlow = (ViewPager)mView.findViewById(R.id.guidePages);
 		MainAdapter adapter = new MainAdapter(fragmentManager, fragments, title);
@@ -128,7 +128,7 @@ public class MainActivityFragment extends Fragment{
 			item.setImageResource(itemDrawables[i]);
 
 			final int position = i;
-			menu.addItem(item, new OnClickListener() { //Ã¿¸öĞ¡²Ëµ¥ÏîµÄ¼àÌıÆ÷
+			menu.addItem(item, new OnClickListener() { //Ã¿ï¿½ï¿½Ğ¡ï¿½Ëµï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
 
 						@Override
 						public void onClick(View v) {

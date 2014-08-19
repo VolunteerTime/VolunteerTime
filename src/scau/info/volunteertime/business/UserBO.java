@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.business;
 
@@ -11,13 +11,13 @@ import scau.info.volunteertime.vo.ActivityData;
 import android.util.Log;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class UserBO {
 
 	/**
-	 * ´óÓÚ0£ºµÇÂ½ÕıÈ·£¬·µ»Øid 0£ºÕËºÅÃÜÂëÎª¿Õ -1£ºÃÜÂë²»ÕıÈ· -2£ºÕËºÅ²»´æÔÚ
+	 * ï¿½ï¿½ï¿½ï¿½0ï¿½ï¿½ï¿½ï¿½Â½ï¿½ï¿½È·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½id 0ï¿½ï¿½ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ -1ï¿½ï¿½ï¿½ï¿½ï¿½ë²»ï¿½ï¿½È· -2ï¿½ï¿½ï¿½ËºÅ²ï¿½ï¿½ï¿½ï¿½ï¿½
 	 * 
 	 * @param userId
 	 * @param password
@@ -34,7 +34,7 @@ public class UserBO {
 				|| password.equals("")) {
 			return 0;
 		}
-		Log.d("CheckUserLoginResult", "Â©ÁËÆäËû¿ÉÄÜĞÔ");
+		Log.d("CheckUserLoginResult", "Â©ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		return -1;
 	}
 	

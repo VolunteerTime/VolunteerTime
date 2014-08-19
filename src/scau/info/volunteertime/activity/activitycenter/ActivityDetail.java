@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014Äê7ÔÂ31ÈÕ
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-31
  */
 package scau.info.volunteertime.activity.activitycenter;
 
@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author æ—é”¡é‘«
  *
  */
 public class ActivityDetail extends Dialog implements OnPageChangeListener{
@@ -61,8 +61,8 @@ public class ActivityDetail extends Dialog implements OnPageChangeListener{
         listViews.add(imageView);
         }
         viewPager.startAutoScroll();
-        viewPager.setInterval(2000);		//Æô¶¯Í¼Æ¬×Ô¶¯¸ü»»¹¦ÄÜ
-         System.out.println("Æô¶¯");
+        viewPager.setInterval(2000);		//ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+         System.out.println("ï¿½ï¿½ï¿½ï¿½");
         viewPager.setAdapter(new imagePageAdapter());
         
         

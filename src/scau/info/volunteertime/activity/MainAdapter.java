@@ -1,24 +1,21 @@
+/**
+ * Copyright (c) 华南农业大学信息学院蔡超敏2014版权所有
+ * 
+ * 文件创建时间：2014-8-19
+ */
 package scau.info.volunteertime.activity;
  
 
 import java.util.ArrayList;
-import java.util.HashMap;
- 
 
-
-import android.app.LocalActivityManager;
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.TextView;
 
+/**
+ * @author 林锡鑫
+ *
+ */
 public class MainAdapter extends FragmentPagerAdapter  {
 	
 	private ArrayList<Fragment> fragments;  

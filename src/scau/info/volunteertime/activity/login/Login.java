@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ÐÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓÐ
+ * Copyright (c) åŽå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼þ´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.activity.login;
 
@@ -25,7 +25,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class Login extends ActionBarActivity {
@@ -63,7 +63,7 @@ public class Login extends ActionBarActivity {
 	}
 
 	/**
-	 * Ìø×ª½çÃæ¼°È«¾Ö±äÁ¿µÄ±£´æ
+	 * ï¿½ï¿½×ªï¿½ï¿½ï¿½æ¼°È«ï¿½Ö±ï¿½ï¿½ï¿½ï¿½Ä±ï¿½ï¿½ï¿½
 	 */
 	private void toNextActivity() {
 
@@ -73,16 +73,16 @@ public class Login extends ActionBarActivity {
 	}
 
 	/**
-	 * ½øÐÐµÇÂ½²Ù×÷
+	 * ï¿½ï¿½ï¿½Ðµï¿½Â½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private void toLogin() {
 		useridValue = etUserid.getText().toString().trim();
 		passwordValue = etPassword.getText().toString().trim();
 		Log.d("toLogin", ":" + useridValue + ":" + passwordValue);
 		if (useridValue == null || useridValue.equals("")) {
-			Toast.makeText(mActivity, "ÓÃ»§Ãû²»ÄÜÎª¿Õ", Toast.LENGTH_LONG).show();
+			Toast.makeText(mActivity, "ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½", Toast.LENGTH_LONG).show();
 		} else if (passwordValue == null || passwordValue.equals("")) {
-			Toast.makeText(mActivity, "ÃÜÂë²»ÄÜÎª¿Õ", Toast.LENGTH_LONG).show();
+			Toast.makeText(mActivity, "ï¿½ï¿½ï¿½ë²»ï¿½ï¿½Îªï¿½ï¿½", Toast.LENGTH_LONG).show();
 		} else {
 			String[] str2 = { useridValue, passwordValue };
 			new CheckDataTask().execute(str2);
@@ -116,8 +116,8 @@ public class Login extends ActionBarActivity {
 		public CheckDataTask() {
 			mDialog = new ProgressDialog(mActivity);
 
-			mDialog.setTitle("µÇÂ½");
-			mDialog.setMessage("ÕýÔÚµÇÂ½·þÎñÆ÷£¬ÇëÉÔºó...");
+			mDialog.setTitle("ï¿½ï¿½Â½");
+			mDialog.setMessage("ï¿½ï¿½ï¿½Úµï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ôºï¿½...");
 			mDialog.show();
 		}
 
@@ -128,8 +128,8 @@ public class Login extends ActionBarActivity {
 		 */
 		@Override
 		protected Integer doInBackground(String[]... arg0) {
-			isConnect = NetworkStateUtil.isNetworkAvailable(mActivity);// »ñÈ¡Á¬½Ó×´¿ö
-			if (!isConnect) {// ÎÞÍøÂç»òÎÞ¸ü¶àÊý¾ÝÔòÈ¡ÏûÈÎÎñ
+			isConnect = NetworkStateUtil.isNetworkAvailable(mActivity);// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½
+			if (!isConnect) {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				Log.d("doInBackground", "hasMore or isConnect not");
 				cancel(true);
 				return null;
@@ -162,7 +162,7 @@ public class Login extends ActionBarActivity {
 
 		private void cancelledFunction() {
 			if (!isConnect) {
-				Toast.makeText(mActivity, "ÍøÂçÁ¬½Ó³öÏÖÎÊÌâ", Toast.LENGTH_SHORT)
+				Toast.makeText(mActivity, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT)
 						.show();
 			}
 			Log.d("onCancelled", "1");
@@ -176,19 +176,19 @@ public class Login extends ActionBarActivity {
 			mDialog.dismiss();
 			Log.d("onPostExecute", result + "");
 			if (result == BOConstant.USER_NOT_EXIST) {
-				Toast.makeText(mActivity, "ÕËºÅÃû²»´æÔÚ", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mActivity, "ï¿½Ëºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 			} else if (result == BOConstant.PASSWORD_ERROR) {
-				Toast.makeText(mActivity, "ÃÜÂë´íÎó", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mActivity, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_SHORT).show();
 			} else if (result > 0) {
-				Toast.makeText(mActivity, "µÇÂ¼³É¹¦", Toast.LENGTH_SHORT).show();
-				// Ìø×ª½çÃæ
+				Toast.makeText(mActivity, "ï¿½ï¿½Â¼ï¿½É¹ï¿½", Toast.LENGTH_SHORT).show();
+				// ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½
 				toNextActivity();
-				Log.d("btnlogin", "Ìø×ª½çÃæ");
+				Log.d("btnlogin", "ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½");
 			} else if (result == BOConstant.USER_NOT_ACTIVATED) {
-				Toast.makeText(mActivity, "¸ÃÓÃ»§ÃûÎ´¼¤»î", Toast.LENGTH_LONG).show();
+				Toast.makeText(mActivity, "ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½Î´ï¿½ï¿½ï¿½ï¿½", Toast.LENGTH_LONG).show();
 			} else {
-				Log.d("postFunction", "Î´Öª¿ÉÄÜÐÔ");
-				Toast.makeText(mActivity, "µÇÂ½´íÎó£¬ÇëÖØÐÂµÇÂ¼", Toast.LENGTH_LONG)
+				Log.d("postFunction", "Î´Öªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+				Toast.makeText(mActivity, "ï¿½ï¿½Â½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Âµï¿½Â¼", Toast.LENGTH_LONG)
 						.show();
 			}
 		}

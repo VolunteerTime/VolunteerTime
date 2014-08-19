@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-8-14
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-8-14
  */
 package scau.info.volunteertime.activity.resultsexhibition;
 
@@ -33,13 +33,13 @@ import cn.trinea.android.common.view.DropDownListView;
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class ResultsExhibitionFragment extends Fragment {
 
 	private SortedLinkList<Result> sortedLinkList;
-	private Pagination<Result> resultsPagination;// ×°ÔØµ±Ç°ÄÚÈİ
+	private Pagination<Result> resultsPagination;// ×°ï¿½Øµï¿½Ç°ï¿½ï¿½ï¿½ï¿½
 
 	private int currentPageSize = 8;
 	private int currentPageNumber = 1;
@@ -60,17 +60,17 @@ public class ResultsExhibitionFragment extends Fragment {
 
 		Log.d("ResultsExhibition", "create");
 
-		hasMore = true;// ÓĞ¸ü¶à²ÅÏÔÊ¾£¬Ã»ÓĞÔò²»ÏÔÊ¾
+		hasMore = true;// ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 		activity = getActivity();
 
-		resultBO = new ResultBO();// È¡µÃresultBO
+		resultBO = new ResultBO();// È¡ï¿½ï¿½resultBO
 		resultsPagination = new Pagination<Result>();
 		resultsPagination.setCurrentPageNumber(currentPageNumber);
 		resultsPagination.setPageSize(currentPageSize);
 		sortedLinkList = new SortedLinkList<Result>();
 
 		resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(
-				activity, sortedLinkList.getList());// ³É¹ûÊı¾İ´«¸øAdapter
+				activity, sortedLinkList.getList());// ï¿½É¹ï¿½ï¿½ï¿½ï¿½İ´ï¿½ï¿½ï¿½Adapter
 
 	}
 
@@ -100,7 +100,7 @@ public class ResultsExhibitionFragment extends Fragment {
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
 						Log.d("ResultsExhibition-onCreate-setOnItemLongClickListener-onItemLongClick",
-								"³õ²½²âÊÔ");
+								"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 						return false;
 					}
 
@@ -111,7 +111,7 @@ public class ResultsExhibitionFragment extends Fragment {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Log.d("ResultsExhibition-onCreate-setOnItemClickListener-onItemClick",
-						"³õ²½²âÊÔ");
+						"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 		});
 
@@ -120,7 +120,7 @@ public class ResultsExhibitionFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
-						"³õ²½²âÊÔ");
+						"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				new GetDataTask(false).execute();
 			}
 		});
@@ -132,7 +132,7 @@ public class ResultsExhibitionFragment extends Fragment {
 			@Override
 			public void onDropDown() {
 				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
-						"³õ²½²âÊÔ");
+						"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				new GetDataTask(true).execute();
 			}
 		});
@@ -162,8 +162,8 @@ public class ResultsExhibitionFragment extends Fragment {
 		 */
 		@Override
 		protected Void doInBackground(Void... params) {
-			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// »ñÈ¡Á¬½Ó×´¿ö
-			if (!isConnect) {// ÎŞÍøÂç»òÎŞ¸ü¶àÊı¾İÔòÈ¡ÏûÈÎÎñ
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½
+			if (!isConnect) {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				Log.d("doInBackground", "isConnect not");
 				cancel(true);
 				return null;
@@ -204,15 +204,17 @@ public class ResultsExhibitionFragment extends Fragment {
 		 * @param result
 		 */
 		private void postFunction(Void result) {
-			if (isDropDown) {				
-				resultsExhibitionListAdapter.setListData(sortedLinkList.getList());
+			if (isDropDown) {
+				resultsExhibitionListAdapter.setListData(sortedLinkList
+						.getList());
 
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
 				resultsListView.onDropDownComplete();
 			} else {
-				resultsExhibitionListAdapter.setListData(sortedLinkList.getList());
-				
+				resultsExhibitionListAdapter.setListData(sortedLinkList
+						.getList());
+
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
 				resultsListView.onBottomComplete();
@@ -224,10 +226,10 @@ public class ResultsExhibitionFragment extends Fragment {
 		 */
 		private void cancelledFunction() {
 			if (!isConnect) {
-				ToastUtils.show(activity, "ÍøÂçÁ¬½Ó³öÏÖÎÊÌâ");
+				ToastUtils.show(activity, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			} else if (!hasMore) {
-				resultsListView.setFooterNoMoreText("Ã»ÓĞ¸ü¶à´ÙÏúĞÅÏ¢ÁËÅ¶~");
-				ToastUtils.show(activity, "Ã»ÓĞ¸ü¶à´ÙÏúĞÅÏ¢ÁËÅ¶~");
+				resultsListView.setFooterNoMoreText("Ã»ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Å¶~");
+				ToastUtils.show(activity, "Ã»ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Å¶~");
 			}
 			if (isDropDown) {
 				resultsListView.onDropDownComplete();
@@ -250,7 +252,7 @@ public class ResultsExhibitionFragment extends Fragment {
 					toGetUpdateDataFromNet();
 				}
 			} else {
-				if (!hasMore) {// ÎŞÍøÂç»òÎŞ¸ü¶àÊı¾İÔòÈ¡ÏûÈÎÎñ
+				if (!hasMore) {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 					Log.d("doInBackground", "hasMore not");
 					cancel(true);
 					return;

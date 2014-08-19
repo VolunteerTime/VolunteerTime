@@ -1,195 +1,220 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.activity.activitycenter;
 
 import java.util.ArrayList;
-import java.util.List; 
+import java.util.List;
 
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-
-import cn.trinea.android.common.util.ListUtils;
-import cn.trinea.android.common.util.ToastUtils;
-import cn.trinea.android.common.view.DropDownListView;
 import scau.info.volunteertime.R;
-import scau.info.volunteertime.activity.resultsexhibition.ResultsExhibitionListAdapter;
-import scau.info.volunteertime.util.NetworkStateUtil;
 import scau.info.volunteertime.util.Pagination;
-import scau.info.volunteertime.vo.ActivityData; 
-import scau.info.volunteertime.vo.Result;
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog; 
-import android.os.AsyncTask;
+import scau.info.volunteertime.vo.ActivityData;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message; 
+import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnClickListener;
-import android.view.View.OnDragListener; 
-import android.view.View.OnTouchListener;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils; 
+import android.view.View.OnDragListener;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
+import cn.trinea.android.common.view.DropDownListView;
+
+import com.nhaarman.supertooltips.ToolTipRelativeLayout;
 
 /**
- * @author ²Ì³¬Ãô
- *
+ * @author è”¡è¶…æ•
+ * 
  */
-public class ActivityCenter extends Fragment  {
+public class ActivityCenter extends Fragment {
 
-	   
-	 DropDownListView listview;
+	DropDownListView listview;
 	View container;
 	ActivityAdapter adapter;
-	  ToolTipRelativeLayout mToolTipFrameLayout;
-	 
-	private Pagination<ActivityData> resultsPagination;// ×°ÔØµ±Ç°ÄÚÈİ
-	private Pagination<ActivityData> nextResultsPagination;// ×÷Îª×°ÔØÏÂÒ»Ò³ÄÚÈİµÄÖĞ½é
-	
-	
-	List<ActivityData> list=new ArrayList<ActivityData>();
+	ToolTipRelativeLayout mToolTipFrameLayout;
+
+	private Pagination<ActivityData> resultsPagination;// ×°ï¿½Øµï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+	private Pagination<ActivityData> nextResultsPagination;// ï¿½ï¿½Îª×°ï¿½ï¿½ï¿½ï¿½Ò»Ò³ï¿½ï¿½ï¿½İµï¿½ï¿½Ğ½ï¿½
+
+	List<ActivityData> list = new ArrayList<ActivityData>();
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-}
-	
-	
-/* (non-Javadoc)
- * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
- */
-@Override
-public View onCreateView(LayoutInflater inflater, ViewGroup container,
-		Bundle savedInstanceState) {
-	// TODO Auto-generated method stub
-	View view=inflater.inflate(R.layout.activity_activity_center, container,false);
-	 
-	  
- 
-	 listview=(DropDownListView)view.findViewById(R.id.listView);
-	 
- // View menu=findViewById(R.id.menu);
-	// menu.startAnimation(animation);
-        mToolTipFrameLayout = (ToolTipRelativeLayout)view. findViewById(R.id.activity_main_tooltipframelayout); 
-         
-	
-	 ActivityData a1=new ActivityData("xin","±¾ÈË21£¬È¥³Ô·¹£¬³ÔÍê½áÕË£¬ÎÒº°Ò»Éù£¬´ó½ã£¬½áÕË£¡","2014-07-22","eee");
-	 ActivityData a2=new ActivityData("name","¸çÃÇ¸ÕÊ§Áµ£¬È¥Ò»¼Ò²ÍÌü³Ô·¹£¬¸ÕºÃºóÃæÓĞÒ»¶ÔÇéÂÀÔÚßóßóÎÒÎÒµÄ£¬ºÃ²»Ç×ÈÈ¡£","2014-07-22","eee");
-	 ActivityData a3=new ActivityData("name","¡°ÎÒ¿¿£¬¸çÃÇ²»ÓÃÕâÑù°É£¡¡±ËûÒÔÎªÎÒÅÂÁË»¹µãÍ·£¬ÎÒ¿ìËÙÄÃÆğÇ®¸úÇ®°ü¾Í×ß£¬ÄáÂê×·ÁËÎÒÁ½Ìõ½Ö»¹Ã»×·ÉÏ±»ÎÒÅÜ","2014-07-22","eee");
-	 ActivityData a4=new ActivityData("name","Ò»¶ÔÄĞÅ®µÄ¶Ô»°£ºÄĞ£ºÎªÊ²Ã´Äã¿´ÉÏÎÒ°¡£¿Å®£ºÒòÎªÄã³¤µÃË§°£ÄĞ£ºË§ÓÖ²»ÄÜµ±·¹³Ô¡£Å®£ºµ«ÊÇ²»Ë§µÄ»°£¬¶Ô×Å»á³Ô²»ÏÂ·¹¡£","2014-07-22","eee");
-	 ActivityData a5=new ActivityData("name","1.Ğ£³¤ºÍÓ¢ÓïÀÏÊ¦Ò»ÆğÈ¥·¨¹úÄ³ÖĞÑ§·ÃÎÊ,Ğ£³¤ÔÚÀñÌÃ½²»°,Ó¢ÓïÀÏÊ¦×ö·­Òë","2009-9-26","eee");
-	 ActivityData a6=new ActivityData("name","±Ê¼Ç±¾Ëµ:ÎÒ¸øÄãËµ¸öĞ¦»°ßÂ¡£²è±­Ëµ:ºÃ°¡ºÃ°¡¡£±Ê¼Ç±¾Ëµ:´ÓÇ°ÓĞ¸ö²è±­,ÄÔ×Ó½øË®ÁË¡£²è±­:","5Ğ¡Ê±Ç°","eee");
-	 ActivityData a7=new ActivityData("xin","±¾ÈË21£¬È¥³Ô·¹£¬³ÔÍê½áÕË£¬ÎÒº°Ò»Éù£¬´ó½ã£¬½áÕË£¡","2014-07-22","eee");
-	 ActivityData a8=new ActivityData("name","¸çÃÇ¸ÕÊ§Áµ£¬È¥Ò»¼Ò²ÍÌü³Ô·¹£¬¸ÕºÃºóÃæÓĞÒ»¶ÔÇéÂÀÔÚßóßóÎÒÎÒµÄ£¬ºÃ²»Ç×ÈÈ¡£","2014-07-22","eee");
-	 ActivityData a9=new ActivityData("name","¡°ÎÒ¿¿£¬¸çÃÇ²»ÓÃÕâÑù°É£¡¡±ËûÒÔÎªÎÒÅÂÁË»¹µãÍ·£¬ÎÒ¿ìËÙÄÃÆğÇ®¸úÇ®°ü¾Í×ß£¬ÄáÂê×·ÁËÎÒÁ½Ìõ½Ö»¹Ã»×·ÉÏ±»ÎÒÅÜ","2014-07-22","eee");
-	 ActivityData a10=new ActivityData("name","Ò»¶ÔÄĞÅ®µÄ¶Ô»°£ºÄĞ£ºÎªÊ²Ã´Äã¿´ÉÏÎÒ°¡£¿Å®£ºÒòÎªÄã³¤µÃË§°£ÄĞ£ºË§ÓÖ²»ÄÜµ±·¹³Ô¡£Å®£ºµ«ÊÇ²»Ë§µÄ»°£¬¶Ô×Å»á³Ô²»ÏÂ·¹¡£","2014-07-22","eee");
-	 ActivityData a11=new ActivityData("name","1.Ğ£³¤ºÍÓ¢ÓïÀÏÊ¦Ò»ÆğÈ¥·¨¹úÄ³ÖĞÑ§·ÃÎÊ,Ğ£³¤ÔÚÀñÌÃ½²»°,Ó¢ÓïÀÏÊ¦×ö·­Òë","2009-9-26","eee");
-	 ActivityData a12=new ActivityData("name","±Ê¼Ç±¾Ëµ:ÎÒ¸øÄãËµ¸öĞ¦»°ßÂ¡£²è±­Ëµ:ºÃ°¡ºÃ°¡¡£±Ê¼Ç±¾Ëµ:´ÓÇ°ÓĞ¸ö²è±­,ÄÔ×Ó½øË®ÁË¡£²è±­:","5Ğ¡Ê±Ç°","eee");
-	 ActivityData a13=new ActivityData("xin","±¾ÈË21£¬È¥³Ô·¹£¬³ÔÍê½áÕË£¬ÎÒº°Ò»Éù£¬´ó½ã£¬½áÕË£¡","2014-07-22","eee");
-	 ActivityData a14=new ActivityData("name","¸çÃÇ¸ÕÊ§Áµ£¬È¥Ò»¼Ò²ÍÌü³Ô·¹£¬¸ÕºÃºóÃæÓĞÒ»¶ÔÇéÂÀÔÚßóßóÎÒÎÒµÄ£¬ºÃ²»Ç×ÈÈ¡£","2014-07-22","eee");
-	 ActivityData a15=new ActivityData("name","¡°ÎÒ¿¿£¬¸çÃÇ²»ÓÃÕâÑù°É£¡¡±ËûÒÔÎªÎÒÅÂÁË»¹µãÍ·£¬ÎÒ¿ìËÙÄÃÆğÇ®¸úÇ®°ü¾Í×ß£¬ÄáÂê×·ÁËÎÒÁ½Ìõ½Ö»¹Ã»×·ÉÏ±»ÎÒÅÜ","2014-07-22","eee");
-	 ActivityData a16=new ActivityData("name","Ò»¶ÔÄĞÅ®µÄ¶Ô»°£ºÄĞ£ºÎªÊ²Ã´Äã¿´ÉÏÎÒ°¡£¿Å®£ºÒòÎªÄã³¤µÃË§°£ÄĞ£ºË§ÓÖ²»ÄÜµ±·¹³Ô¡£Å®£ºµ«ÊÇ²»Ë§µÄ»°£¬¶Ô×Å»á³Ô²»ÏÂ·¹¡£","2014-07-22","eee");
-	 ActivityData a17=new ActivityData("name","1.Ğ£³¤ºÍÓ¢ÓïÀÏÊ¦Ò»ÆğÈ¥·¨¹úÄ³ÖĞÑ§·ÃÎÊ,Ğ£³¤ÔÚÀñÌÃ½²»°,Ó¢ÓïÀÏÊ¦×ö·­Òë","2009-9-26","eee"); 
-	 
-		list.add(a1); 
-		list.add(a2); 
-		list.add(a3); 
-		list.add(a4); 
-		list.add(a5); 
-		list.add(a6); 		
-		list.add(a7); 
-		list.add(a8); 
-		list.add(a9); 
-		list.add(a10); 
-		list.add(a11); 
-		list.add(a12); 		
-		list.add(a13); 
-		list.add(a14); 
-		list.add(a15); 
-		list.add(a16); 
-		list.add(a17); 
-	
-	adapter=new ActivityAdapter(getActivity(),list,mToolTipFrameLayout );
-	
-	
-	listview.setOnItemClickListener(new OnItemClickListener() {
+	}
 
-		@Override		//´ò¿ª¶Ô»°¿òÏÔÊ¾»î¶¯ÏêÇé
-		public void onItemClick(AdapterView<?> parent, View view,
-				int position, long id) {
-			// TODO Auto-generated method stub
-			
-			LayoutInflater inflaterDl = LayoutInflater.from(getActivity());
-	         View layout =inflaterDl.inflate(R.layout.activity_activity_center_detail, null );
-	        
-	         //¶Ô»°¿ò
-	         final ActivityDetail dialog = new ActivityDetail(getActivity());
-	         TextView text=(TextView)layout.findViewById(R.id.title);
-	         
-	         dialog.show(); 
-	         
-	          
-		}
-	});
-	listview.setAdapter(adapter);  
-	listview.setOnDragListener(new OnDragListener() {
-		
-		@Override
-		public boolean onDrag(View v, DragEvent event) {
-			// TODO Auto-generated method stub
-			listview.onDropDownComplete("¹ş¹ş");
-			return false;
-		}
-	});
-	final Handler adapterHandler=adapter.getHandler();
-	
-	listview.setOnScrollListener(new OnScrollListener() {
-		
-		 
-		@Override
-		public void onScrollStateChanged(AbsListView view, int scrollState) {
-			// TODO Auto-generated method stub
-			
-		}
-		int now=0;
-		@Override
-		public void onScroll(AbsListView view, int firstVisibleItem,
-				int visibleItemCount, int totalItemCount) {
-		  
-			if(now!=firstVisibleItem)
-			{Message msg=adapterHandler.obtainMessage();
-			msg.arg2=3;
-			msg.arg1=firstVisibleItem;
-			msg.sendToTarget();
-			now=firstVisibleItem;
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+	 * android.view.ViewGroup, android.os.Bundle)
+	 */
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
+		View view = inflater.inflate(R.layout.activity_activity_center,
+				container, false);
+
+		listview = (DropDownListView) view.findViewById(R.id.listView);
+
+		// View menu=findViewById(R.id.menu);
+		// menu.startAnimation(animation);
+		mToolTipFrameLayout = (ToolTipRelativeLayout) view
+				.findViewById(R.id.activity_main_tooltipframelayout);
+
+		ActivityData a1 = new ActivityData("xin",
+				"ï¿½ï¿½ï¿½ï¿½21ï¿½ï¿½È¥ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½Òºï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½Ë£ï¿½", "2014-07-22", "eee");
+		ActivityData a2 = new ActivityData("name",
+				"ï¿½ï¿½ï¿½Ç¸ï¿½Ê§ï¿½ï¿½ï¿½ï¿½È¥Ò»ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ÕºÃºï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒµÄ£ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½È¡ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a3 = new ActivityData(
+				"name",
+				"ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ã»×·ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a4 = new ActivityData(
+				"name",
+				"Ò»ï¿½ï¿½ï¿½ï¿½Å®ï¿½Ä¶Ô»ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ÎªÊ²Ã´ï¿½ã¿´ï¿½ï¿½ï¿½Ò°ï¿½ï¿½ï¿½Å®ï¿½ï¿½ï¿½ï¿½Îªï¿½ã³¤ï¿½ï¿½Ë§ï¿½ï¿½ï¿½Ğ£ï¿½Ë§ï¿½Ö²ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ô¡ï¿½Å®ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½Ë§ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½Ô²ï¿½ï¿½Â·ï¿½ï¿½ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a5 = new ActivityData("name",
+				"1.Ğ£ï¿½ï¿½ï¿½ï¿½Ó¢ï¿½ï¿½ï¿½ï¿½Ê¦Ò»ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½,Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½,Ó¢ï¿½ï¿½ï¿½ï¿½Ê¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+				"2009-9-26", "eee");
+		ActivityData a6 = new ActivityData("name",
+				"ï¿½Ê¼Ç±ï¿½Ëµ:ï¿½Ò¸ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ğ¦ï¿½ï¿½ï¿½Â¡ï¿½ï¿½è±­Ëµ:ï¿½Ã°ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½Ê¼Ç±ï¿½Ëµ:ï¿½ï¿½Ç°ï¿½Ğ¸ï¿½ï¿½è±­,ï¿½ï¿½ï¿½Ó½ï¿½Ë®ï¿½Ë¡ï¿½ï¿½è±­:",
+				"5Ğ¡Ê±Ç°", "eee");
+		ActivityData a7 = new ActivityData("xin",
+				"ï¿½ï¿½ï¿½ï¿½21ï¿½ï¿½È¥ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½Òºï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½Ë£ï¿½", "2014-07-22", "eee");
+		ActivityData a8 = new ActivityData("name",
+				"ï¿½ï¿½ï¿½Ç¸ï¿½Ê§ï¿½ï¿½ï¿½ï¿½È¥Ò»ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ÕºÃºï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒµÄ£ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½È¡ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a9 = new ActivityData(
+				"name",
+				"ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ã»×·ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a10 = new ActivityData(
+				"name",
+				"Ò»ï¿½ï¿½ï¿½ï¿½Å®ï¿½Ä¶Ô»ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ÎªÊ²Ã´ï¿½ã¿´ï¿½ï¿½ï¿½Ò°ï¿½ï¿½ï¿½Å®ï¿½ï¿½ï¿½ï¿½Îªï¿½ã³¤ï¿½ï¿½Ë§ï¿½ï¿½ï¿½Ğ£ï¿½Ë§ï¿½Ö²ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ô¡ï¿½Å®ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½Ë§ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½Ô²ï¿½ï¿½Â·ï¿½ï¿½ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a11 = new ActivityData("name",
+				"1.Ğ£ï¿½ï¿½ï¿½ï¿½Ó¢ï¿½ï¿½ï¿½ï¿½Ê¦Ò»ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½,Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½,Ó¢ï¿½ï¿½ï¿½ï¿½Ê¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+				"2009-9-26", "eee");
+		ActivityData a12 = new ActivityData("name",
+				"ï¿½Ê¼Ç±ï¿½Ëµ:ï¿½Ò¸ï¿½ï¿½ï¿½Ëµï¿½ï¿½Ğ¦ï¿½ï¿½ï¿½Â¡ï¿½ï¿½è±­Ëµ:ï¿½Ã°ï¿½ï¿½Ã°ï¿½ï¿½ï¿½ï¿½Ê¼Ç±ï¿½Ëµ:ï¿½ï¿½Ç°ï¿½Ğ¸ï¿½ï¿½è±­,ï¿½ï¿½ï¿½Ó½ï¿½Ë®ï¿½Ë¡ï¿½ï¿½è±­:",
+				"5Ğ¡Ê±Ç°", "eee");
+		ActivityData a13 = new ActivityData("xin",
+				"ï¿½ï¿½ï¿½ï¿½21ï¿½ï¿½È¥ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ë£ï¿½ï¿½Òºï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ã£¬ï¿½ï¿½ï¿½Ë£ï¿½", "2014-07-22", "eee");
+		ActivityData a14 = new ActivityData("name",
+				"ï¿½ï¿½ï¿½Ç¸ï¿½Ê§ï¿½ï¿½ï¿½ï¿½È¥Ò»ï¿½Ò²ï¿½ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ÕºÃºï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÒµÄ£ï¿½ï¿½Ã²ï¿½ï¿½ï¿½ï¿½È¡ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a15 = new ActivityData(
+				"name",
+				"ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½Ë»ï¿½ï¿½ï¿½Í·ï¿½ï¿½ï¿½Ò¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç®ï¿½ï¿½Ç®ï¿½ï¿½ï¿½ï¿½ï¿½ß£ï¿½ï¿½ï¿½ï¿½ï¿½×·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö»ï¿½Ã»×·ï¿½Ï±ï¿½ï¿½ï¿½ï¿½ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a16 = new ActivityData(
+				"name",
+				"Ò»ï¿½ï¿½ï¿½ï¿½Å®ï¿½Ä¶Ô»ï¿½ï¿½ï¿½ï¿½Ğ£ï¿½ÎªÊ²Ã´ï¿½ã¿´ï¿½ï¿½ï¿½Ò°ï¿½ï¿½ï¿½Å®ï¿½ï¿½ï¿½ï¿½Îªï¿½ã³¤ï¿½ï¿½Ë§ï¿½ï¿½ï¿½Ğ£ï¿½Ë§ï¿½Ö²ï¿½ï¿½Üµï¿½ï¿½ï¿½ï¿½Ô¡ï¿½Å®ï¿½ï¿½ï¿½ï¿½ï¿½Ç²ï¿½Ë§ï¿½Ä»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å»ï¿½Ô²ï¿½ï¿½Â·ï¿½ï¿½ï¿½",
+				"2014-07-22", "eee");
+		ActivityData a17 = new ActivityData("name",
+				"1.Ğ£ï¿½ï¿½ï¿½ï¿½Ó¢ï¿½ï¿½ï¿½ï¿½Ê¦Ò»ï¿½ï¿½È¥ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Ñ§ï¿½ï¿½ï¿½ï¿½,Ğ£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã½ï¿½ï¿½ï¿½,Ó¢ï¿½ï¿½ï¿½ï¿½Ê¦ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½",
+				"2009-9-26", "eee");
+
+		list.add(a1);
+		list.add(a2);
+		list.add(a3);
+		list.add(a4);
+		list.add(a5);
+		list.add(a6);
+		list.add(a7);
+		list.add(a8);
+		list.add(a9);
+		list.add(a10);
+		list.add(a11);
+		list.add(a12);
+		list.add(a13);
+		list.add(a14);
+		list.add(a15);
+		list.add(a16);
+		list.add(a17);
+
+		adapter = new ActivityAdapter(getActivity(), list, mToolTipFrameLayout);
+
+		listview.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			// ï¿½ò¿ª¶Ô»ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½î¶¯ï¿½ï¿½ï¿½ï¿½
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// TODO Auto-generated method stub
+
+				LayoutInflater inflaterDl = LayoutInflater.from(getActivity());
+				View layout = inflaterDl.inflate(
+						R.layout.activity_activity_center_detail, null);
+
+				// ï¿½Ô»ï¿½ï¿½ï¿½
+				final ActivityDetail dialog = new ActivityDetail(getActivity());
+				TextView text = (TextView) layout.findViewById(R.id.title);
+
+				dialog.show();
+
 			}
-		}
-	});
-	listview.setOnBottomListener(new  OnClickListener() {
-		
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub  
-		}
-	});
+		});
+		listview.setAdapter(adapter);
+		listview.setOnDragListener(new OnDragListener() {
 
-	return view;
-}
+			@Override
+			public boolean onDrag(View v, DragEvent event) {
+				// TODO Auto-generated method stub
+				listview.onDropDownComplete("ï¿½ï¿½ï¿½ï¿½");
+				return false;
+			}
+		});
+
+		final Handler adapterHandler = adapter.getHandler();
+
+		listview.setOnScrollListener(new OnScrollListener() {
+
+			@Override
+			public void onScrollStateChanged(AbsListView view, int scrollState) {
+				// TODO Auto-generated method stub
+
+			}
+
+			int now = 0;
+
+			@Override
+			public void onScroll(AbsListView view, int firstVisibleItem,
+					int visibleItemCount, int totalItemCount) {
+
+				if (now != firstVisibleItem) {
+					Message msg = adapterHandler.obtainMessage();
+					msg.arg2 = 3;
+					msg.arg1 = firstVisibleItem;
+					msg.sendToTarget();
+					now = firstVisibleItem;
+				}
+			}
+		});
+		listview.setOnBottomListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+			}
+		});
+
+		return view;
+	}
+
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -212,120 +237,122 @@ public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
- 
-	/* (non-Javadoc)
-	 * @see android.view.View.OnTouchListener#onTouch(android.view.View, android.view.MotionEvent)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see android.view.View.OnTouchListener#onTouch(android.view.View,
+	 * android.view.MotionEvent)
 	 */
-	 
- 
- 
-//	private class GetDataTask extends AsyncTask<Void, Void, Void> {
-//
-//		private boolean isConnect;
-//		private boolean isDropDown;
-//
-//		public GetDataTask(boolean isDropDown) {
-//			this.isDropDown = isDropDown;
-//		}
-//
-//		/*
-//		 * (non-Javadoc)
-//		 * 
-//		 * @see android.os.AsyncTask#doInBackground(Params[])
-//		 */
-//		@Override
-//		protected Void doInBackground(Void... params) {
-//			isConnect = NetworkStateUtil.isNetworkAvailable(getActivity());// »ñÈ¡Á¬½Ó×´¿ö
-//			if (!isConnect) {// ÎŞÍøÂç»òÎŞ¸ü¶àÊı¾İÔòÈ¡ÏûÈÎÎñ
-//				Log.d("doInBackground", "isConnect not");
-//				cancel(true);
-//				return null;
-//			}
-//			doInBackgroundFunction();
-//			return null;
-//		}
-//
-//		/*
-//		 * (non-Javadoc)
-//		 * 
-//		 * @see android.os.AsyncTask#onCancelled()
-//		 */
-//		@Override
-//		protected void onCancelled() {
-//			cancelledFunction();
-//			super.onCancelled();
-//		}
-//
-//		/*
-//		 * (non-Javadoc)
-//		 * 
-//		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-//		 */
-//		@Override
-//		protected void onPostExecute(Void result) {
-//			if (isCancelled()) {
-//				Log.d("Cancle", "call");
-//				cancelledFunction();
-//			} else {
-//				postFunction(result);
-//			}
-//			super.onPostExecute(result);
-//		}
-//
-//		/**
-//		 * @param result
-//		 */
-//		private void postFunction(Void result) {
-//			if (isDropDown) {
-//
-//			} else {
-//				if (resultsPagination != null
-//						&& resultsPagination.getRecords() != null)
-//					Log.d("couponsMessagesAdapter", resultsPagination
-//							.getRecords().size() + "");
-//				
-//				
-//				adapter.notifyDataSetChanged();
-//				Log.d("couponsMessagesAdapter", "2");
-//				// should call onBottomComplete function of DropDownListView at
-//				// end of on bottom complete.
-//				listview.onBottomComplete();
-//				Log.d("couponsMessagesAdapter", "½áÊø");
-//			}
-//		}
-//
-//		/**
-//		 * 
-//		 */
-//		private void cancelledFunction() {
-//			if (!isConnect) {
-//				ToastUtils.show(getActivity(), "ÍøÂçÁ¬½Ó³öÏÖÎÊÌâ");
-//			} else if (!hasMore) {
-//				listview.setFooterNoMoreText("Ã»ÓĞ¸ü¶à´ÙÏúĞÅÏ¢ÁËÅ¶~");
-//				ToastUtils.show(getActivity(), "Ã»ÓĞ¸ü¶à´ÙÏúĞÅÏ¢ÁËÅ¶~");
-//			}
-//			listview.onBottomComplete();
-//		}
-//
-//		/**
-//		 * 
-//		 */
-//		private void doInBackgroundFunction() {
-//			if (isDropDown) {
-//
-//			} else {
-//			 
-//				nextResultsPagination=new .getDownData(1);
-//					resultsPagination
-//							.setCurrentPageNumber(nextResultsPagination
-//									.getCurrentPageNumber());
-//					resultsPagination.getRecords().addAll(
-//							nextResultsPagination.getRecords());
-//
-//				 
-//			}
-//		}
-//
-//	}
- 
+
+	// private class GetDataTask extends AsyncTask<Void, Void, Void> {
+	//
+	// private boolean isConnect;
+	// private boolean isDropDown;
+	//
+	// public GetDataTask(boolean isDropDown) {
+	// this.isDropDown = isDropDown;
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see android.os.AsyncTask#doInBackground(Params[])
+	// */
+	// @Override
+	// protected Void doInBackground(Void... params) {
+	// isConnect = NetworkStateUtil.isNetworkAvailable(getActivity());//
+	// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½
+	// if (!isConnect) {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	// Log.d("doInBackground", "isConnect not");
+	// cancel(true);
+	// return null;
+	// }
+	// doInBackgroundFunction();
+	// return null;
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see android.os.AsyncTask#onCancelled()
+	// */
+	// @Override
+	// protected void onCancelled() {
+	// cancelledFunction();
+	// super.onCancelled();
+	// }
+	//
+	// /*
+	// * (non-Javadoc)
+	// *
+	// * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+	// */
+	// @Override
+	// protected void onPostExecute(Void result) {
+	// if (isCancelled()) {
+	// Log.d("Cancle", "call");
+	// cancelledFunction();
+	// } else {
+	// postFunction(result);
+	// }
+	// super.onPostExecute(result);
+	// }
+	//
+	// /**
+	// * @param result
+	// */
+	// private void postFunction(Void result) {
+	// if (isDropDown) {
+	//
+	// } else {
+	// if (resultsPagination != null
+	// && resultsPagination.getRecords() != null)
+	// Log.d("couponsMessagesAdapter", resultsPagination
+	// .getRecords().size() + "");
+	//
+	//
+	// adapter.notifyDataSetChanged();
+	// Log.d("couponsMessagesAdapter", "2");
+	// // should call onBottomComplete function of DropDownListView at
+	// // end of on bottom complete.
+	// listview.onBottomComplete();
+	// Log.d("couponsMessagesAdapter", "ï¿½ï¿½ï¿½ï¿½");
+	// }
+	// }
+	//
+	// /**
+	// *
+	// */
+	// private void cancelledFunction() {
+	// if (!isConnect) {
+	// ToastUtils.show(getActivity(), "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
+	// } else if (!hasMore) {
+	// listview.setFooterNoMoreText("Ã»ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Å¶~");
+	// ToastUtils.show(getActivity(), "Ã»ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Å¶~");
+	// }
+	// listview.onBottomComplete();
+	// }
+	//
+	// /**
+	// *
+	// */
+	// private void doInBackgroundFunction() {
+	// if (isDropDown) {
+	//
+	// } else {
+	//
+	// nextResultsPagination=new .getDownData(1);
+	// resultsPagination
+	// .setCurrentPageNumber(nextResultsPagination
+	// .getCurrentPageNumber());
+	// resultsPagination.getRecords().addAll(
+	// nextResultsPagination.getRecords());
+	//
+	//
+	// }
+	// }
+	//
+	// }
+
 }

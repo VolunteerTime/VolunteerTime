@@ -1,14 +1,13 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014Äê8ÔÂ18ÈÕ
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-8-18
  */
 package scau.info.volunteertime.activity;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
-import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -16,7 +15,7 @@ import android.view.ViewConfiguration;
 import android.view.Window;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  *
  */
 public class BaseActionBarActivity extends ActionBarActivity{
@@ -32,7 +31,7 @@ public class BaseActionBarActivity extends ActionBarActivity{
 		super.onCreate(savedInstanceState);
 		getOverflowMenu();
 	}
-	 public boolean onMenuOpened(int featureId, Menu menu) {  //Ê¹°´ÏÂ²Ëµ¥¼ü»áÔÚÉÏÃæÏÔÊ¾Í¼±ê
+	 public boolean onMenuOpened(int featureId, Menu menu) {  //Ê¹ï¿½ï¿½ï¿½Â²Ëµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾Í¼ï¿½ï¿½
 	        if (featureId == Window.FEATURE_ACTION_BAR && menu != null) {  
 	            if (menu.getClass().getSimpleName().equals("MenuBuilder")) {  
 	                try {  
@@ -47,7 +46,7 @@ public class BaseActionBarActivity extends ActionBarActivity{
 	        return super.onMenuOpened(featureId, menu);  
 	    }  
 	 
-		private void getOverflowMenu() { //Ã¿¸öĞ¡²Ëµ¥ÏîµÄ¼àÌıÆ÷
+		private void getOverflowMenu() { //Ã¿ï¿½ï¿½Ğ¡ï¿½Ëµï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ï¿½ï¿½
 			try {
 				ViewConfiguration config = ViewConfiguration.get(this);
 				Field menuKeyField = ViewConfiguration.class

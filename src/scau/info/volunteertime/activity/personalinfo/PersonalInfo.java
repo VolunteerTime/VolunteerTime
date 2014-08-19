@@ -1,17 +1,16 @@
-package scau.info.volunteertime.activity.personalinfo;
-
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014Äê8ÔÂ18ÈÕ
- */ 
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-8-18
+ */
+package scau.info.volunteertime.activity.personalinfo;
 
 import scau.info.volunteertime.R;
 import android.os.Bundle;  
 import android.support.v4.preference.PreferenceFragment;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  *
  */
 public class PersonalInfo extends PreferenceFragment{

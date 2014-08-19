@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.util;
 
@@ -17,7 +17,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class FormatTools {
@@ -32,7 +32,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * ½«byte[]×ª»»³ÉInputStream
+	 * ï¿½ï¿½byte[]×ªï¿½ï¿½ï¿½ï¿½InputStream
 	 * 
 	 * @param b
 	 * @return
@@ -43,7 +43,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * ½«InputStream×ª»»³Ébyte[]
+	 * ï¿½ï¿½InputStream×ªï¿½ï¿½ï¿½ï¿½byte[]
 	 * 
 	 * @param is
 	 * @return
@@ -64,7 +64,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * ½«Bitmap×ª»»³ÉInputStream
+	 * ï¿½ï¿½Bitmap×ªï¿½ï¿½ï¿½ï¿½InputStream
 	 * 
 	 * @param bm
 	 * @return
@@ -77,7 +77,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * ½«Bitmap×ª»»³ÉInputStream
+	 * ï¿½ï¿½Bitmap×ªï¿½ï¿½ï¿½ï¿½InputStream
 	 * 
 	 * @param bm
 	 * @param quality
@@ -91,7 +91,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * ½«InputStream×ª»»³ÉBitmap
+	 * ï¿½ï¿½InputStream×ªï¿½ï¿½ï¿½ï¿½Bitmap
 	 * 
 	 * @param is
 	 * @return
@@ -101,7 +101,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * Drawable×ª»»³ÉInputStream
+	 * Drawable×ªï¿½ï¿½ï¿½ï¿½InputStream
 	 * 
 	 * @param d
 	 * @return
@@ -112,7 +112,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * InputStream×ª»»³ÉDrawable
+	 * InputStream×ªï¿½ï¿½ï¿½ï¿½Drawable
 	 * 
 	 * @param is
 	 * @return
@@ -123,7 +123,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * Drawable×ª»»³Ébyte[]
+	 * Drawable×ªï¿½ï¿½ï¿½ï¿½byte[]
 	 * 
 	 * @param d
 	 * @return
@@ -134,7 +134,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * byte[]×ª»»³ÉDrawable
+	 * byte[]×ªï¿½ï¿½ï¿½ï¿½Drawable
 	 * 
 	 * @param b
 	 * @return
@@ -145,7 +145,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * Bitmap×ª»»³Ébyte[]
+	 * Bitmap×ªï¿½ï¿½ï¿½ï¿½byte[]
 	 * 
 	 * @param bm
 	 * @return
@@ -157,7 +157,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * byte[]×ª»»³ÉBitmap
+	 * byte[]×ªï¿½ï¿½ï¿½ï¿½Bitmap
 	 * 
 	 * @param b
 	 * @return
@@ -170,7 +170,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * Drawable×ª»»³ÉBitmap
+	 * Drawable×ªï¿½ï¿½ï¿½ï¿½Bitmap
 	 * 
 	 * @param drawable
 	 * @return
@@ -190,7 +190,7 @@ public class FormatTools {
 	}
 
 	/**
-	 * Bitmap×ª»»³ÉDrawable
+	 * Bitmap×ªï¿½ï¿½ï¿½ï¿½Drawable
 	 * 
 	 * @param bitmap
 	 * @return

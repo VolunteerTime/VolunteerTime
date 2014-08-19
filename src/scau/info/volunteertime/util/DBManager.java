@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-24
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-24
  */
 package scau.info.volunteertime.util;
 
@@ -16,7 +16,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class DBManager {
@@ -25,9 +25,9 @@ public class DBManager {
 
 	public DBManager(Context context) {
 		helper = new DBHelper(context);
-		// ÒòÎªgetWritableDatabaseÄÚ²¿µ÷ÓÃÁËmContext.openOrCreateDatabase(mName, 0,
+		// ï¿½ï¿½ÎªgetWritableDatabaseï¿½Ú²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½mContext.openOrCreateDatabase(mName, 0,
 		// mFactory);
-		// ËùÒÔÒªÈ·±£contextÒÑ³õÊ¼»¯,ÎÒÃÇ¿ÉÒÔ°ÑÊµÀı»¯DBManagerµÄ²½Öè·ÅÔÚActivityµÄonCreateÀï
+		// ï¿½ï¿½ï¿½ï¿½ÒªÈ·ï¿½ï¿½contextï¿½Ñ³ï¿½Ê¼ï¿½ï¿½,ï¿½ï¿½ï¿½Ç¿ï¿½ï¿½Ô°ï¿½Êµï¿½ï¿½ï¿½ï¿½DBManagerï¿½Ä²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Activityï¿½ï¿½onCreateï¿½ï¿½
 		db = helper.getWritableDatabase();
 	}
 
@@ -42,7 +42,7 @@ public class DBManager {
 		 * "(id INTEGER PRIMARY KEY, title VARCHAR," +
 		 * " image VARCHAR, content TEXT, editor VARCHAR , publishTime Date )");
 		 */
-		db.beginTransaction(); // ¿ªÊ¼ÊÂÎñ
+		db.beginTransaction(); // ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½
 		try {
 			for (Result result : results) {
 				db.execSQL(
@@ -51,9 +51,9 @@ public class DBManager {
 								result.getImage(), result.getContent(),
 								result.getEditor(), result.getPublishTime() });
 			}
-			db.setTransactionSuccessful(); // ÉèÖÃÊÂÎñ³É¹¦Íê³É
+			db.setTransactionSuccessful(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¹ï¿½ï¿½ï¿½ï¿½
 		} finally {
-			db.endTransaction(); // ½áÊøÊÂÎñ
+			db.endTransaction(); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		}
 	}
 

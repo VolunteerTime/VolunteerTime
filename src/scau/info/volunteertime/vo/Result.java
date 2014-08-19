@@ -1,25 +1,25 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-23
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-23
  */
 package scau.info.volunteertime.vo;
 
 /**
- * ³É¹ûÕ¹Ê¾µÄVO
+ * ï¿½É¹ï¿½Õ¹Ê¾ï¿½ï¿½VO
  * 
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class Result implements VolunteertimeData {
 
-	private int id;// ±êÊ¶id
+	private int id;// ï¿½ï¿½Ê¶id
 
-	private String title;// ÌâÄ¿
-	private String content;// ÄÚÈİ
+	private String title;// ï¿½ï¿½Ä¿
+	private String content;// ï¿½ï¿½ï¿½ï¿½
 	private String image;// Í¼Æ¬
-	private String editor;// ×÷Õß
-	private long publishTime;// ·¢²¼Ê±¼ä
+	private String editor;// ï¿½ï¿½ï¿½ï¿½
+	private long publishTime;// ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 
 	/**
 	 * @param id

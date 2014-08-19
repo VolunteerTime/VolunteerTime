@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.activity.resultsexhibition;
 
@@ -27,15 +27,15 @@ import cn.trinea.android.common.view.DropDownListView;
 import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 
 /**
- * ³É¹ûÕ¹Ê¾µÄactivity
+ * ï¿½É¹ï¿½Õ¹Ê¾ï¿½ï¿½activity
  * 
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class ResultsExhibition extends ActionBarActivity {
 
-	private Pagination<Result> resultsPagination;// ×°ÔØµ±Ç°ÄÚÈİ
-	private Pagination<Result> nextResultsPagination;// ×÷Îª×°ÔØÏÂÒ»Ò³ÄÚÈİµÄÖĞ½é
+	private Pagination<Result> resultsPagination;// ×°ï¿½Øµï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+	private Pagination<Result> nextResultsPagination;// ï¿½ï¿½Îª×°ï¿½ï¿½ï¿½ï¿½Ò»Ò³ï¿½ï¿½ï¿½İµï¿½ï¿½Ğ½ï¿½
 
 	private DropDownListView resultsListView;
 
@@ -56,14 +56,14 @@ public class ResultsExhibition extends ActionBarActivity {
 
 		resultsListView = (DropDownListView) findViewById(R.id.results_exhibition_list);
 
-		hasMore = true;// ÓĞ¸ü¶à²ÅÏÔÊ¾£¬Ã»ÓĞÔò²»ÏÔÊ¾
+		hasMore = true;// ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾
 		activity = this;
 
-		resultBO = new ResultBO();// È¡µÃresultBO
+		resultBO = new ResultBO();// È¡ï¿½ï¿½resultBO
 		resultsPagination = new Pagination<Result>();
 
 		// resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(this,
-		// resultsPagination);// ³É¹ûÊı¾İ´«¸øAdapter
+		// resultsPagination);// ï¿½É¹ï¿½ï¿½ï¿½ï¿½İ´ï¿½ï¿½ï¿½Adapter
 
 		resultsListView.setAdapter(resultsExhibitionListAdapter);
 
@@ -74,7 +74,7 @@ public class ResultsExhibition extends ActionBarActivity {
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
 						Log.d("ResultsExhibition-onCreate-setOnItemLongClickListener-onItemLongClick",
-								"³õ²½²âÊÔ");
+								"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 						return false;
 					}
 
@@ -85,7 +85,7 @@ public class ResultsExhibition extends ActionBarActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Log.d("ResultsExhibition-onCreate-setOnItemClickListener-onItemClick",
-						"³õ²½²âÊÔ");
+						"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			}
 		});
 
@@ -94,7 +94,7 @@ public class ResultsExhibition extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
-						"³õ²½²âÊÔ");
+						"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				new GetDataTask(false).execute();
 				resultsListView.onBottomComplete();
 			}
@@ -107,7 +107,7 @@ public class ResultsExhibition extends ActionBarActivity {
 			@Override
 			public void onDropDown() {
 				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
-						"³õ²½²âÊÔ");
+						"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 				new GetDataTask(true).execute();
 				resultsListView.onDropDownComplete();
 			}
@@ -151,8 +151,8 @@ public class ResultsExhibition extends ActionBarActivity {
 		 */
 		@Override
 		protected Void doInBackground(Void... params) {
-			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// »ñÈ¡Á¬½Ó×´¿ö
-			if (!isConnect) {// ÎŞÍøÂç»òÎŞ¸ü¶àÊı¾İÔòÈ¡ÏûÈÎÎñ
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½×´ï¿½ï¿½
+			if (!isConnect) {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ş¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				Log.d("doInBackground", "isConnect not");
 				cancel(true);
 				return null;
@@ -210,7 +210,7 @@ public class ResultsExhibition extends ActionBarActivity {
 				// should call onBottomComplete function of DropDownListView at
 				// end of on bottom complete.
 				resultsListView.onBottomComplete();
-				Log.d("couponsMessagesAdapter", "½áÊø");
+				Log.d("couponsMessagesAdapter", "ï¿½ï¿½ï¿½ï¿½");
 			}
 		}
 
@@ -219,10 +219,10 @@ public class ResultsExhibition extends ActionBarActivity {
 		 */
 		private void cancelledFunction() {
 			if (!isConnect) {
-				ToastUtils.show(activity, "ÍøÂçÁ¬½Ó³öÏÖÎÊÌâ");
+				ToastUtils.show(activity, "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó³ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 			} else if (!hasMore) {
-				resultsListView.setFooterNoMoreText("Ã»ÓĞ¸ü¶à´ÙÏúĞÅÏ¢ÁËÅ¶~");
-				ToastUtils.show(activity, "Ã»ÓĞ¸ü¶à´ÙÏúĞÅÏ¢ÁËÅ¶~");
+				resultsListView.setFooterNoMoreText("Ã»ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Å¶~");
+				ToastUtils.show(activity, "Ã»ï¿½Ğ¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¢ï¿½ï¿½Å¶~");
 			}
 			resultsListView.onBottomComplete();
 		}

@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-25
  */
 package scau.info.volunteertime.util;
 
@@ -22,19 +22,19 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class UploadImageUtil {
 
 	private static final String TAG = "uploadFile";
-	private static final int TIME_OUT = 10 * 10000000; // ³¬Ê±Ê±¼ä
-	private static final String CHARSET = "utf-8"; // ÉèÖÃ±àÂë
+	private static final int TIME_OUT = 10 * 10000000; // ï¿½ï¿½Ê±Ê±ï¿½ï¿½
+	private static final String CHARSET = "utf-8"; // ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½
 	public static final String SUCCESS = "1";
 	public static final String FAILURE = "0";
 
 	/**
-	 * fileÎªÎÄ¼ş£¬RequestURLÎªÉÏ´«µØÖ·£¬ ¸ÃÀàÖ»ÄÜÉÏ´«Ò»¸öÎÄ¼ş
+	 * fileÎªï¿½Ä¼ï¿½ï¿½ï¿½RequestURLÎªï¿½Ï´ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ö»ï¿½ï¿½ï¿½Ï´ï¿½Ò»ï¿½ï¿½ï¿½Ä¼ï¿½
 	 * 
 	 * @param file
 	 * @param RequestURL
@@ -42,24 +42,24 @@ public class UploadImageUtil {
 	 */
 
 	public static String uploadFile(File file, String RequestURL) {
-		String BOUNDARY = UUID.randomUUID().toString(); // ±ß½ç±êÊ¶ Ëæ»úÉú³É
+		String BOUNDARY = UUID.randomUUID().toString(); // ï¿½ß½ï¿½ï¿½Ê¶ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String PREFIX = "--", LINE_END = "\r\n";
-		String CONTENT_TYPE = "multipart/form-data"; // ÄÚÈİÀàĞÍ
+		String CONTENT_TYPE = "multipart/form-data"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		try {
 			URL url = new URL(RequestURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(TIME_OUT);
 			conn.setConnectTimeout(TIME_OUT);
-			conn.setDoInput(true); // ÔÊĞíÊäÈëÁ÷
-			conn.setDoOutput(true); // ÔÊĞíÊä³öÁ÷
-			conn.setUseCaches(false); // ²»ÔÊĞíÊ¹ÓÃ»º´æ
-			conn.setRequestMethod("POST"); // ÇëÇó·½Ê½
-			conn.setRequestProperty("Charset", CHARSET); // ÉèÖÃ±àÂë
-			// ÒÔÏÂ±ØĞëµÄ£¬ÓëºóÃæÏà¶ÔÓ¦¡£
-			conn.setRequestProperty("connection", "keep-alive"); // ÉèÖÃÁ¬½Ó·½Ê½
+			conn.setDoInput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			conn.setDoOutput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			conn.setUseCaches(false); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã»ï¿½ï¿½ï¿½
+			conn.setRequestMethod("POST"); // ï¿½ï¿½ï¿½ï¿½Ê½
+			conn.setRequestProperty("Charset", CHARSET); // ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+			conn.setRequestProperty("connection", "keep-alive"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½Ê½
 			conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
-					+ BOUNDARY);// ÉèÖÃ´«ÊäÄÚÈİÀàĞÍºÍ±ß½ç±êÖ¾
+					+ BOUNDARY);// ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍºÍ±ß½ï¿½ï¿½Ö¾
 			if (file != null) {
 				OutputStream outputSteam = conn.getOutputStream();
 				DataOutputStream dos = new DataOutputStream(outputSteam);
@@ -87,7 +87,7 @@ public class UploadImageUtil {
 				dos.flush();
 				int res = conn.getResponseCode();
 				Log.e(TAG, "response code:" + res);
-				if (res == 200) {// »ñÈ¡ÏìÓ¦Âë 200=³É¹¦
+				if (res == 200) {// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ 200=ï¿½É¹ï¿½
 					return SUCCESS;
 				}
 				dos.close();
@@ -105,24 +105,24 @@ public class UploadImageUtil {
 	public static int uploadFiles(String userName, int productId,
 			String productName, List<String> imageList, int userId,
 			String content, String RequestURL) {
-		String BOUNDARY = UUID.randomUUID().toString(); // ±ß½ç±êÊ¶ Ëæ»úÉú³É
+		String BOUNDARY = UUID.randomUUID().toString(); // ï¿½ß½ï¿½ï¿½Ê¶ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String PREFIX = "--", LINE_END = "\r\n";
-		String CONTENT_TYPE = "multipart/form-data"; // ÄÚÈİÀàĞÍ
+		String CONTENT_TYPE = "multipart/form-data"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		try {
 			URL url = new URL(RequestURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(TIME_OUT);
 			conn.setConnectTimeout(TIME_OUT);
-			conn.setDoInput(true); // ÔÊĞíÊäÈëÁ÷
-			conn.setDoOutput(true); // ÔÊĞíÊä³öÁ÷
-			conn.setUseCaches(false); // ²»ÔÊĞíÊ¹ÓÃ»º´æ
-			conn.setRequestMethod("POST"); // ÇëÇó·½Ê½
-			conn.setRequestProperty("Charset", CHARSET); // ÉèÖÃ±àÂë
-			// ÒÔÏÂ±ØĞëµÄ£¬ÓëºóÃæÏà¶ÔÓ¦¡£
-			conn.setRequestProperty("connection", "keep-alive"); // ÉèÖÃÁ¬½Ó·½Ê½
+			conn.setDoInput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			conn.setDoOutput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			conn.setUseCaches(false); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã»ï¿½ï¿½ï¿½
+			conn.setRequestMethod("POST"); // ï¿½ï¿½ï¿½ï¿½Ê½
+			conn.setRequestProperty("Charset", CHARSET); // ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+			conn.setRequestProperty("connection", "keep-alive"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½Ê½
 			conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
-					+ BOUNDARY);// ÉèÖÃ´«ÊäÄÚÈİÀàĞÍºÍ±ß½ç±êÖ¾
+					+ BOUNDARY);// ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍºÍ±ß½ï¿½ï¿½Ö¾
 			if (imageList != null) {
 				OutputStream outputSteam = conn.getOutputStream();
 				DataOutputStream dos = new DataOutputStream(outputSteam);
@@ -209,7 +209,7 @@ public class UploadImageUtil {
 				dos.flush();
 				int res = conn.getResponseCode();
 				Log.e(TAG, "response code:" + res);
-				if (res == 200)// »ñÈ¡ÏìÓ¦Âë 200=³É¹¦
+				if (res == 200)// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ 200=ï¿½É¹ï¿½
 				{
 					System.out.println(UploadImageUtil.inputStreamToString(conn
 							.getInputStream()));
@@ -235,24 +235,24 @@ public class UploadImageUtil {
 			String productName, List<String> imageList,
 			List<Bitmap> bitmapList, int userId, String content,
 			String RequestURL) {
-		String BOUNDARY = UUID.randomUUID().toString(); // ±ß½ç±êÊ¶ Ëæ»úÉú³É
+		String BOUNDARY = UUID.randomUUID().toString(); // ï¿½ß½ï¿½ï¿½Ê¶ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		String PREFIX = "--", LINE_END = "\r\n";
-		String CONTENT_TYPE = "multipart/form-data"; // ÄÚÈİÀàĞÍ
+		String CONTENT_TYPE = "multipart/form-data"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 		try {
 			URL url = new URL(RequestURL);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setReadTimeout(TIME_OUT);
 			conn.setConnectTimeout(TIME_OUT);
-			conn.setDoInput(true); // ÔÊĞíÊäÈëÁ÷
-			conn.setDoOutput(true); // ÔÊĞíÊä³öÁ÷
-			conn.setUseCaches(false); // ²»ÔÊĞíÊ¹ÓÃ»º´æ
-			conn.setRequestMethod("POST"); // ÇëÇó·½Ê½
-			conn.setRequestProperty("Charset", CHARSET); // ÉèÖÃ±àÂë
-			// ÒÔÏÂ±ØĞëµÄ£¬ÓëºóÃæÏà¶ÔÓ¦¡£
-			conn.setRequestProperty("connection", "keep-alive"); // ÉèÖÃÁ¬½Ó·½Ê½
+			conn.setDoInput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			conn.setDoOutput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+			conn.setUseCaches(false); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã»ï¿½ï¿½ï¿½
+			conn.setRequestMethod("POST"); // ï¿½ï¿½ï¿½ï¿½Ê½
+			conn.setRequestProperty("Charset", CHARSET); // ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½
+			// ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½
+			conn.setRequestProperty("connection", "keep-alive"); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½Ê½
 			conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
-					+ BOUNDARY);// ÉèÖÃ´«ÊäÄÚÈİÀàĞÍºÍ±ß½ç±êÖ¾
+					+ BOUNDARY);// ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍºÍ±ß½ï¿½ï¿½Ö¾
 			if (imageList != null) {
 				OutputStream outputSteam = conn.getOutputStream();
 				DataOutputStream dos = new DataOutputStream(outputSteam);
@@ -344,7 +344,7 @@ public class UploadImageUtil {
 				dos.flush();
 				int res = conn.getResponseCode();
 				Log.e(TAG, "response code:" + res);
-				if (res == 200)// »ñÈ¡ÏìÓ¦Âë 200=³É¹¦
+				if (res == 200)// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ 200=ï¿½É¹ï¿½
 				{
 					int flag = Integer.parseInt(UploadImageUtil
 							.inputStreamToString(conn.getInputStream()));
@@ -373,379 +373,229 @@ public class UploadImageUtil {
 		return out.toString();
 	}
 
-/*	public static int uploadFileTest(CheapCard cheapCard, Bitmap bitmap,
-			String addMerchantCouponUrl) {
-		String BOUNDARY = UUID.randomUUID().toString(); // ±ß½ç±êÊ¶ Ëæ»úÉú³É
-		String PREFIX = "--", LINE_END = "\r\n";
-		String CONTENT_TYPE = "multipart/form-data"; // ÄÚÈİÀàĞÍ
-
-		try {
-			URL url = new URL(addMerchantCouponUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(TIME_OUT);
-			conn.setConnectTimeout(TIME_OUT);
-			conn.setDoInput(true); // ÔÊĞíÊäÈëÁ÷
-			conn.setDoOutput(true); // ÔÊĞíÊä³öÁ÷
-			conn.setUseCaches(false); // ²»ÔÊĞíÊ¹ÓÃ»º´æ
-			conn.setRequestMethod("POST"); // ÇëÇó·½Ê½
-			conn.setRequestProperty("Charset", CHARSET); // ÉèÖÃ±àÂë
-			// ÒÔÏÂ±ØĞëµÄ£¬ÓëºóÃæÏà¶ÔÓ¦¡£
-			conn.setRequestProperty("connection", "keep-alive"); // ÉèÖÃÁ¬½Ó·½Ê½
-			conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
-					+ BOUNDARY);// ÉèÖÃ´«ÊäÄÚÈİÀàĞÍºÍ±ß½ç±êÖ¾
-			if (cheapCard.getChca_pic() != null) {
-				OutputStream outputSteam = conn.getOutputStream();
-				DataOutputStream dos = new DataOutputStream(outputSteam);
-				StringBuffer sb = new StringBuffer();
-
-				int chca_id = cheapCard.getChca_id();
-				if (chca_id > 0) {
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"chca_id\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(chca_id);
-					sb.append(LINE_END);
-				}
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"merc_id\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getMerc_id());
-				sb.append(LINE_END);
-
-				String store_name = cheapCard.getStore_name();
-				if (store_name != null) {
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"store_name\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(store_name);
-					sb.append(LINE_END);
-				}
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"title\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getChca_title());
-				sb.append(LINE_END);
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"content\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getContent());
-				sb.append(LINE_END);
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"start_time\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getChca_time());
-				sb.append(LINE_END);
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"end_time\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getEnd_time());
-				sb.append(LINE_END);
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"is_can_search\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getIs_can_search());
-				sb.append(LINE_END);
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"chca_url\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getChca_url());
-				sb.append(LINE_END);
-
-				dos.write(sb.toString().getBytes());
-
-				StringBuffer sb1 = new StringBuffer();
-				String imageUrl = cheapCard.getChca_pic();
-				File file = new File(imageUrl);
-				sb1.append(PREFIX);
-				sb1.append(BOUNDARY);
-				sb1.append(LINE_END);
-				sb1.append("Content-Disposition: form-data; name=\"img\"; filename=\""
-						+ file.getName() + "\"" + LINE_END);
-				sb1.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END);
-				sb1.append(LINE_END);
-
-				dos.write(sb1.toString().getBytes());
-				InputStream is = FormatTools.getInstance().Bitmap2InputStream(
-						bitmap);
-				byte[] bytes = new byte[1024];
-				int len = 0;
-				while ((len = is.read(bytes)) != -1) {
-					dos.write(bytes, 0, len);
-				}
-				is.close();
-				dos.write(LINE_END.getBytes());
-
-				byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END)
-						.getBytes();
-				dos.write(end_data);
-				dos.flush();
-				int res = conn.getResponseCode();
-				Log.e(TAG, "response code:" + res);
-
-				dos.close();
-				outputSteam.close();
-				conn.disconnect();
-
-				if (res == 200)// »ñÈ¡ÏìÓ¦Âë 200=³É¹¦
-				{
-					return 1;
-				}
-
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-*/
 	/*
-	  public static int uploadFile(CheapCard cheapCard,
-			String addMerchantCouponUrl) {
-		String BOUNDARY = UUID.randomUUID().toString(); // ±ß½ç±êÊ¶ Ëæ»úÉú³É
-		String PREFIX = "--", LINE_END = "\r\n";
-		String CONTENT_TYPE = "multipart/form-data"; // ÄÚÈİÀàĞÍ
-
-		try {
-			URL url = new URL(addMerchantCouponUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setReadTimeout(TIME_OUT);
-			conn.setConnectTimeout(TIME_OUT);
-			conn.setDoInput(true); // ÔÊĞíÊäÈëÁ÷
-			conn.setDoOutput(true); // ÔÊĞíÊä³öÁ÷
-			conn.setUseCaches(false); // ²»ÔÊĞíÊ¹ÓÃ»º´æ
-			conn.setRequestMethod("POST"); // ÇëÇó·½Ê½
-			conn.setRequestProperty("Charset", CHARSET); // ÉèÖÃ±àÂë
-			// ÒÔÏÂ±ØĞëµÄ£¬ÓëºóÃæÏà¶ÔÓ¦¡£
-			conn.setRequestProperty("connection", "keep-alive"); // ÉèÖÃÁ¬½Ó·½Ê½
-			conn.setRequestProperty("Content-Type", CONTENT_TYPE + ";boundary="
-					+ BOUNDARY);// ÉèÖÃ´«ÊäÄÚÈİÀàĞÍºÍ±ß½ç±êÖ¾
-			if (cheapCard.getChca_pic() != null) {
-				OutputStream outputSteam = conn.getOutputStream();
-				DataOutputStream dos = new DataOutputStream(outputSteam);
-				StringBuffer sb = new StringBuffer();
-
-				int chca_id = cheapCard.getChca_id();
-				if (chca_id > 0) {
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"chca_id\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(chca_id);
-					sb.append(LINE_END);
-				}
-
-				int merc_id = cheapCard.getMerc_id();
-				if (merc_id > 0) {
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"merc_id\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(cheapCard.getMerc_id());
-					sb.append(LINE_END);
-				}
-
-				String store_name = cheapCard.getStore_name();
-				if (store_name != null) {
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"store_name\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(store_name);
-					sb.append(LINE_END);
-				}
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"title\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getChca_title());
-				sb.append(LINE_END);
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"content\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getContent());
-				sb.append(LINE_END);
-
-				String start_time = cheapCard.getChca_time();
-				if (start_time != null && !start_time.equals("")) {
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"start_time\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(cheapCard.getChca_time());
-					sb.append(LINE_END);
-				}
-
-				String end_time = cheapCard.getEnd_time();
-				if (start_time != null && !start_time.equals("")) {
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"end_time\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(end_time);
-					sb.append(LINE_END);
-				}
-
-				// sb.append(PREFIX);
-				// sb.append(BOUNDARY);
-				// sb.append(LINE_END);
-				// sb.append("Content-Disposition: form-data; name=\"is_can_search\""
-				// + LINE_END);
-				// sb.append("Content-Type: application/octet-stream; charset="
-				// + CHARSET + "\"" + LINE_END
-				// + LINE_END);
-				// sb.append(cheapCard.getIs_can_search());
-				// sb.append(LINE_END);
-
-				sb.append(PREFIX);
-				sb.append(BOUNDARY);
-				sb.append(LINE_END);
-				sb.append("Content-Disposition: form-data; name=\"chca_url\""
-						+ LINE_END);
-				sb.append("Content-Type: application/octet-stream; charset="
-						+ CHARSET + "\"" + LINE_END + LINE_END);
-				sb.append(cheapCard.getChca_url());
-				sb.append(LINE_END);
-
-				String imageUrl = cheapCard.getChca_pic();
-
-				if (imageUrl.contains("http://")) {
-
-					sb.append(PREFIX);
-					sb.append(BOUNDARY);
-					sb.append(LINE_END);
-					sb.append("Content-Disposition: form-data; name=\"chca_pic\""
-							+ LINE_END);
-					sb.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END + LINE_END);
-					sb.append(cheapCard.getChca_pic());
-					sb.append(LINE_END);
-					dos.write(sb.toString().getBytes());
-
-				} else {
-
-					dos.write(sb.toString().getBytes());
-
-					StringBuffer sb1 = new StringBuffer();
-
-					File file = new File(imageUrl);
-					sb1.append(PREFIX);
-					sb1.append(BOUNDARY);
-					sb1.append(LINE_END);
-					sb1.append("Content-Disposition: form-data; name=\"img\"; filename=\""
-							+ file.getName() + "\"" + LINE_END);
-					sb1.append("Content-Type: application/octet-stream; charset="
-							+ CHARSET + "\"" + LINE_END);
-					sb1.append(LINE_END);
-					dos.write(sb1.toString().getBytes());
-					InputStream is = new FileInputStream(file);
-					byte[] bytes = new byte[1024];
-					int len = 0;
-					while ((len = is.read(bytes)) != -1) {
-						dos.write(bytes, 0, len);
-					}
-					is.close();
-
-				}
-
-				dos.write(LINE_END.getBytes());
-
-				byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END)
-						.getBytes();
-				dos.write(end_data);
-				dos.flush();
-				int res = conn.getResponseCode();
-				Log.e(TAG, "response code:" + res);
-
-				dos.close();
-				outputSteam.close();
-				conn.disconnect();
-
-				if (res == 200)// »ñÈ¡ÏìÓ¦Âë 200=³É¹¦
-				{
-					return 1;
-				}
-			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-	*/
+	 * public static int uploadFileTest(CheapCard cheapCard, Bitmap bitmap,
+	 * String addMerchantCouponUrl) { String BOUNDARY =
+	 * UUID.randomUUID().toString(); // ï¿½ß½ï¿½ï¿½Ê¶ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ String PREFIX = "--",
+	 * LINE_END = "\r\n"; String CONTENT_TYPE = "multipart/form-data"; //
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * 
+	 * try { URL url = new URL(addMerchantCouponUrl); HttpURLConnection conn =
+	 * (HttpURLConnection) url.openConnection(); conn.setReadTimeout(TIME_OUT);
+	 * conn.setConnectTimeout(TIME_OUT); conn.setDoInput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * conn.setDoOutput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ conn.setUseCaches(false); //
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã»ï¿½ï¿½ï¿½ conn.setRequestMethod("POST"); // ï¿½ï¿½ï¿½ï¿½Ê½
+	 * conn.setRequestProperty("Charset", CHARSET); // ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ //
+	 * ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ conn.setRequestProperty("connection", "keep-alive");
+	 * // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½Ê½ conn.setRequestProperty("Content-Type", CONTENT_TYPE +
+	 * ";boundary=" + BOUNDARY);// ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍºÍ±ß½ï¿½ï¿½Ö¾ if
+	 * (cheapCard.getChca_pic() != null) { OutputStream outputSteam =
+	 * conn.getOutputStream(); DataOutputStream dos = new
+	 * DataOutputStream(outputSteam); StringBuffer sb = new StringBuffer();
+	 * 
+	 * int chca_id = cheapCard.getChca_id(); if (chca_id > 0) {
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"chca_id\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(chca_id); sb.append(LINE_END); }
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"merc_id\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(cheapCard.getMerc_id());
+	 * sb.append(LINE_END);
+	 * 
+	 * String store_name = cheapCard.getStore_name(); if (store_name != null) {
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"store_name\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END); sb.append(store_name);
+	 * sb.append(LINE_END); }
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"title\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(cheapCard.getChca_title());
+	 * sb.append(LINE_END);
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"content\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(cheapCard.getContent());
+	 * sb.append(LINE_END);
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"start_time\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END);
+	 * sb.append(cheapCard.getChca_time()); sb.append(LINE_END);
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"end_time\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END);
+	 * sb.append(cheapCard.getEnd_time()); sb.append(LINE_END);
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"is_can_search\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END);
+	 * sb.append(cheapCard.getIs_can_search()); sb.append(LINE_END);
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"chca_url\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END);
+	 * sb.append(cheapCard.getChca_url()); sb.append(LINE_END);
+	 * 
+	 * dos.write(sb.toString().getBytes());
+	 * 
+	 * StringBuffer sb1 = new StringBuffer(); String imageUrl =
+	 * cheapCard.getChca_pic(); File file = new File(imageUrl);
+	 * sb1.append(PREFIX); sb1.append(BOUNDARY); sb1.append(LINE_END);
+	 * sb1.append("Content-Disposition: form-data; name=\"img\"; filename=\"" +
+	 * file.getName() + "\"" + LINE_END);
+	 * sb1.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END); sb1.append(LINE_END);
+	 * 
+	 * dos.write(sb1.toString().getBytes()); InputStream is =
+	 * FormatTools.getInstance().Bitmap2InputStream( bitmap); byte[] bytes = new
+	 * byte[1024]; int len = 0; while ((len = is.read(bytes)) != -1) {
+	 * dos.write(bytes, 0, len); } is.close(); dos.write(LINE_END.getBytes());
+	 * 
+	 * byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END) .getBytes();
+	 * dos.write(end_data); dos.flush(); int res = conn.getResponseCode();
+	 * Log.e(TAG, "response code:" + res);
+	 * 
+	 * dos.close(); outputSteam.close(); conn.disconnect();
+	 * 
+	 * if (res == 200)// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ 200=ï¿½É¹ï¿½ { return 1; }
+	 * 
+	 * } } catch (MalformedURLException e) { e.printStackTrace(); } catch
+	 * (IOException e) { e.printStackTrace(); } catch (Exception e) {
+	 * e.printStackTrace(); } return 0; }
+	 */
+	/*
+	 * public static int uploadFile(CheapCard cheapCard, String
+	 * addMerchantCouponUrl) { String BOUNDARY = UUID.randomUUID().toString();
+	 * // ï¿½ß½ï¿½ï¿½Ê¶ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ String PREFIX = "--", LINE_END = "\r\n"; String
+	 * CONTENT_TYPE = "multipart/form-data"; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * 
+	 * try { URL url = new URL(addMerchantCouponUrl); HttpURLConnection conn =
+	 * (HttpURLConnection) url.openConnection(); conn.setReadTimeout(TIME_OUT);
+	 * conn.setConnectTimeout(TIME_OUT); conn.setDoInput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	 * conn.setDoOutput(true); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ conn.setUseCaches(false); //
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¹ï¿½Ã»ï¿½ï¿½ï¿½ conn.setRequestMethod("POST"); // ï¿½ï¿½ï¿½ï¿½Ê½
+	 * conn.setRequestProperty("Charset", CHARSET); // ï¿½ï¿½ï¿½Ã±ï¿½ï¿½ï¿½ //
+	 * ï¿½ï¿½ï¿½Â±ï¿½ï¿½ï¿½Ä£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½ï¿½ conn.setRequestProperty("connection", "keep-alive");
+	 * // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ó·ï¿½Ê½ conn.setRequestProperty("Content-Type", CONTENT_TYPE +
+	 * ";boundary=" + BOUNDARY);// ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÍºÍ±ß½ï¿½ï¿½Ö¾ if
+	 * (cheapCard.getChca_pic() != null) { OutputStream outputSteam =
+	 * conn.getOutputStream(); DataOutputStream dos = new
+	 * DataOutputStream(outputSteam); StringBuffer sb = new StringBuffer();
+	 * 
+	 * int chca_id = cheapCard.getChca_id(); if (chca_id > 0) {
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"chca_id\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(chca_id); sb.append(LINE_END); }
+	 * 
+	 * int merc_id = cheapCard.getMerc_id(); if (merc_id > 0) {
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"merc_id\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(cheapCard.getMerc_id());
+	 * sb.append(LINE_END); }
+	 * 
+	 * String store_name = cheapCard.getStore_name(); if (store_name != null) {
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"store_name\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END); sb.append(store_name);
+	 * sb.append(LINE_END); }
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"title\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(cheapCard.getChca_title());
+	 * sb.append(LINE_END);
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"content\"" + LINE_END);
+	 * sb.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END + LINE_END); sb.append(cheapCard.getContent());
+	 * sb.append(LINE_END);
+	 * 
+	 * String start_time = cheapCard.getChca_time(); if (start_time != null &&
+	 * !start_time.equals("")) { sb.append(PREFIX); sb.append(BOUNDARY);
+	 * sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"start_time\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END);
+	 * sb.append(cheapCard.getChca_time()); sb.append(LINE_END); }
+	 * 
+	 * String end_time = cheapCard.getEnd_time(); if (start_time != null &&
+	 * !start_time.equals("")) { sb.append(PREFIX); sb.append(BOUNDARY);
+	 * sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"end_time\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END); sb.append(end_time);
+	 * sb.append(LINE_END); }
+	 * 
+	 * // sb.append(PREFIX); // sb.append(BOUNDARY); // sb.append(LINE_END); //
+	 * sb.append("Content-Disposition: form-data; name=\"is_can_search\"" // +
+	 * LINE_END); //
+	 * sb.append("Content-Type: application/octet-stream; charset=" // + CHARSET
+	 * + "\"" + LINE_END // + LINE_END); //
+	 * sb.append(cheapCard.getIs_can_search()); // sb.append(LINE_END);
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"chca_url\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END);
+	 * sb.append(cheapCard.getChca_url()); sb.append(LINE_END);
+	 * 
+	 * String imageUrl = cheapCard.getChca_pic();
+	 * 
+	 * if (imageUrl.contains("http://")) {
+	 * 
+	 * sb.append(PREFIX); sb.append(BOUNDARY); sb.append(LINE_END);
+	 * sb.append("Content-Disposition: form-data; name=\"chca_pic\"" +
+	 * LINE_END); sb.append("Content-Type: application/octet-stream; charset=" +
+	 * CHARSET + "\"" + LINE_END + LINE_END);
+	 * sb.append(cheapCard.getChca_pic()); sb.append(LINE_END);
+	 * dos.write(sb.toString().getBytes());
+	 * 
+	 * } else {
+	 * 
+	 * dos.write(sb.toString().getBytes());
+	 * 
+	 * StringBuffer sb1 = new StringBuffer();
+	 * 
+	 * File file = new File(imageUrl); sb1.append(PREFIX); sb1.append(BOUNDARY);
+	 * sb1.append(LINE_END);
+	 * sb1.append("Content-Disposition: form-data; name=\"img\"; filename=\"" +
+	 * file.getName() + "\"" + LINE_END);
+	 * sb1.append("Content-Type: application/octet-stream; charset=" + CHARSET +
+	 * "\"" + LINE_END); sb1.append(LINE_END);
+	 * dos.write(sb1.toString().getBytes()); InputStream is = new
+	 * FileInputStream(file); byte[] bytes = new byte[1024]; int len = 0; while
+	 * ((len = is.read(bytes)) != -1) { dos.write(bytes, 0, len); } is.close();
+	 * 
+	 * }
+	 * 
+	 * dos.write(LINE_END.getBytes());
+	 * 
+	 * byte[] end_data = (PREFIX + BOUNDARY + PREFIX + LINE_END) .getBytes();
+	 * dos.write(end_data); dos.flush(); int res = conn.getResponseCode();
+	 * Log.e(TAG, "response code:" + res);
+	 * 
+	 * dos.close(); outputSteam.close(); conn.disconnect();
+	 * 
+	 * if (res == 200)// ï¿½ï¿½È¡ï¿½ï¿½Ó¦ï¿½ï¿½ 200=ï¿½É¹ï¿½ { return 1; } } } catch
+	 * (MalformedURLException e) { e.printStackTrace(); } catch (IOException e)
+	 * { e.printStackTrace(); } catch (Exception e) { e.printStackTrace(); }
+	 * return 0; }
+	 */
 
 }

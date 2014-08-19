@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-15
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-15
  */
 package scau.info.volunteertime.application;
 
@@ -16,13 +16,13 @@ import cn.trinea.android.common.service.impl.ImageCache;
 import cn.trinea.android.common.service.impl.ImageMemoryCache.OnImageCallbackListener;
 
 /**
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class Ding9App extends Application {
-	/** ¶¨Òå»º´æºÍ»Øµ÷½Ó¿Ú */
-	public static final String TAG_CACHE = "image_cache";// »º´æ±êÊ¶
-	/** DEFAULT_CACHE_FOLDER£¬Í¼Æ¬»º´æ´æ·ÅÄ¿Â¼ */
+	/** ï¿½ï¿½ï¿½å»ºï¿½ï¿½Í»Øµï¿½ï¿½Ó¿ï¿½ */
+	public static final String TAG_CACHE = "image_cache";// ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶
+	/** DEFAULT_CACHE_FOLDERï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿Â¼ */
 	/*
 	 * public static final String DEFAULT_CACHE_FOLDER = new StringBuilder()
 	 * .append
@@ -37,12 +37,12 @@ public class Ding9App extends Application {
 	public static int CLASS_MERCHANT = 2;
 
 	/**
-	 * ±£´æÓÃ»§ÀàĞÍ
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½
 	 */
 	private int userClass = 0;
 
 	/**
-	 * ÓÃ»§id
+	 * ï¿½Ã»ï¿½id
 	 */
 	private int userId;
 
@@ -81,17 +81,17 @@ public class Ding9App extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		IMAGE_CACHE.initData(this, TAG_CACHE);// ³õÊ¼»¯»º´æ
+		IMAGE_CACHE.initData(this, TAG_CACHE);// ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		DEFAULT_CACHE_FOLDER = getApplicationContext().getCacheDir()
 				.getAbsolutePath();
-		IMAGE_CACHE.setCacheFolder(DEFAULT_CACHE_FOLDER);// ÉèÖÃ»º´æ±£´æÄ¿Â¼
-		IMAGE_CACHE.setContext(getApplicationContext());// ÉèÖÃÎŞÍøÂç²»¶ÁÈ¡
+		IMAGE_CACHE.setCacheFolder(DEFAULT_CACHE_FOLDER);// ï¿½ï¿½ï¿½Ã»ï¿½ï¿½æ±£ï¿½ï¿½Ä¿Â¼
+		IMAGE_CACHE.setContext(getApplicationContext());// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ç²»ï¿½ï¿½È¡
 		// IMAGE_CACHE.setAllowedNetworkTypes(int
-		// allowedNetworkTypes);//ÉèÖÃÔÊĞíµÄÍøÂçÀàĞÍ£¬¿ÉÑ¡ÔñPreloadDataCache#NETWORK_MOBILE¡¢PreloadDataCache#NETWORK_WIFI»òÁ½Õß¶¼ÔÊĞí¡£Ä¬ÈÏÁ½Õß¶¼ÔÊĞí¡£
+		// allowedNetworkTypes);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½PreloadDataCache#NETWORK_MOBILEï¿½ï¿½PreloadDataCache#NETWORK_WIFIï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ï¿½ï¿½Ä¬ï¿½ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 
 	public static final ImageCache IMAGE_CACHE = new ImageCache(128, 512);
-	/** ¶¨Òå»º´æµÄ»Øµ÷½Ó¿Ú£¨»ñÈ¡Ç°£¬»ñÈ¡³É¹¦£¬Ê§°ÜµÄ»Øµ÷½Ó¿Ú£© */
+	/** ï¿½ï¿½ï¿½å»ºï¿½ï¿½Ä»Øµï¿½ï¿½Ó¿Ú£ï¿½ï¿½ï¿½È¡Ç°ï¿½ï¿½ï¿½ï¿½È¡ï¿½É¹ï¿½ï¿½ï¿½Ê§ï¿½ÜµÄ»Øµï¿½ï¿½Ó¿Ú£ï¿½ */
 	static {
 		/** init icon cache **/
 		OnImageCallbackListener imageCallBack = new OnImageCallbackListener() {
@@ -115,11 +115,11 @@ public class Ding9App extends Application {
 					ImageView imageView = (ImageView) view;
 					imageView.setImageBitmap(loadedImage);
 					// first time show with animation
-					if (!isInCache) {// ¼´Ê±¼ÓÔØÊ±
+					if (!isInCache) {// ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ê±
 						imageView.startAnimation(getInAlphaAnimation(100));
 					}
 
-					// ¿ÉÔÚ´Ë´¦Ë³±ã½øĞĞImageViewËõ·Å
+					// ï¿½ï¿½ï¿½Ú´Ë´ï¿½Ë³ï¿½ï¿½ï¿½ï¿½ï¿½ImageViewï¿½ï¿½ï¿½ï¿½
 					// imageView.setAdjustViewBounds(true);
 					// imageView.setScaleType(ScaleType.CENTER);
 				}
@@ -181,10 +181,10 @@ public class Ding9App extends Application {
 	}
 
 	/**
-	 * ¶¨Òå¼ÓÔØ×ÔÍøÂçµÄÍ¼Æ¬ÏÔÊ¾µÄµ­Èë¶¯»­
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½Ê¾ï¿½Äµï¿½ï¿½ë¶¯ï¿½ï¿½
 	 * 
 	 * @param durationMillis
-	 *            ³ÖĞøÊ±¼ä
+	 *            ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
 	 * @return
 	 */
 

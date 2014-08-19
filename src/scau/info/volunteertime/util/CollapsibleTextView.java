@@ -1,7 +1,7 @@
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014-7-23
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-7-23
  */
 package scau.info.volunteertime.util;
 
@@ -16,9 +16,9 @@ import android.widget.TextView.BufferType;
 
 /**
  * 
- * ¿ÉÕÛµşTextView¿Ø¼ş
+ * ï¿½ï¿½ï¿½Ûµï¿½TextViewï¿½Ø¼ï¿½
  * 
- * @author ²Ì³¬Ãô
+ * @author è”¡è¶…æ•
  * 
  */
 public class CollapsibleTextView extends LinearLayout implements
@@ -54,7 +54,8 @@ public class CollapsibleTextView extends LinearLayout implements
 	}
 
 	/**
-	 * ÉèÖÃÏÔÊ¾ÄÚÈİÎªcharSequence£¬ÈôcharSequence¹ı³¤Ôò»áÕÛµşºóÃæµÄÄÚÈİ£¬²¢Ìá¹©ÏÔÊ¾¸ü¶àµÄ°´Å¥
+	 * ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½ÎªcharSequenceï¿½ï¿½ï¿½ï¿½charSequenceï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ûµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½İ£ï¿½ï¿½ï¿½ï¿½á¹©ï¿½ï¿½Ê¾ï¿½ï¿½ï¿½ï¿½Ä°ï¿½
+	 * Å¥
 	 * 
 	 * @param charSequence
 	 * @param bufferType

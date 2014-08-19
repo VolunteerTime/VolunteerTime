@@ -1,10 +1,10 @@
-package scau.info.volunteertime.util;
-
 /**
- * Copyright (c) »ªÄÏÅ©Òµ´óÑ§ĞÅÏ¢Ñ§Ôº²Ì³¬Ãô2014°æÈ¨ËùÓĞ
+ * Copyright (c) åå—å†œä¸šå¤§å­¦ä¿¡æ¯å­¦é™¢è”¡è¶…æ•2014ç‰ˆæƒæ‰€æœ‰
  * 
- * ÎÄ¼ş´´½¨Ê±¼ä£º2014Äê8ÔÂ17ÈÕ
+ * æ–‡ä»¶åˆ›å»ºæ—¶é—´ï¼š2014-8-17
  */
+
+package scau.info.volunteertime.util;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -14,7 +14,7 @@ import java.util.List;
 import scau.info.volunteertime.vo.VolunteertimeData;
 
 /**
- * @author ÁÖÎıöÎ
+ * @author ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @param <Data>
  * 
  */
@@ -24,7 +24,7 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 	LinkedList<T> sortedLinkList = new LinkedList<T>();
 
 	/**
-	 * ·µ»ØÈ«ĞÂµÄlist
+	 * ï¿½ï¿½ï¿½ï¿½È«ï¿½Âµï¿½list
 	 * 
 	 * @return LinkedList<T>
 	 */
@@ -64,24 +64,24 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
 
-	public int nsort() {// ²åÈëÅÅĞò
+	public int nsort() {// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		// TODO Auto-generated method stub
-		int length = sortedLinkList.size(); // Êı×é³¤¶È
-		int j; // µ±Ç°ÖµµÄÎ»ÖÃ
-		int i; // Ö¸ÏòjÇ°µÄÎ»ÖÃ
-		T key; // µ±Ç°Òª½øĞĞ²åÈëÅÅĞòµÄÖµ
-		// ´ÓÊı×éµÄµÚ¶ş¸öÎ»ÖÃ¿ªÊ¼±éÀúÖµ
+		int length = sortedLinkList.size(); // ï¿½ï¿½ï¿½é³¤ï¿½ï¿½
+		int j; // ï¿½ï¿½Ç°Öµï¿½ï¿½Î»ï¿½ï¿½
+		int i; // Ö¸ï¿½ï¿½jÇ°ï¿½ï¿½Î»ï¿½ï¿½
+		T key; // ï¿½ï¿½Ç°Òªï¿½ï¿½ï¿½Ğ²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄµÚ¶ï¿½ï¿½ï¿½Î»ï¿½Ã¿ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Öµ
 		for (j = 1; j < length; j++) {
 			key = sortedLinkList.get(j);
 			;
 			i = j - 1;
 
-			// a[i]±Èµ±Ç°Öµ´óÊ±£¬a[i]ºóÒÆÒ»Î»,¿Õ³öiµÄÎ»ÖÃ£¬ºÃÈÃÏÂÒ»´ÎÑ­»·µÄÖµºóÒÆ
+			// a[i]ï¿½Èµï¿½Ç°Öµï¿½ï¿½Ê±ï¿½ï¿½a[i]ï¿½ï¿½ï¿½ï¿½Ò»Î»,ï¿½Õ³ï¿½iï¿½ï¿½Î»ï¿½Ã£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½Ñ­ï¿½ï¿½ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½
 			while ((i >= 0) && this.compare(sortedLinkList.get(i), key) > 0) {
-				sortedLinkList.set(i + 1, sortedLinkList.get(i)); // ½«a[i]ÖµºóÒÆ
-				i--; // iÇ°ÒÆ
-			}// Ìø³öÑ­»·(ÕÒµ½Òª²åÈëµÄÖĞ¼äÎ»ÖÃ»òÒÑ±éÀúµ½0ÏÂ±ê)
-			sortedLinkList.set(i + 1, key); // ½«µ±Ç°Öµ²åÈë
+				sortedLinkList.set(i + 1, sortedLinkList.get(i)); // ï¿½ï¿½a[i]Öµï¿½ï¿½ï¿½ï¿½
+				i--; // iÇ°ï¿½ï¿½
+			}// ï¿½ï¿½ï¿½ï¿½Ñ­ï¿½ï¿½(ï¿½Òµï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ğ¼ï¿½Î»ï¿½Ã»ï¿½ï¿½Ñ±ï¿½ï¿½ï¿½ï¿½ï¿½0ï¿½Â±ï¿½)
+			sortedLinkList.set(i + 1, key); // ï¿½ï¿½ï¿½ï¿½Ç°Öµï¿½ï¿½ï¿½ï¿½
 		}
 		return 0;
 	}
