@@ -67,10 +67,10 @@ public class ResultsExhibitionFragment extends Fragment {
 		resultsPagination = new Pagination<Result>();
 		resultsPagination.setCurrentPageNumber(currentPageNumber);
 		resultsPagination.setPageSize(currentPageSize);
-		sortedLinkList = new SortedLinkList();
+		sortedLinkList = new SortedLinkList<Result>();
 
 		resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(
-				activity, sortedLinkList);// 成果数据传给Adapter
+				activity, sortedLinkList.getList());// 成果数据传给Adapter
 
 	}
 
@@ -204,11 +204,15 @@ public class ResultsExhibitionFragment extends Fragment {
 		 * @param result
 		 */
 		private void postFunction(Void result) {
-			if (isDropDown) {
+			if (isDropDown) {				
+				resultsExhibitionListAdapter.setListData(sortedLinkList.getList());
+
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
 				resultsListView.onDropDownComplete();
 			} else {
+				resultsExhibitionListAdapter.setListData(sortedLinkList.getList());
+				
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
 				resultsListView.onBottomComplete();

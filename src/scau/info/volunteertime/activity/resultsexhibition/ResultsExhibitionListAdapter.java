@@ -6,10 +6,10 @@
 package scau.info.volunteertime.activity.resultsexhibition;
 
 import java.sql.Date;
+import java.util.LinkedList;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.application.Ding9App;
-import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.Result;
 import android.content.Context;
 import android.util.Log;
@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
-import android.widget.TextView.BufferType;
 import cn.trinea.android.common.service.impl.ImageCache;
 
 /**
@@ -34,23 +33,27 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	private LayoutInflater inflater;
 	private ImageCache IMAGE_CACHE;// Í¼Æ¬»º´æ
 	private Ding9App ding9App;
-	private SortedLinkList<Result> sortedLinkList;
+	private LinkedList<Result> linkedList;
 	private Context mContext;
 
 	public ResultsExhibitionListAdapter(Context context,
-			SortedLinkList<Result> sortedLinkList) {
+			LinkedList<Result> linkedList) {
 		super();
 		this.inflater = LayoutInflater.from(context);
-		this.sortedLinkList = sortedLinkList;
+		this.linkedList = linkedList;
 		this.ding9App = (Ding9App) context.getApplicationContext();
 		this.IMAGE_CACHE = ding9App.IMAGE_CACHE;
 		this.mContext = context;
 	}
 
+	public void setListData(LinkedList<Result> linkedList) {
+		this.linkedList = linkedList;
+	}
+
 	@Override
 	public int getCount() {
-		if (sortedLinkList != null) {
-			return sortedLinkList.size();
+		if (linkedList != null) {
+			return linkedList.size();
 		} else {
 			Log.d("ResultsExhibitionListAdapter-getCount", "2");
 			return 0;
@@ -73,7 +76,7 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		ViewHolder holder;
 
 		Log.d("ResultsExhibitionListAdapter-getView", "position = " + position);
-		Result result = sortedLinkList.get(position);
+		Result result = linkedList.get(position);
 		if (view == null) {
 			view = inflater.inflate(R.layout.item_results_exhibition, null);
 			holder = new ViewHolder();
@@ -88,7 +91,7 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
-		holder.title.setText("["+result.getTitle()+"]");
+		holder.title.setText("[" + result.getTitle() + "]");
 
 		holder.articleContent.setText(result.getContent());
 

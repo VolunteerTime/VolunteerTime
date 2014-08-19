@@ -21,22 +21,32 @@ import scau.info.volunteertime.vo.VolunteertimeData;
 public class SortedLinkList<T extends VolunteertimeData> implements
 		Comparator<VolunteertimeData> {
 
-	LinkedList<VolunteertimeData> sortedLinkList = new LinkedList<VolunteertimeData>();
+	LinkedList<T> sortedLinkList = new LinkedList<T>();
 
-	public LinkedList<VolunteertimeData> getList() {
-		return sortedLinkList;
+	/**
+	 * 返回全新的list
+	 * 
+	 * @return LinkedList<T>
+	 */
+	public LinkedList<T> getList() {
+		LinkedList<T> newLinkList = new LinkedList<T>();
+
+		for (T t : sortedLinkList) {
+			newLinkList.add(t);
+		}
+		return newLinkList;
 	}
 
 	public boolean remove(VolunteertimeData object) {
 		return sortedLinkList.remove(object);
 	}
 
-	public List<VolunteertimeData> sort() {
+	public List<T> sort() {
 		Collections.sort(sortedLinkList, this);
 		return sortedLinkList;
 	}
 
-	public List<VolunteertimeData> addAll(List<T> list) {
+	public List<T> addAll(List<T> list) {
 
 		for (VolunteertimeData i : list) {
 			sortedLinkList.remove(i);
@@ -59,7 +69,7 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 		int length = sortedLinkList.size(); // 数组长度
 		int j; // 当前值的位置
 		int i; // 指向j前的位置
-		VolunteertimeData key; // 当前要进行插入排序的值
+		T key; // 当前要进行插入排序的值
 		// 从数组的第二个位置开始遍历值
 		for (j = 1; j < length; j++) {
 			key = sortedLinkList.get(j);
@@ -79,7 +89,7 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 	/**
 	 * @param i
 	 */
-	public void add(VolunteertimeData item) {
+	public void add(T item) {
 		// TODO Auto-generated method stub
 		// System.out.println(item.getDate());
 		sortedLinkList.remove(item.getId());
