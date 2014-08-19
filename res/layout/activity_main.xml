@@ -1,22 +1,19 @@
-<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"  
-android:layout_width="fill_parent" 
-android:layout_height="wrap_content" 
-android:orientation="vertical" 
-> 
-<RelativeLayout 
-android:id="@+id/setting" 
-android:layout_width="fill_parent" 
-android:layout_height="wrap_content" 
-android:orientation="vertical" 
-/> 
-<RelativeLayout 
-android:id="@+id/mainActivityFragmentLayout" 
-android:layout_width="fill_parent" 
-android:layout_height="wrap_content" 
-android:orientation="vertical" 
-/> 
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_activity_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
 
+    <RelativeLayout
+        android:id="@+id/setting"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
+    <RelativeLayout
+        android:id="@+id/mainActivityFragmentLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
 
 </RelativeLayout>
