@@ -14,7 +14,7 @@ package scau.info.volunteertime.vo;
 public interface VolunteertimeData {
 	
 	public long getDate();
-	public void setDate(long Date);
+	public void setDate(long date);
 	
 	public void setId(int id);
 	public int getId();

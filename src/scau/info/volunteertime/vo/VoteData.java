@@ -12,7 +12,7 @@ import java.util.ArrayList;
  * @author 蔡超敏
  *
  */
-public class VoteData {
+public class VoteData implements VolunteertimeData{
 	
 	private int id;	//投票编号
 	private boolean single; //单选是true，复选是false
@@ -21,6 +21,8 @@ public class VoteData {
 	private ArrayList<Integer>	votes;		//对应的投票结果
 	private boolean checked=false;		//是否已经选择过了，从本地数据库获得,如果
 	public boolean isChange=false;	//判断是否按下了按键，如果按下了那么会变成true，变成true画面会改变，但很快又会变成false
+	public long date;	//更新时间
+	
 	
 	public void setChecked(boolean checked)
 	{
@@ -44,8 +46,6 @@ public class VoteData {
 	{
 		id=num;
 	}
-	
-	
 	
 	public boolean getSingle()
 	{
@@ -78,6 +78,23 @@ public class VoteData {
 	public void setVotes(ArrayList<Integer> v)
 	{
 		votes=v;
+	}
+	
+	@Override
+	public long getDate() { 
+		return date;
+	}
+
+	public int setDate() { 
+		return 0;
+	}
+	/* (non-Javadoc)
+	 * @see scau.info.volunteertime.vo.VolunteertimeData#setDate(long)
+	 */
+	@Override
+	public void setDate(long date) {
+		this.date=date;
+		
 	}
 	
 

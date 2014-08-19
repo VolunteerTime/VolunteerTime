@@ -14,9 +14,11 @@ import com.viewpagerindicator.TitlePageIndicator;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.activitycenter.ActivityCenter;
-import scau.info.volunteertime.activity.resultsexhibition.ResultsExhibitionFragment;
+import scau.info.volunteertime.activity.personalinfo.PersonalInfo;
+import scau.info.volunteertime.activity.resultsexhibition.ResultsExhibitionFragment; 
 import scau.info.volunteertime.activity.votecenter.VoteCenter;
 import android.app.LocalActivityManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -41,98 +43,26 @@ import android.widget.Toast;
  * @author 蔡超敏
  * 
  */
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends BaseActionBarActivity {
 
 	public static int ScreenWidth;
-	private static final int[] ITEM_DRAWABLES = {
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme };
-
-	private ViewPager viewFlow;
-	private ListView listView;
-	LocalActivityManager manager = null;
-	PageIndicator mIndicator;
-	/** Called when the activity is first created. */
-
-	HashMap<Integer, Fragment> map = new HashMap<Integer, Fragment>();// 鏀剧▼搴忕殑姣忎竴涓狥ragment
-	HashMap<Integer, String> mapTitle = new HashMap<Integer, String>();// 姣忎竴涓狥ragment鐨則itile
-
+	MainActivityFragment mainfragment ;
+ 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// System.out.println("!!!!!!!!!!");
-		FragmentManager fragmentManager = getSupportFragmentManager();
-
-		ArcMenu arcMenu2 = (ArcMenu) findViewById(R.id.arc_menu_2); // 5涓皬鐐�
-
-		WindowManager manager = getWindowManager();
-		ScreenWidth = manager.getDefaultDisplay().getWidth();
-		int height = manager.getDefaultDisplay().getHeight();
-
-		arcMenu2.setWindowSize(ScreenWidth, height);
-		initArcMenu(arcMenu2, ITEM_DRAWABLES);
-
-		map.put(0, new ResultsExhibitionFragment());
-		map.put(1, new ActivityCenter());
-		map.put(2, new VoteCenter());
-		map.put(3, new ActivityCenter());
-		map.put(4, new ActivityCenter());
-
-		mapTitle.put(0, "作品展示");
-		mapTitle.put(1, "活动中心");
-		mapTitle.put(2, "投票中心");
-		mapTitle.put(3, "活动中心");
-		mapTitle.put(4, "活动中心");
-
-		viewFlow = (ViewPager) findViewById(R.id.guidePages);
-		MainAdapter adapter = new MainAdapter(fragmentManager, map, mapTitle);
-		viewFlow.setAdapter(adapter);
-
-		mIndicator = (TitlePageIndicator) findViewById(R.id.indicator);
-		mIndicator.setViewPager(viewFlow);
-
-		getOverflowMenu();// 寮哄埗鏄剧ず鑿滃崟鐨勪笁涓偣
+		FragmentManager fragmentManager = getSupportFragmentManager(); 
+		
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction(); 
+		
+		mainfragment = new MainActivityFragment(); 
+		
+	 fragmentTransaction.replace(R.id.mainActivityFragmentLayout, mainfragment).commit(); 
 
 	}
 
-	private void getOverflowMenu() { // 寮哄埗鏄剧ず鑿滃崟鐨勪笁涓偣
-		try {
-			ViewConfiguration config = ViewConfiguration.get(this);
-			Field menuKeyField = ViewConfiguration.class
-					.getDeclaredField("sHasPermanentMenuKey");
-			if (menuKeyField != null) {
-				menuKeyField.setAccessible(true);
-				menuKeyField.setBoolean(config, false);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	private void initArcMenu(ArcMenu menu, int[] itemDrawables) {
-		menu.scrollBy(0, -100);
-		final int itemCount = itemDrawables.length;
-		for (int i = 0; i < itemCount; i++) {
-			ImageView item = new ImageView(this);
-			item.setImageResource(itemDrawables[i]);
-
-			final int position = i;
-			menu.addItem(item, new OnClickListener() { // 姣忎釜灏忚彍鍗曢」鐨勭洃鍚櫒
-
-						@Override
-						public void onClick(View v) {
-							viewFlow.setCurrentItem(position);
-							Toast.makeText(MainActivity.this,
-									"position:" + position, Toast.LENGTH_SHORT)
-									.show();
-						}
-					});
-		}
-	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -155,28 +85,22 @@ public class MainActivity extends ActionBarActivity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
+		String name = (String) item.getTitle();
+		if (name.equals("个人信息")) {
+			 
+		 
+			FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction(); 
+			fragmentTransaction.replace(R.id.mainActivityFragmentLayout, new PersonalInfo()).addToBackStack(null).commit(); 
+ 
 			return true;
 		}
+		
+		
 		return super.onOptionsItemSelected(item);
 	}
 
 	/**
 	 * A placeholder fragment containing a simple view.
 	 */
-	public static class PlaceholderFragment extends Fragment {
-
-		public PlaceholderFragment() {
-		}
-
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
 
 }
