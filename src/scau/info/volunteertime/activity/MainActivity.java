@@ -75,7 +75,19 @@ public class MainActivity extends BaseActionBarActivity {
 		actionItems.add(new ActionItem(this, "设置",
 				R.drawable.mm_title_btn_set_normal));
 
-		actionItems.add(new ActionItem(this, "活动管理",
+		actionItems.add(new ActionItem(this, "我的活动",
+				R.drawable.mm_title_btn_share_normal));
+
+		actionItems.add(new ActionItem(this, "管理权限",
+				R.drawable.mm_title_btn_set_normal));
+
+		actionItems.add(new ActionItem(this, "管理成员",
+				R.drawable.mm_title_btn_share_normal));
+
+		actionItems.add(new ActionItem(this, "管理活动",
+				R.drawable.mm_title_btn_set_normal));
+
+		actionItems.add(new ActionItem(this, "管理投票",
 				R.drawable.mm_title_btn_share_normal));
 
 		titlePopup = new PopupMainMenu(this, LayoutParams.WRAP_CONTENT,
@@ -99,8 +111,24 @@ public class MainActivity extends BaseActionBarActivity {
 					toSetting();
 					break;
 				case 2:
-					Log.d("MainActivity-setItemOnClickListener", "活动管理");
-					toActivityManagement();
+					Log.d("MainActivity-setItemOnClickListener", "我的活动");
+					toMyActivityManagement();
+					break;
+				case 3:
+					Log.d("MainActivity-setItemOnClickListener", "管理权限");
+					toManageAuthority();
+					break;
+				case 4:
+					Log.d("MainActivity-setItemOnClickListener", "管理成员");
+					toManagePeople();
+					break;
+				case 5:
+					Log.d("MainActivity-setItemOnClickListener", "管理活动");
+					toManageActivity();
+					break;
+				case 6:
+					Log.d("MainActivity-setItemOnClickListener", "管理投票");
+					toManageVote();
 					break;
 
 				default:
@@ -125,7 +153,27 @@ public class MainActivity extends BaseActionBarActivity {
 
 	}
 
-	private void toActivityManagement() {
+	private void toMyActivityManagement() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void toManageAuthority() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void toManagePeople() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void toManageActivity() {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void toManageVote() {
 		// TODO Auto-generated method stub
 
 	}
