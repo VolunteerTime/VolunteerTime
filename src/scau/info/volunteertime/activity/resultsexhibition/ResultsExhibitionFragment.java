@@ -39,7 +39,7 @@ import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
 public class ResultsExhibitionFragment extends Fragment {
 
 	private SortedLinkList<Result> sortedLinkList;
-	private Pagination<Result> resultsPagination;// װ�ص�ǰ����
+	private Pagination<Result> resultsPagination;// 临时数据的分页类
 
 	private int currentPageSize = 8;
 	private int currentPageNumber = 1;

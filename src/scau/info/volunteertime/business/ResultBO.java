@@ -8,7 +8,6 @@ package scau.info.volunteertime.business;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,29 +20,19 @@ import android.util.Log;
 import cn.trinea.android.common.util.HttpUtils;
 
 /**
- * Results��BO
+ * Results的BO 还没设置延迟问题
  * 
  * @author 蔡超敏
  * 
  */
 public class ResultBO {
 
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
 	/**
-	 * ���췽������ʼ����̬����
+	 * 创建一个构造方法
 	 */
 	public ResultBO() {
-		// List<Result> allResults = new ArrayList<Result>();
-		// for (int i = 0; i < 30; i++) {// ��������30��result��list
-		// allResults
-		// .add(new Result(
-		// i,
-		// "����title" + i,
-		// "�������ݣ�ʲô���������Ҳ���д�ܶණ���ģ�����ǵ�" + i + "������",
-		// "http://img.hb.aicdn.com/fda4bb25fc546ed22c9ff137ac72b7ba27e62e9916225-2ywtVp_fw658",
-		// "chaoKing" + i, new Date(i * 100000).toGMTString()));
-		// }
 	}
 
 	/**
@@ -61,7 +50,8 @@ public class ResultBO {
 		String jsonStr = HttpUtils.httpPostString(
 				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
 
-		Log.d("getDownData", "��ȡ��Ϣ�б�" + currentPageSize + ":" + jsonStr);
+		Log.d("getDownData", "page size is " + currentPageSize
+				+ ": the json is " + jsonStr);
 
 		try {
 			return jsonToList(jsonStr);
@@ -87,7 +77,8 @@ public class ResultBO {
 		String jsonStr = HttpUtils.httpPostString(
 				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
 
-		Log.d("getDownData", "��ȡ��Ϣ�б�" + currentPageSize + ":" + jsonStr);
+		Log.d("getDownData", "page size is " + currentPageSize
+				+ ": the json is " + jsonStr);
 
 		try {
 			return jsonToList(jsonStr);
@@ -135,8 +126,8 @@ public class ResultBO {
 			jaryProducts = jsonResults.getJSONArray("records");
 			pageSize = jsonResults.getInt("pageSize"); // �õ�pagesize��ֵ
 
-			Log.d("ResultBO-jsonToPagination", "��ȡ��Ϣ�б�" + pageSize + ":"
-					+ jsonStr);
+			Log.d("ResultBO-jsonToPagination", "return size is" + pageSize
+					+ ": the json is " + jsonStr);
 
 			ArrayList<Result> list = new ArrayList<Result>(); // �õ�Result��List
 			JSONObject jsonResult = null; // ���ڱ���CheapCard��json����
@@ -152,8 +143,10 @@ public class ResultBO {
 				result.setImage(jsonResult.getString("image"));
 				result.setEditor(jsonResult.getString("editor"));
 				list.add(result);
-				
-				Log.d("jsonToList", "getPublishTime = "+result.getPublishTime()+" : result.getDate = "+result.getDate());
+
+				Log.d("jsonToList",
+						"getPublishTime = " + result.getPublishTime()
+								+ " : result.getDate = " + result.getDate());
 			}
 
 			return list;
