@@ -3,7 +3,7 @@
  * 
  * 文件创建时间：2014-7-23
  */
-package scau.info.volunteertime.activity.resultsexhibition;
+package scau.info.volunteertime.activity.manageresult;
 
 import java.sql.Date;
 import java.util.LinkedList;
@@ -15,18 +15,23 @@ import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import cn.trinea.android.common.service.impl.ImageCache;
 
 /**
- * ResultsExhibitionList的适配器
+ * �ɹ�չʾ�е�ListView������(��Ϊ
+ * һ�����������õ�ListView�����ӣ���ʾImageCache��ding9App
+ * ���÷�����ʵImageCache���ʺ���Ϊһ����̬����
+ * ������ֻ�������󣬿����и��õ��Ż������ͽ����Ż�)
  * 
  * @author 蔡超敏
  * 
  */
-public class ResultsExhibitionListAdapter extends BaseAdapter {
+public class ManageResultsExhibitionListAdapter extends BaseAdapter {
 
 	private LayoutInflater inflater;
 	private ImageCache IMAGE_CACHE;// ͼƬ����
@@ -34,7 +39,11 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	private LinkedList<Result> linkedList;
 	private Context mContext;
 
-	public ResultsExhibitionListAdapter(Context context,
+	private OnSettingsOnClickListener onSettingsOnClickListener;
+
+	private ViewHolder holder;
+
+	public ManageResultsExhibitionListAdapter(Context context,
 			LinkedList<Result> linkedList) {
 		super();
 		this.inflater = LayoutInflater.from(context);
@@ -71,12 +80,14 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		View view = convertView;
-		ViewHolder holder;
+
+		final int savePosition = position;
 
 		Log.d("ResultsExhibitionListAdapter-getView", "position = " + position);
 		Result result = linkedList.get(position);
 		if (view == null) {
-			view = inflater.inflate(R.layout.item_results_exhibition, null);
+			view = inflater.inflate(R.layout.item_manage_results_exhibition,
+					null);
 			holder = new ViewHolder();
 			holder.title = (TextView) view
 					.findViewById(R.id.results_exhibition_title);
@@ -86,6 +97,8 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 					.findViewById(R.id.results_exhibition_editor);
 			holder.publishTime = (TextView) view
 					.findViewById(R.id.results_exhibition_time);
+			holder.settings = (ImageButton) view
+					.findViewById(R.id.results_exhibition_settings);
 
 			view.setTag(holder);
 		} else {
@@ -99,8 +112,22 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 
 		holder.publishTime.setText(new Date(result.getDate()).toLocaleString());
 
+		holder.settings.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				if (onSettingsOnClickListener != null) {
+					onSettingsOnClickListener.onClick(savePosition);
+				}
+			}
+		});
 		return view;
 
+	}
+
+	public void setOnSettingsClickListener(
+			OnSettingsOnClickListener onClickListener) {
+		onSettingsOnClickListener = onClickListener;
 	}
 
 	static class ViewHolder {
@@ -108,6 +135,11 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 		TextView articleContent;
 		TextView editor;
 		TextView publishTime;
+		ImageButton settings;
+	}
+
+	public static interface OnSettingsOnClickListener {
+		public void onClick(int position);
 	}
 
 }

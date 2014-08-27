@@ -50,6 +50,16 @@
             android:layout_alignParentRight="true"
             android:layout_below="@id/linear"
             android:text="time" />
+
+        <ImageButton
+            android:id="@+id/results_exhibition_settings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/results_exhibition_time"
+            android:background="#00000000"
+            android:contentDescription="@string/setting"
+            android:src="@drawable/setting" />
     </RelativeLayout>
 
 </LinearLayout>

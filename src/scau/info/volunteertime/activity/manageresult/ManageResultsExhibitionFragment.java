@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 华南农业大学信息学院蔡超敏2014版权所有
  * 
- * 文件创建时间：2014-7-15
+ * 文件创建时间：2014-8-21
  */
 package scau.info.volunteertime.activity.manageresult;
 
@@ -20,13 +20,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
@@ -38,8 +37,7 @@ import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
  * @author 蔡超敏
  * 
  */
-public class ManageResult extends ActionBarActivity {
-
+public class ManageResultsExhibitionFragment extends Fragment {
 	private SortedLinkList<Result> sortedLinkList;
 	private Pagination<Result> resultsPagination;// 临时数据的分页类
 
@@ -58,26 +56,22 @@ public class ManageResult extends ActionBarActivity {
 	public OnClickListener addClickListener;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		actionBarInit();
-
-		setContentView(R.layout.activity_manage_result);
 
 		Log.d("ResultsExhibition", "create");
 
-		hasMore = true;// no data to set
-		activity = this;
+		hasMore = true;// �и������ʾ��û������ʾ
+		activity = getActivity();
 
-		resultBO = new ResultBO();// resultBO
+		resultBO = new ResultBO();// ȡ��resultBO
 		resultsPagination = new Pagination<Result>();
 		resultsPagination.setCurrentPageNumber(currentPageNumber);
 		resultsPagination.setPageSize(currentPageSize);
 		sortedLinkList = new SortedLinkList<Result>();
 
 		resultsExhibitionListAdapter = new ManageResultsExhibitionListAdapter(
-				activity, sortedLinkList.getList());
+				activity, sortedLinkList.getList());// �ɹ����ݴ���Adapter
 
 		resultsExhibitionListAdapter
 				.setOnSettingsClickListener(new OnSettingsOnClickListener() {
@@ -89,26 +83,24 @@ public class ManageResult extends ActionBarActivity {
 					}
 				});
 
-		ListViewInit();
-
 	}
 
-	/**
+	/*
+	 * (non-Javadoc)
 	 * 
+	 * @see
+	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
+	 * android.view.ViewGroup, android.os.Bundle)
 	 */
-	private void actionBarInit() {
-		ActionBar bar = this.getSupportActionBar();
-		this.setTitle("管理成果");
-		bar.setDisplayOptions(ActionBar.DISPLAY_SHOW_TITLE
-				| ActionBar.DISPLAY_USE_LOGO | ActionBar.DISPLAY_HOME_AS_UP
-				| ActionBar.DISPLAY_SHOW_CUSTOM);
-	}
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 
-	/**
-	 * ListView初始化
-	 */
-	private void ListViewInit() {
-		resultsListView = (DropDownListView) findViewById(R.id.results_exhibition_list);
+		View view = inflater.inflate(
+				R.layout.fragment_manage_results_exhibition, null);
+
+		resultsListView = (DropDownListView) view
+				.findViewById(R.id.results_exhibition_list);
 
 		resultsListView.setAdapter(resultsExhibitionListAdapter);
 
@@ -119,7 +111,7 @@ public class ManageResult extends ActionBarActivity {
 					public boolean onItemLongClick(AdapterView<?> parent,
 							View view, int position, long id) {
 						Log.d("ResultsExhibition-onCreate-setOnItemLongClickListener-onItemLongClick",
-								"position = " + position);
+								"��������");
 						return false;
 					}
 
@@ -130,7 +122,7 @@ public class ManageResult extends ActionBarActivity {
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Log.d("ResultsExhibition-onCreate-setOnItemClickListener-onItemClick",
-						"position = " + position);
+						"��������");
 			}
 		});
 
@@ -139,7 +131,7 @@ public class ManageResult extends ActionBarActivity {
 			@Override
 			public void onClick(View v) {
 				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
-						"上拉");
+						"��������");
 				new GetDataTask(false).execute();
 			}
 		});
@@ -151,11 +143,13 @@ public class ManageResult extends ActionBarActivity {
 			@Override
 			public void onDropDown() {
 				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
-						"下拉");
+						"��������");
 				new GetDataTask(true).execute();
 			}
 		});
 		resultsListView.onDropDownComplete();
+
+		return view;
 	}
 
 	private class GetDataTask extends AsyncTask<Void, Void, Void> {
@@ -179,8 +173,8 @@ public class ManageResult extends ActionBarActivity {
 		 */
 		@Override
 		protected Void doInBackground(Void... params) {
-			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// 检查网络
-			if (!isConnect) {// 网络不通则跳出
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// ��ȡ����״��
+			if (!isConnect) {// ��������޸���������ȡ������
 				Log.d("doInBackground", "isConnect not");
 				cancel(true);
 				return null;
@@ -243,10 +237,10 @@ public class ManageResult extends ActionBarActivity {
 		 */
 		private void cancelledFunction() {
 			if (!isConnect) {
-				ToastUtils.show(activity, "网络无连接");
+				ToastUtils.show(activity, "�������ӳ�������");
 			} else if (!hasMore) {
-				resultsListView.setFooterNoMoreText("没有更多数据了~");
-				ToastUtils.show(activity, "没有更多数据了~");
+				resultsListView.setFooterNoMoreText("û�и��������Ϣ��Ŷ~");
+				ToastUtils.show(activity, "û�и��������Ϣ��Ŷ~");
 			}
 			if (isDropDown) {
 				resultsListView.onDropDownComplete();
@@ -269,7 +263,7 @@ public class ManageResult extends ActionBarActivity {
 					toGetUpdateDataFromNet();
 				}
 			} else {
-				if (!hasMore) {// 没有更多数据则不通过
+				if (!hasMore) {// ��������޸���������ȡ������
 					Log.d("doInBackground", "hasMore not");
 					cancel(true);
 					return;
@@ -418,33 +412,4 @@ public class ManageResult extends ActionBarActivity {
 		};
 		return addClickListener;
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.manage_result, menu);
-		return true;
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home: // 返回首页
-			onBackPressed();
-			return true;
-		case R.id.conent_new:
-			addNewResult();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
-	/**
-	 * 添加新的成果
-	 */
-	private void addNewResult() {
-		getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, new AddResultFragment())
-				.addToBackStack(null).commit();
-	}
-
 }

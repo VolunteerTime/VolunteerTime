@@ -23,9 +23,12 @@
     <string name="loginusername">账号名</string>
     <string name="loginpassword">账号密码</string>
     <string name="loginTopIcon">华农</string>
-    <string name="loginbutton">登陆</string> 
+    <string name="loginbutton">登陆</string>
     <!-- 可折叠TextView的String -->
     <string name="desc_shrinkup">收起</string>
     <string name="desc_spread">显示更多</string>
+    <string name="setting">setting</string>
+    <string name="add">add</string>
+    <string name="title_activity_select_photo">SelectPhotoActivity</string>
 
 </resources>

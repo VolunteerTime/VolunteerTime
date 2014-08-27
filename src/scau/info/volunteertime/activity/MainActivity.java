@@ -9,9 +9,13 @@ import java.util.ArrayList;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.PopupMainMenu.OnItemOnClickListener;
+import scau.info.volunteertime.activity.manageresult.ManageResult;
+import scau.info.volunteertime.activity.manageresult.ManageResultsExhibitionFragment;
 import scau.info.volunteertime.activity.personalinfo.PersonalInfo;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBar;
 import android.util.Log;
@@ -20,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
 /**
@@ -30,10 +35,20 @@ public class MainActivity extends BaseActionBarActivity {
 
 	public static int ScreenWidth;
 	private RelativeLayout actionView;// ActionBar的view
-	MainActivityFragment mainfragment;
+	private MainActivityFragment mainfragment;
 	private PopupMainMenu titlePopup;
 
 	private ArrayList<ActionItem> actionItems;
+
+	FragmentManager fragmentManager;
+	private FragmentTransaction fragmentTransaction;
+
+	// userinfo
+	private PersonalInfo personalInfo;
+
+	// result
+	private ImageButton contentAdd;
+	private ManageResultsExhibitionFragment resultsExhibitionFragment;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -49,21 +64,44 @@ public class MainActivity extends BaseActionBarActivity {
 						LayoutParams.MATCH_PARENT));
 		getSupportActionBar().setDisplayShowHomeEnabled(false);
 		getSupportActionBar().setDisplayShowCustomEnabled(true);
-		getSupportActionBar().setTitle("首页");
 
 		setContentView(R.layout.activity_main);
-		FragmentManager fragmentManager = getSupportFragmentManager();
 
-		FragmentTransaction fragmentTransaction = fragmentManager
-				.beginTransaction();
+		fragmentManager = getSupportFragmentManager();
+
+		fragmentTransaction = fragmentManager.beginTransaction();
 
 		mainfragment = new MainActivityFragment();
 
 		fragmentTransaction.replace(R.id.mainActivityFragmentLayout,
 				mainfragment).commit();
 
+		personalInfo = new PersonalInfo();
+
+		resultsExhibitionFragment = new ManageResultsExhibitionFragment();
+
+		barUiInit();
+
 		init();
 
+		fragmentManager
+				.addOnBackStackChangedListener(new OnBackStackChangedListener() {
+
+					@Override
+					public void onBackStackChanged() {
+						Log.d("MainActivity-OnBackStackChangedListener",
+								"fragmentManager");
+					}
+				});
+
+	}
+
+	/**
+	 * 
+	 */
+	private void barUiInit() {
+		contentAdd = (ImageButton) actionView.findViewById(R.id.conent_new);
+		contentAdd.setVisibility(View.GONE);
 	}
 
 	private void init() {
@@ -85,6 +123,9 @@ public class MainActivity extends BaseActionBarActivity {
 				R.drawable.mm_title_btn_share_normal));
 
 		actionItems.add(new ActionItem(this, "管理活动",
+				R.drawable.mm_title_btn_set_normal));
+
+		actionItems.add(new ActionItem(this, "管理成果",
 				R.drawable.mm_title_btn_set_normal));
 
 		actionItems.add(new ActionItem(this, "管理投票",
@@ -127,6 +168,10 @@ public class MainActivity extends BaseActionBarActivity {
 					toManageActivity();
 					break;
 				case 6:
+					Log.d("MainActivity-setItemOnClickListener", "管理成果");
+					toManageResults();
+					break;
+				case 7:
 					Log.d("MainActivity-setItemOnClickListener", "管理投票");
 					toManageVote();
 					break;
@@ -141,10 +186,10 @@ public class MainActivity extends BaseActionBarActivity {
 	}
 
 	private void toPersonInfo() {
-		FragmentTransaction fragmentTransaction = getSupportFragmentManager()
-				.beginTransaction();
+
+		fragmentTransaction = fragmentManager.beginTransaction();
 		fragmentTransaction
-				.replace(R.id.mainActivityFragmentLayout, new PersonalInfo())
+				.replace(R.id.mainActivityFragmentLayout, personalInfo)
 				.addToBackStack(null).commit();
 	}
 
@@ -171,6 +216,24 @@ public class MainActivity extends BaseActionBarActivity {
 	private void toManageActivity() {
 		// TODO Auto-generated method stub
 
+	}
+
+	private void toManageResults() {
+		Intent intent = new Intent(this, ManageResult.class);
+
+		this.startActivity(intent);
+
+		// fragmentTransaction = fragmentManager.beginTransaction();
+		//
+		// fragmentTransaction.replace(R.id.mainActivityFragmentLayout,
+		// resultsExhibitionFragment).addToBackStack(null);
+		//
+		// fragmentTransaction.commit();
+		//
+		// contentAdd.setVisibility(View.VISIBLE);
+		//
+		// contentAdd.setOnClickListener(resultsExhibitionFragment
+		// .getOnAddClickListener());
 	}
 
 	private void toManageVote() {

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/framelayout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants" >
+
+    <scau.info.volunteertime.activity.selectPhoto.MyImageView
+        android:id="@+id/add_image"
+        android:layout_width="fill_parent"
+        android:layout_height="100dip"
+        android:background="@drawable/add_image_bt_bg"
+        android:scaleType="fitXY" />
+
+</FrameLayout>

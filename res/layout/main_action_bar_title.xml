@@ -4,23 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <TextView
+        android:id="@android:id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/title_imageView"
+        android:text="志愿宝"
+        android:textColor="@color/blue"
+        android:textSize="18sp" />
+
     <ImageButton
         android:id="@+id/right_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
         android:background="@drawable/actionbar_bt_bg"
         android:onClick="showMenu"
         android:padding="18dp"
         android:src="@drawable/action_settings" />
 
-    <TextView
-        android:id="@android:id/title"
+    <ImageView
+        android:id="@+id/title_imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="首页"
-        android:textColor="@color/blue"
-        android:textSize="18sp" />
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="#00000000"
+        android:src="@drawable/ic_launcher" />
+
+    <ImageButton
+        android:id="@+id/conent_new"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/right_btn"
+        android:background="@drawable/actionbar_bt_bg"
+        android:src="@drawable/content_new" />
 
 </RelativeLayout>
