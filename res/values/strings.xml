@@ -30,5 +30,6 @@
     <string name="setting">setting</string>
     <string name="add">add</string>
     <string name="title_activity_select_photo">SelectPhotoActivity</string>
+    <string name="title_activity_show_result">ShowResultActivity</string>
 
 </resources>

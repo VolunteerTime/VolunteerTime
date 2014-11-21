@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Window;
 
 /**
  * @author 蔡超敏
@@ -32,11 +33,12 @@ public class LoadActivity extends Activity {
 
 	private static final String SHAREDPREFERENCES_NAME = "first_start_info";
 
-	// �����һ���������������
+	private static final String KEY_IS_FIRST_START = "isFirstStart";
+
 	SharedPreferences preferences;
 
 	/**
-	 * Handler:��ת����ͬ����
+	 * Handler处理器
 	 */
 	private Handler mHandler = new Handler() {
 
@@ -57,6 +59,9 @@ public class LoadActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		
 		setContentView(R.layout.activity_load);
 
 		// toShowVideo();
@@ -65,38 +70,34 @@ public class LoadActivity extends Activity {
 	}
 
 	private void init() {
-		// ��ȡSharedPreferences����Ҫ������
-		// ʹ��SharedPreferences����¼�����ʹ�ô���
 		preferences = getSharedPreferences(SHAREDPREFERENCES_NAME, MODE_PRIVATE);
 
-		// ȡ����Ӧ��ֵ�����û�и�ֵ��˵����δд�룬��true��ΪĬ��ֵ
-		isFirstIn = preferences.getBoolean("isFirstStart", true);
+		// 检测是否第一次启动软件
+		isFirstIn = preferences.getBoolean(KEY_IS_FIRST_START, true);
 
-		// �жϳ�����ڼ������У�����ǵ�һ����������ת���������棬������ת��������
+		// 进行判断
 		if (!isFirstIn) {
-			// ʹ��Handler��postDelayed������3���ִ����ת��MainActivity
-			mHandler.sendEmptyMessage(GO_HOME);
+			mHandler.sendEmptyMessageDelayed(GO_HOME,1000);
 		} else {
 			setGuided();
-			mHandler.sendEmptyMessage(GO_GUIDE);
+			mHandler.sendEmptyMessageDelayed(GO_GUIDE,1000);
 		}
 
 	}
 
 	/**
 	 * 
-	 * method desc�������Ѿ��������ˣ��´����������ٴ�����
+	 * 
 	 */
 	private void setGuided() {
 		Editor editor = preferences.edit();
-		// ��������
-		editor.putBoolean("isFirstStart1", false);
-		// �ύ�޸�
+		editor.putBoolean(KEY_IS_FIRST_START, false);
 		editor.commit();
 	}
 
 	private void goHome() {
-		Log.d("LoadActivity-goHome", "���ｫִ�е�½����");
+		Log.d("LoadActivity-goHome", "start");
+
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);
 		finish();
@@ -109,12 +110,12 @@ public class LoadActivity extends Activity {
 	}
 
 	/**
-	 * ��ʼ�����ݿ�
+	 * 初始化本地数据库
 	 */
 	private void initializeDatabase() {
 		SQLiteDatabase db = openOrCreateDatabase("volunteertimedatabase.db",
 				Context.MODE_PRIVATE, null);
-		// ����results��
+		// 建表
 		db.execSQL("CREATE TABLE IF NOT EXISTS results(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, content VARCHAR, image  VARCHAR, editor VARCHAR, publishTime BIGINT)");
 		db.close();
 	}

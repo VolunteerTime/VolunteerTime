@@ -6,7 +6,6 @@
 package scau.info.volunteertime.activity.manageresult;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.manageresult.AddImageAdapter.OnAddClickListener;
@@ -18,6 +17,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
 
 /**
@@ -30,8 +30,10 @@ public class AddResultFragment extends Fragment {
 
 	private int nowPhotoCount = 0;
 
+	private EditText titleText, contentText;
+
 	private GridView mGridView;
-	private List<String> list;
+	private ArrayList<String> list;
 	private AddImageAdapter adapter;
 
 	public AddResultFragment() {
@@ -43,6 +45,10 @@ public class AddResultFragment extends Fragment {
 			Bundle savedInstanceState) {
 		View rootView = inflater.inflate(R.layout.fragment_manage_result,
 				container, false);
+
+		titleText = (EditText) rootView.findViewById(R.id.manage_result_title);
+		contentText = (EditText) rootView
+				.findViewById(R.id.manage_result_conent);
 
 		mGridView = (GridView) rootView
 				.findViewById(R.id.manage_result_images_grid);
@@ -77,22 +83,6 @@ public class AddResultFragment extends Fragment {
 		});
 
 		mGridView.setAdapter(adapter);
-
-		// Button button = (Button) rootView
-		// .findViewById(R.id.manage_result_choose_image);
-		// button.setOnClickListener(new OnClickListener() {
-		//
-		// @Override
-		// public void onClick(View v) {
-		// Log.d("AddResultFragment-onClick", "images");
-		// Intent intent = new Intent(getActivity(),
-		// SelectPhotoActivity.class);
-		//
-		// intent.putExtra("nowPhotoCount", nowPhotoCount);
-		//
-		// startActivityForResult(intent, REQUEST_CODE);
-		// }
-		// });
 		return rootView;
 	}
 
@@ -117,6 +107,24 @@ public class AddResultFragment extends Fragment {
 			}
 
 		}
+	}
+
+	public ArrayList<String> getSelectedList() {
+		return list;
+	}
+
+	public String getTitle() {
+		if (titleText != null)
+			return titleText.getText().toString();
+		else
+			return null;
+	}
+
+	public String getContent() {
+		if (contentText != null)
+			return contentText.getText().toString();
+		else
+			return null;
 	}
 
 }

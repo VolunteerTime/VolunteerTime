@@ -152,8 +152,17 @@ public class ResultBO {
 			return list;
 		} catch (JSONException e) {
 			e.printStackTrace();
-			Log.d("debug", "���������ط�json");
+			Log.d("debug", "json出问题");
 		}
+		return null;
+	}
+
+	/**
+	 * @param newResult
+	 * @return String
+	 */
+	public String addNewResult(Result newResult) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 

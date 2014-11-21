@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.manageresult.ManageResultsExhibitionListAdapter.OnSettingsOnClickListener;
+import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.business.ResultBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
 import scau.info.volunteertime.util.Pagination;
@@ -23,6 +24,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -55,7 +57,11 @@ public class ManageResult extends ActionBarActivity {
 	private boolean hasMore;
 
 	private Activity activity;
-	public OnClickListener addClickListener;
+
+	private boolean isAddState = true;
+	private MenuItem item;
+
+	private AddResultFragment addResultFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -405,23 +411,10 @@ public class ManageResult extends ActionBarActivity {
 		}
 	}
 
-	/**
-	 * @return
-	 */
-	public OnClickListener getOnAddClickListener() {
-		addClickListener = new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-
-			}
-		};
-		return addClickListener;
-	}
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.manage_result, menu);
+		item = menu.findItem(R.id.conent_new);
 		return true;
 	}
 
@@ -432,19 +425,128 @@ public class ManageResult extends ActionBarActivity {
 			onBackPressed();
 			return true;
 		case R.id.conent_new:
-			addNewResult();
+
+			if (isAddState) {
+				item.setIcon(R.drawable.navigation_accept);
+				item.setTitle("确定");
+				addNewResult();
+				isAddState = !isAddState;
+			} else {
+				item.setIcon(R.drawable.content_new);
+				item.setTitle("增加");
+				addResult();
+				isAddState = !isAddState;
+			}
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
 
 	/**
+	 * 增加成果到服务器
+	 */
+	private void addResult() {
+		Log.d("ManageResult-addResult", "start");
+		Result newResult = new Result();
+		newResult.setTitle(addResultFragment.getTitle());
+		newResult.setContent(addResultFragment.getContent());
+		newResult.setImages(addResultFragment.getSelectedList());
+		getSupportFragmentManager().popBackStack();
+
+		Ding9App ding9App = (Ding9App) getApplication();
+
+		newResult.setEditor(ding9App.getUsername());
+
+		new AddDataTask(newResult);
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { // 按下的如果是BACK，同时没有重复
+			if (!isAddState) {
+				item.setIcon(R.drawable.content_new);
+				item.setTitle("增加");
+				isAddState = !isAddState;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
+
+	/**
 	 * 添加新的成果
 	 */
 	private void addNewResult() {
+		addResultFragment = new AddResultFragment();
+
 		getSupportFragmentManager().beginTransaction()
-				.add(R.id.container, new AddResultFragment())
-				.addToBackStack(null).commit();
+				.add(R.id.container, addResultFragment).addToBackStack(null)
+				.commit();
+	}
+
+	private class AddDataTask extends AsyncTask<Void, Void, String> {
+		private boolean isConnect;
+		private Result newResult;
+
+		public AddDataTask(Result newResult) {
+			this.newResult = newResult;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see android.os.AsyncTask#doInBackground(Params[])
+		 */
+		@Override
+		protected String doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// 获取连接状况
+			if (!isConnect) {// 无网络或未登陆则取消任务
+				Log.d("doInBackground", "not network");
+				cancel(true);
+				return "not network";
+			}
+			return resultBO.addNewResult(newResult);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(String result) {
+			Log.d("onPostExecute", result);
+			if (result.trim().equals("success")) {
+				ToastUtils.show(activity, "新增成功");
+			} else if (result.trim().equals("failure")) {
+				ToastUtils.show(activity, "新增失败");
+			} else {
+				ToastUtils.show(activity, "新增情况未知");
+			}
+		}
+
+		/**
+	     * 
+	     */
+		private void cancelledFunction() {
+			if (!isConnect) {
+				ToastUtils.show(activity, "网络连接出现问题~");
+			}
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
 	}
 
 }

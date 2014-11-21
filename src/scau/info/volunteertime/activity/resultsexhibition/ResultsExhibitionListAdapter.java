@@ -10,6 +10,7 @@ import java.util.LinkedList;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.application.Ding9App;
+import scau.info.volunteertime.util.AgoTimeUtil;
 import scau.info.volunteertime.vo.Result;
 import android.content.Context;
 import android.util.Log;
@@ -97,7 +98,8 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 
 		holder.editor.setText(result.getEditor());
 
-		holder.publishTime.setText(new Date(result.getDate()).toLocaleString());
+		holder.publishTime.setText(AgoTimeUtil.getTimeAgoFromCurren(result
+				.getDate()));
 
 		return view;
 

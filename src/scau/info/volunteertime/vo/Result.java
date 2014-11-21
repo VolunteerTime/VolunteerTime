@@ -5,6 +5,8 @@
  */
 package scau.info.volunteertime.vo;
 
+import java.util.List;
+
 /**
  * �ɹ�չʾ��VO
  * 
@@ -13,13 +15,22 @@ package scau.info.volunteertime.vo;
  */
 public class Result implements VolunteertimeData {
 
-	private int id;// ��ʶid
+	private int id;// id
 
-	private String title;// ��Ŀ
-	private String content;// ����
-	private String image;// ͼƬ
-	private String editor;// ����
-	private long publishTime;// ����ʱ��
+	private String title;// 标题
+	private String content;// 内容
+	private String image;// 图片
+	private String editor;// 作者
+	private long publishTime;// 时间
+
+	private int readNum;// 阅读数
+	private int commentNum;// 评论数
+	private String commentIds;// 评价id
+
+	private List<String> images;
+
+	public Result() {
+	}
 
 	/**
 	 * @param id
@@ -62,6 +73,14 @@ public class Result implements VolunteertimeData {
 		this.publishTime = publishTime;
 	}
 
+	public void setImages(List<String> imageList) {
+		this.images = imageList;
+	}
+
+	public List<String> getImages() {
+		return images;
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -75,6 +94,51 @@ public class Result implements VolunteertimeData {
 	 */
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the readNum
+	 */
+	public int getReadNum() {
+		return readNum;
+	}
+
+	/**
+	 * @param readNum
+	 *            the readNum to set
+	 */
+	public void setReadNum(int readNum) {
+		this.readNum = readNum;
+	}
+
+	/**
+	 * @return the commentNum
+	 */
+	public int getCommentNum() {
+		return commentNum;
+	}
+
+	/**
+	 * @param commentNum
+	 *            the commentNum to set
+	 */
+	public void setCommentNum(int commentNum) {
+		this.commentNum = commentNum;
+	}
+
+	/**
+	 * @return the commentIds
+	 */
+	public String getCommentIds() {
+		return commentIds;
+	}
+
+	/**
+	 * @param commentIds
+	 *            the commentIds to set
+	 */
+	public void setCommentIds(String commentIds) {
+		this.commentIds = commentIds;
 	}
 
 	/**

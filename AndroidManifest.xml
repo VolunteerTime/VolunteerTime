@@ -95,6 +95,10 @@
             android:name="scau.info.volunteertime.activity.selectPhoto.SelectPhotoActivity"
             android:label="@string/title_activity_select_photo" >
         </activity>
+        <activity
+            android:name="scau.info.volunteertime.activity.resultsexhibition.ShowResultActivity"
+            android:label="@string/title_activity_show_result" >
+        </activity>
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.Result;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -23,14 +24,17 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import cn.trinea.android.common.util.ToastUtils;
-import cn.trinea.android.common.view.DropDownListView;
-import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
+
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * @author 蔡超敏
@@ -44,7 +48,7 @@ public class ResultsExhibitionFragment extends Fragment {
 	private int currentPageSize = 8;
 	private int currentPageNumber = 1;
 
-	private DropDownListView resultsListView;
+	private PullToRefreshListView resultsListView;
 
 	private ResultsExhibitionListAdapter resultsExhibitionListAdapter;
 
@@ -74,13 +78,6 @@ public class ResultsExhibitionFragment extends Fragment {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
-	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -88,57 +85,78 @@ public class ResultsExhibitionFragment extends Fragment {
 		View view = inflater
 				.inflate(R.layout.fragment_results_exhibition, null);
 
-		resultsListView = (DropDownListView) view
+		resultsListView = (PullToRefreshListView) view
 				.findViewById(R.id.results_exhibition_list);
 
 		resultsListView.setAdapter(resultsExhibitionListAdapter);
 
-		resultsListView
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-					@Override
-					public boolean onItemLongClick(AdapterView<?> parent,
-							View view, int position, long id) {
-						Log.d("ResultsExhibition-onCreate-setOnItemLongClickListener-onItemLongClick",
-								"��������");
-						return false;
-					}
-
-				});
 		resultsListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				Log.d("ResultsExhibition-onCreate-setOnItemClickListener-onItemClick",
-						"��������");
+				Log.d("ResultsExhibition-onCreate-setOnItemClickListener",
+						"onItemClick");
+				showResultContent(position);
 			}
+
 		});
 
-		resultsListView.setOnBottomListener(new OnClickListener() {
+		resultsListView.setMode(Mode.BOTH);
+		resultsListView.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
-			public void onClick(View v) {
-				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
-						"��������");
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
+				Log.d("ResultsExhibition-onCreate-setOnRefreshListener",
+						"onPullDownToRefresh");
+				new GetDataTask(true).execute();
+			}
+
+			@Override
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
+				Log.d("ResultsExhibition-onCreate-onPullUpToRefresh",
+						"onPullUpToRefresh");
 				new GetDataTask(false).execute();
 			}
 		});
 
-		resultsListView.onBottom();
+		initListView();
 
-		resultsListView.setOnDropDownListener(new OnDropDownListener() {
-
-			@Override
-			public void onDropDown() {
-				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
-						"��������");
-				new GetDataTask(true).execute();
-			}
-		});
-		resultsListView.onDropDownComplete();
+		if (resultsExhibitionListAdapter.getCount() == 0) {
+			Log.d("chao-onCreateView", "setState");
+			new GetLocalDataTask().execute();
+			resultsListView.setState(State.REFRESHING, true);
+			resultsListView.setHeaderScroll(-84);
+			new GetDataTask(true).execute();
+		}
 
 		return view;
+	}
+
+	private void showResultContent(int position) {
+		Result result = sortedLinkList.get(position - 1);
+	    Log.d("showResultContent", "result.getArticleId" + result.getId());
+	    Intent mIntent = new Intent(activity, ShowResultActivity.class);
+	    Bundle mBundle = new Bundle();
+	    mBundle.putSerializable(ShowResultActivity.SER_KEY, result);
+	    mIntent.putExtras(mBundle);
+
+	    startActivity(mIntent);
+	}
+
+	private void initListView() {
+		ILoadingLayout startLabels = resultsListView.getLoadingLayoutProxy(
+				true, false);
+		startLabels.setPullLabel("下拉刷新");// 刚下拉时，显示的提示
+		startLabels.setRefreshingLabel("正在载入...");// 刷新时
+		startLabels.setReleaseLabel("放开刷新");// 下来达到一定距离时，显示的提示
+
+		ILoadingLayout endLabels = resultsListView.getLoadingLayoutProxy(false,
+				true);
+		endLabels.setPullLabel("上拉刷新");// 刚下拉时，显示的提示
+		endLabels.setRefreshingLabel("正在载入...");// 刷新时
+		endLabels.setReleaseLabel("放开刷新");// 下来达到一定距离时，显示的提示
+
 	}
 
 	private class GetDataTask extends AsyncTask<Void, Void, Void> {
@@ -152,43 +170,32 @@ public class ResultsExhibitionFragment extends Fragment {
 		ArrayList<Result> results = null;
 
 		public GetDataTask(boolean isDropDown) {
+			Log.d("GetDataTask-GetDataTask", "isDropDown = " + isDropDown);
 			this.isDropDown = isDropDown;
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.os.AsyncTask#doInBackground(Params[])
-		 */
 		@Override
 		protected Void doInBackground(Void... params) {
-			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// ��ȡ����״��
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);
+
+			Log.d("GetDataTask-doInBackground", "isConnect = " + isConnect);
 			if (!isConnect) {// ��������޸���������ȡ������
 				Log.d("doInBackground", "isConnect not");
 				cancel(true);
 				return null;
 			}
+
 			Log.d("GetDataTask-doInBackground", "in");
 			doInBackgroundFunction();
 			return null;
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.os.AsyncTask#onCancelled()
-		 */
 		@Override
 		protected void onCancelled() {
 			cancelledFunction();
 			super.onCancelled();
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-		 */
 		@Override
 		protected void onPostExecute(Void result) {
 			if (isCancelled()) {
@@ -210,14 +217,14 @@ public class ResultsExhibitionFragment extends Fragment {
 
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
-				resultsListView.onDropDownComplete();
+				resultsListView.onRefreshComplete();
 			} else {
 				resultsExhibitionListAdapter.setListData(sortedLinkList
 						.getList());
 
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
-				resultsListView.onBottomComplete();
+				resultsListView.onRefreshComplete();
 			}
 		}
 
@@ -226,15 +233,15 @@ public class ResultsExhibitionFragment extends Fragment {
 		 */
 		private void cancelledFunction() {
 			if (!isConnect) {
-				ToastUtils.show(activity, "�������ӳ�������");
+				ToastUtils.show(activity, "网络连接不正常");
 			} else if (!hasMore) {
-				resultsListView.setFooterNoMoreText("û�и��������Ϣ��Ŷ~");
-				ToastUtils.show(activity, "û�и��������Ϣ��Ŷ~");
+				// resultsListView.setFooterNoMoreText("û�и��������Ϣ��Ŷ~");
+				ToastUtils.show(activity, "没有更多信息了~");
 			}
 			if (isDropDown) {
-				resultsListView.onDropDownComplete();
+				resultsListView.onRefreshComplete();
 			} else {
-				resultsListView.onBottomComplete();
+				resultsListView.onRefreshComplete();
 			}
 		}
 
@@ -252,7 +259,7 @@ public class ResultsExhibitionFragment extends Fragment {
 					toGetUpdateDataFromNet();
 				}
 			} else {
-				if (!hasMore) {// ��������޸���������ȡ������
+				if (!hasMore) {
 					Log.d("doInBackground", "hasMore not");
 					cancel(true);
 					return;
@@ -269,6 +276,9 @@ public class ResultsExhibitionFragment extends Fragment {
 				} else if (resultsPagination.getCurrentPageNumber() > resultsPagination
 						.getSumPage()) {
 					toGetDataFromNet();
+					if (resultsPagination.getCurrentPageNumber() <= resultsPagination
+							.getSumPage())
+						toAddDataFromPagination();
 				}
 			}
 		}
@@ -278,6 +288,11 @@ public class ResultsExhibitionFragment extends Fragment {
 		 */
 		private void toGetUpdateDataFromNet() {
 			Log.d("doInBackgroundFunction", "toGetUpdateDataFromNet1");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 
 			firstTime = sortedLinkList.get(0).getPublishTime() + "";
 			Log.d("doInBackgroundFunction-toGetUpdateDataFromNet",
@@ -295,6 +310,11 @@ public class ResultsExhibitionFragment extends Fragment {
 		 */
 		private void toGetDataFromNet() {
 			Log.d("doInBackgroundFunction", "toGetDataFromNet");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			results = new ArrayList<Result>();
 			endTime = resultsPagination.getLastData().getPublishTime() + "";
 			Log.d("doInBackgroundFunction-toGetDataFromNet", "endTime ="
@@ -332,6 +352,11 @@ public class ResultsExhibitionFragment extends Fragment {
 		 */
 		private void toGetNewDataFromNet() {
 			Log.d("doInBackgroundFunction", "getNewData1");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			results = new ArrayList<Result>();
 			results = (ArrayList<Result>) resultBO.getNewData(currentPageSize);
 			if (results != null) {
@@ -382,6 +407,99 @@ public class ResultsExhibitionFragment extends Fragment {
 				endTime = c.getString(c.getColumnIndex("publishTime"));
 			Log.d("ResultsExhibitionFragment-doInBackgroundFunction",
 					"firstTime = " + firstTime + "; endTime = " + endTime);
+			c.close();
+			db.close();
+			resultsPagination.getRecords().addAll(results);
+		}
+	}
+
+	private class GetLocalDataTask extends AsyncTask<Void, Void, Void> {
+
+		ArrayList<Result> results = null;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			doInBackgroundFunction();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(Void result) {
+			resultsExhibitionListAdapter.setListData(sortedLinkList.getList());
+
+			resultsExhibitionListAdapter.notifyDataSetChanged();
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+		}
+
+		/**
+		 * 
+		 */
+		private void doInBackgroundFunction() {
+			Log.d("doInBackgroundFunction",
+					"getSumPage = " + resultsPagination.getSumPage());
+			toCheckDatabase();
+			toAddDataFromPagination();
+		}
+
+		/**
+		 * 
+		 */
+		private void toAddDataFromPagination() {
+			Log.d("doInBackgroundFunction",
+					"toAddDataFromPagination PageNumber="
+							+ resultsPagination.getCurrentPageNumber());
+			if (resultsPagination.getAmountOfRecorders() != 0) {
+				sortedLinkList
+						.addAll(resultsPagination.getcurrentPageRecords());
+				resultsPagination.setCurrentPageNumber(resultsPagination
+						.getCurrentPageNumber() + 1);
+			}
+		}
+
+		/**
+		 * 
+		 */
+		private void toCheckDatabase() {
+			SQLiteDatabase db = activity.openOrCreateDatabase(
+					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
+			Cursor c = db.rawQuery(
+					"SELECT * FROM results ORDER BY publishTime DESC", null);
+			results = new ArrayList<Result>();
+			c.moveToFirst();
+			while (!c.isAfterLast()) {
+				Result result = new Result(c.getInt(c.getColumnIndex("id")),
+						c.getString(c.getColumnIndex("title")), c.getString(c
+								.getColumnIndex("content")), c.getString(c
+								.getColumnIndex("image")), c.getString(c
+								.getColumnIndex("editor")), c.getLong(c
+								.getColumnIndex("publishTime")));
+				results.add(result);
+				c.moveToNext();
+			}
 			c.close();
 			db.close();
 			resultsPagination.getRecords().addAll(results);

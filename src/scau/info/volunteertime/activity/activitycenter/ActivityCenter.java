@@ -129,22 +129,6 @@ public class ActivityCenter extends Fragment {
 				"2009-9-26", "eee");
 
 		list.add(a1);
-		list.add(a2);
-		list.add(a3);
-		list.add(a4);
-		list.add(a5);
-		list.add(a6);
-		list.add(a7);
-		list.add(a8);
-		list.add(a9);
-		list.add(a10);
-		list.add(a11);
-		list.add(a12);
-		list.add(a13);
-		list.add(a14);
-		list.add(a15);
-		list.add(a16);
-		list.add(a17);
 
 		adapter = new ActivityAdapter(getActivity(), list, mToolTipFrameLayout);
 

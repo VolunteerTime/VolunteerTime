@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <cn.trinea.android.common.view.DropDownListView
+    <!--
+         <cn.trinea.android.common.view.DropDownListView
         android:id="@+id/results_exhibition_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,5 +14,12 @@
         listViewAttr:isAutoLoadOnBottom="true"
         listViewAttr:isDropDownStyle="true"
         listViewAttr:isOnBottomStyle="true" />
+    -->
+
+    <com.handmark.pulltorefresh.library.PullToRefreshExpandableListView
+        android:id="@+id/results_exhibition_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/mm_title_functionframe_line" />
 
 </RelativeLayout>

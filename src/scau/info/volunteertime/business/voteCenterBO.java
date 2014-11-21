@@ -26,7 +26,7 @@ public class voteCenterBO {
 	/**
 	 * @return
 	 */
-	public static String VoteCenterAddress = "http://192.168.253.1:8088/VolunteerTimeWeb/VolunteerTimeVoteCenterServlet";
+	public static String VoteCenterAddress = BOConstant.ROOT_URL+"/VolunteerTimeWeb/VolunteerTimeVoteCenterServlet";
 
 	public ArrayList<VoteData> getVotesData(int lastId) {
 		// TODO Auto-generated method stub

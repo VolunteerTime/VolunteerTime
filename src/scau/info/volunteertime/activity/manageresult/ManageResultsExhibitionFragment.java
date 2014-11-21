@@ -28,10 +28,12 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import cn.trinea.android.common.util.ToastUtils;
-import cn.trinea.android.common.view.DropDownListView;
-import cn.trinea.android.common.view.DropDownListView.OnDropDownListener;
+
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.Mode;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener2;
+import com.handmark.pulltorefresh.library.PullToRefreshExpandableListView;
 
 /**
  * @author 蔡超敏
@@ -41,10 +43,10 @@ public class ManageResultsExhibitionFragment extends Fragment {
 	private SortedLinkList<Result> sortedLinkList;
 	private Pagination<Result> resultsPagination;// 临时数据的分页类
 
-	private int currentPageSize = 8;
+	private int currentPageSize = 3;
 	private int currentPageNumber = 1;
 
-	private DropDownListView resultsListView;
+	private PullToRefreshExpandableListView resultsListView;
 
 	private ManageResultsExhibitionListAdapter resultsExhibitionListAdapter;
 
@@ -99,55 +101,60 @@ public class ManageResultsExhibitionFragment extends Fragment {
 		View view = inflater.inflate(
 				R.layout.fragment_manage_results_exhibition, null);
 
-		resultsListView = (DropDownListView) view
+		resultsListView = (PullToRefreshExpandableListView) view
 				.findViewById(R.id.results_exhibition_list);
 
 		resultsListView.setAdapter(resultsExhibitionListAdapter);
 
-		resultsListView
-				.setOnItemLongClickListener(new OnItemLongClickListener() {
-
-					@Override
-					public boolean onItemLongClick(AdapterView<?> parent,
-							View view, int position, long id) {
-						Log.d("ResultsExhibition-onCreate-setOnItemLongClickListener-onItemLongClick",
-								"��������");
-						return false;
-					}
-
-				});
 		resultsListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Log.d("ResultsExhibition-onCreate-setOnItemClickListener-onItemClick",
-						"��������");
+						"test");
 			}
 		});
 
-		resultsListView.setOnBottomListener(new OnClickListener() {
+		// resultsListView.setOnBottomListener(new OnClickListener() {
+		//
+		// @Override
+		// public void onClick(View v) {
+		// Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
+		// "��������");
+		// new GetDataTask(false).execute();
+		// }
+		// });
+		//
+		// resultsListView.onBottom();
+		//
+		// resultsListView.setOnDropDownListener(new OnDropDownListener() {
+		//
+		// @Override
+		// public void onDropDown() {
+		// Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
+		// "��������");
+		// new GetDataTask(true).execute();
+		// }
+		// });
+		// resultsListView.onDropDownComplete();
+		resultsListView.setMode(Mode.BOTH);
+		resultsListView.setOnRefreshListener(new OnRefreshListener2() {
 
 			@Override
-			public void onClick(View v) {
+			public void onPullDownToRefresh(PullToRefreshBase refreshView) {
 				Log.d("ResultsExhibition-onCreate-setOnBottomListener-onClick",
-						"��������");
+						"in");
 				new GetDataTask(false).execute();
 			}
-		});
-
-		resultsListView.onBottom();
-
-		resultsListView.setOnDropDownListener(new OnDropDownListener() {
 
 			@Override
-			public void onDropDown() {
+			public void onPullUpToRefresh(PullToRefreshBase refreshView) {
 				Log.d("ResultsExhibition-onCreate-setOnDropDownListener-onClick",
-						"��������");
+						"in");
 				new GetDataTask(true).execute();
 			}
 		});
-		resultsListView.onDropDownComplete();
 
 		return view;
 	}
@@ -166,11 +173,6 @@ public class ManageResultsExhibitionFragment extends Fragment {
 			this.isDropDown = isDropDown;
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.os.AsyncTask#doInBackground(Params[])
-		 */
 		@Override
 		protected Void doInBackground(Void... params) {
 			isConnect = NetworkStateUtil.isNetworkAvailable(activity);// ��ȡ����״��
@@ -184,22 +186,12 @@ public class ManageResultsExhibitionFragment extends Fragment {
 			return null;
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.os.AsyncTask#onCancelled()
-		 */
 		@Override
 		protected void onCancelled() {
 			cancelledFunction();
 			super.onCancelled();
 		}
 
-		/*
-		 * (non-Javadoc)
-		 * 
-		 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-		 */
 		@Override
 		protected void onPostExecute(Void result) {
 			if (isCancelled()) {
@@ -221,14 +213,14 @@ public class ManageResultsExhibitionFragment extends Fragment {
 
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
-				resultsListView.onDropDownComplete();
+				resultsListView.onRefreshComplete();
 			} else {
 				resultsExhibitionListAdapter.setListData(sortedLinkList
 						.getList());
 
 				resultsExhibitionListAdapter.notifyDataSetChanged();
 
-				resultsListView.onBottomComplete();
+				resultsListView.onRefreshComplete();
 			}
 		}
 
@@ -237,15 +229,15 @@ public class ManageResultsExhibitionFragment extends Fragment {
 		 */
 		private void cancelledFunction() {
 			if (!isConnect) {
-				ToastUtils.show(activity, "�������ӳ�������");
+				ToastUtils.show(activity, "网络连接不正常");
 			} else if (!hasMore) {
-				resultsListView.setFooterNoMoreText("û�и��������Ϣ��Ŷ~");
-				ToastUtils.show(activity, "û�и��������Ϣ��Ŷ~");
+				// resultsListView.setFooterNoMoreText("û�и��������Ϣ��Ŷ~");
+				ToastUtils.show(activity, "没有更多信息了~");
 			}
 			if (isDropDown) {
-				resultsListView.onDropDownComplete();
+				resultsListView.onRefreshComplete();
 			} else {
-				resultsListView.onBottomComplete();
+				resultsListView.onRefreshComplete();
 			}
 		}
 

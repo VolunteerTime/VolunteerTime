@@ -6,12 +6,14 @@
 
 package scau.info.volunteertime.vo;
 
+import java.io.Serializable;
+
 
 /**
  * @author 林锡鑫
  *
  */
-public interface VolunteertimeData {
+public interface VolunteertimeData extends Serializable{
 	
 	public long getDate();
 	public void setDate(long date);
