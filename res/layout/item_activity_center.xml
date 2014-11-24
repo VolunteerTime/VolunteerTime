@@ -3,6 +3,7 @@
     android:id="@+id/RelativeLayout1"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="horizontal"
     android:padding="5dp" >
 
@@ -62,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="#ffffff"
+            android:focusable="false"
             android:text="报名"
             android:textSize="16dp" />
     </RelativeLayout>

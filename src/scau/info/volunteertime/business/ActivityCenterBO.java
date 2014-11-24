@@ -134,4 +134,18 @@ public class ActivityCenterBO {
 		Log.d("quitParticipateActivity", "jsonStr = " + jsonStr);
 		return jsonStr;
 	}
+
+	/**
+	 * @param id
+	 */
+	public void updateReadNum(int id) {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 3 + "");
+		maps.put("id", id + "");
+
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+
+		Log.d("updateReadNum", "jsonStr = " + jsonStr);
+	}
 }

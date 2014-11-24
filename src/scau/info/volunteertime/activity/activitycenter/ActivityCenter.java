@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.activitycenter.ActivityAdapter.OnParticipateButtonListener;
-import scau.info.volunteertime.activity.resultsexhibition.ShowResultActivity;
 import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.business.ActivityCenterBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
@@ -143,12 +142,15 @@ public class ActivityCenter extends Fragment {
 		ActivityDate activityDate = sortedLinkList.get(position - 1);
 		Log.d("showActivityDateContent",
 				"activityDate.getId" + activityDate.getId());
-		Intent mIntent = new Intent(activity, ShowResultActivity.class);
+		Intent mIntent = new Intent(activity, ShowActivityActivity.class);
 		Bundle mBundle = new Bundle();
-		mBundle.putSerializable(ShowResultActivity.SER_KEY, activityDate);
+		mBundle.putSerializable(ShowActivityActivity.SER_KEY, activityDate);
 		mIntent.putExtras(mBundle);
 
 		startActivity(mIntent);
+
+		new UpdateReadNumDataTask(activityDate.getId()).execute();
+		activityDate.setReadNum(activityDate.getReadNum() + 1);
 	}
 
 	private void participateActivity(int activityId, int position, View v) {
@@ -611,6 +613,71 @@ public class ActivityCenter extends Fragment {
 			c.close();
 			db.close();
 			sortedLinkList.addAll(activityDates);
+		}
+	}
+
+	private class UpdateReadNumDataTask extends AsyncTask<Void, Void, Void> {
+
+		private boolean isConnect;
+		private int id;
+
+		public UpdateReadNumDataTask(int id) {
+			this.id = id;
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);
+
+			Log.d("UpdateNowDataTask-doInBackground", "isConnect = "
+					+ isConnect);
+			if (!isConnect) {
+				Log.d("doInBackground", "isConnect not");
+				cancel(true);
+				return null;
+			}
+
+			Log.d("UpdateNowDataTask-doInBackground", "in");
+			doInBackgroundFunction();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(Void result) {
+			activityListAdapter.notifyDataSetChanged();
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+			Log.d("UpdateNowDataTask", "wrong");
+		}
+
+		/**
+		 * 
+		 */
+		private void doInBackgroundFunction() {
+			activityCenterBO.updateReadNum(id);
 		}
 	}
 }

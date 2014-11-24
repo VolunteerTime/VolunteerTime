@@ -5,11 +5,13 @@
  */
 package scau.info.volunteertime.vo;
 
+import java.io.Serializable;
+
 /**
  * @author 蔡超敏
  * 
  */
-public class ActivityGroup {
+public class ActivityGroup implements Serializable {
 	private int id;
 	private String principalId;
 	private String participators;

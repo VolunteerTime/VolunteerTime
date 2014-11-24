@@ -99,6 +99,10 @@
             android:name="scau.info.volunteertime.activity.resultsexhibition.ShowResultActivity"
             android:label="@string/title_activity_show_result" >
         </activity>
+        <activity
+            android:name="scau.info.volunteertime.activity.activitycenter.ShowActivityActivity"
+            android:label="@string/title_activity_show_activity" >
+        </activity>
     </application>
 
 </manifest>
