@@ -1,12 +1,21 @@
 package scau.info.volunteertime.activity.resultsexhibition;
 
+import java.util.ArrayList;
+
+import cn.trinea.android.common.util.ToastUtils;
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.util.AgoTimeUtil;
+import scau.info.volunteertime.util.NetworkStateUtil;
 import scau.info.volunteertime.vo.Result;
+import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +35,8 @@ public class ShowResultActivity extends ActionBarActivity {
 	private WebView webViewShowContent;
 
 	private String htmlStr;
+	
+	private Context mContext;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +49,10 @@ public class ShowResultActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_show_result);
 		webViewShowContent = (WebView) findViewById(R.id.show_content);
 
+		mContext=this;
+		result.setReadNum(result.getReadNum());
 		showContent();
+		
 
 	}
 
@@ -59,7 +73,8 @@ public class ShowResultActivity extends ActionBarActivity {
 				+ result.getImage()
 				+ "\" /></p>&nbsp;&nbsp;&nbsp;&nbsp;"
 				+ result.getContent()
-				+ "</p></body></html>";
+				+ "</p><p align=\"left\"><font size=\"2\" color=\"#808080\">阅读 "
+				+ result.getReadNum() + "</font></p></body></html>";
 
 		webViewShowContent.loadDataWithBaseURL("about:blank", htmlStr,
 				"text/html", "utf-8", null);
@@ -129,6 +144,68 @@ public class ShowResultActivity extends ActionBarActivity {
 		public void onPageFinished(WebView view, String url) {
 			super.onPageFinished(view, url);
 		}
+	}
+	
+	private class SaveDataTask extends AsyncTask<Void, Void, Void> {
+
+		private boolean isConnect;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(mContext);
+
+			Log.d("GetDataTask-doInBackground", "isConnect = " + isConnect);
+			if (!isConnect) {
+				Log.d("doInBackground", "isConnect not");
+				cancel(true);
+				return null;
+			}
+
+			Log.d("GetDataTask-doInBackground", "in");
+			doInBackgroundFunction();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(Void result) {
+			Log.d("SaveDataTask-postFunction", "success!");
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+			if (!isConnect) {
+				ToastUtils.show(mContext, "网络连接不正常");
+			}
+		}
+
+		/**
+		 * 
+		 */
+		private void doInBackgroundFunction() {
+			
+		}
+
 	}
 
 }

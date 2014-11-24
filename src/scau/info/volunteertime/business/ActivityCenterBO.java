@@ -5,82 +5,107 @@
  */
 package scau.info.volunteertime.business;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import scau.info.volunteertime.vo.ActivityData;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import scau.info.volunteertime.vo.ActivityDate;
+import android.util.Log;
+import cn.trinea.android.common.util.HttpUtils;
 
 /**
  * @author 林锡鑫
- *
+ * 
  */
 public class ActivityCenterBO {
 
-	ArrayList<ArrayList<ActivityData>> list=new ArrayList<ArrayList<ActivityData>>();
-	public ArrayList<ActivityData> getActivityRecord(int page)  //ÿ�λ�ȡ20�����ݵ�
-	{
-		ArrayList<ActivityData> arraylist=new ArrayList<ActivityData>();
-		ArrayList<ActivityData> arraylist2=new ArrayList<ActivityData>();
-		
-		ActivityData[] a=new ActivityData[20];
-		
-		 a[0]=new ActivityData("df", "asdf", "df", "dffd"); 
+	/**
+	 * @return
+	 */
+	public ArrayList<ActivityDate> getNewData() {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 0 + "");
 
-		  a[1]=new ActivityData("name","���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�","2014-07-22","eee");
-		  
-			 a[1].addComment("�ú�Ц��������������������������");
-			 a[1].addComment("��������^_^");
-			 a[1].addComment("������ม�������");
-		  
-		  a[2]=new ActivityData("name","���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����","2014-07-22","eee");
-		  a[3]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-		  a[4]=new ActivityData("name","һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���","2014-07-22","eee");
-		  a[5]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-		  a[6]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-		  a[7]=new ActivityData("xin","����21��ȥ�Է���������ˣ��Һ�һ������㣬���ˣ�","2014-07-22","eee");
-		  a[8]=new ActivityData("name","���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�","2014-07-22","eee");
-		  a[9]=new ActivityData("name","���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����","2014-07-22","eee");
-		  a[10]=new ActivityData("name","һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���","2014-07-22","eee");
-		  a[11]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-		  a[12]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-		  a[13]=new ActivityData("xin","����21��ȥ�Է���������ˣ��Һ�һ������㣬���ˣ�","2014-07-22","eee");
-		  a[14]=new ActivityData("name","���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�","2014-07-22","eee");
-		  a[15]=new ActivityData("name","���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����","2014-07-22","eee");
-		  a[16]=new ActivityData("name","һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���","2014-07-22","eee");
-		  a[17]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-		  a[18]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-		  a[19]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-			ActivityData[] ab=new ActivityData[20];
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
 
-			  ab[0]=new ActivityData("df", "asdf", "df", "dffd"); 
-			  ab[1]=new ActivityData("name","���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�","2014-07-22","eee");
-			  ab[2]=new ActivityData("name","���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����","2014-07-22","eee");
-			  ab[3]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-			  ab[4]=new ActivityData("name","һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���","2014-07-22","eee");
-			  ab[5]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-			  ab[6]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-			  ab[7]=new ActivityData("xin","����21��ȥ�Է���������ˣ��Һ�һ������㣬���ˣ�","2014-07-22","eee");
-			  ab[8]=new ActivityData("name","���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�","2014-07-22","eee");
-			  ab[9]=new ActivityData("name","���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����","2014-07-22","eee");
-			  ab[10]=new ActivityData("name","һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���","2014-07-22","eee");
-			  ab[11]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-			  ab[12]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-			  ab[13]=new ActivityData("xin","����21��ȥ�Է���������ˣ��Һ�һ������㣬���ˣ�","2014-07-22","eee");
-			  ab[14]=new ActivityData("name","���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�","2014-07-22","eee");
-			  ab[15]=new ActivityData("name","���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����","2014-07-22","eee");
-			  ab[16]=new ActivityData("name","һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���","2014-07-22","eee");
-			  ab[17]=new ActivityData("name","1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������","2009-9-26","eee");
-			  ab[18]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-			  ab[19]=new ActivityData("name","�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:","5Сʱǰ","eee");
-			
-			  
-		  for(int i=0;i<20;i++)
-		  {arraylist.add(a[i]);}
-		  for(int i=0;i<20;i++)
-		  {arraylist2.add(ab[i]);}
-		  list.add(arraylist);
-		  list.add(arraylist2);
-		  if(page>=list.size()) return null;
-		  else
-		return list.get(page);
+		try {
+			return jsonToList(jsonStr);
+		} catch (ParseException e) {
+			Log.d("ActivityCenterBO-getNewData", "ParseException-err");
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private ArrayList<ActivityDate> jsonToList(String jsonStr)
+			throws ParseException {
+		JSONArray jaryProducts = null;
+		int pageSize = 10;
+		try {
+			JSONObject jsonResults = new JSONObject(jsonStr);
+			jaryProducts = jsonResults.getJSONArray("records");
+			pageSize = jsonResults.getInt("pageSize");
+
+			Log.d("ActivityCenterBO-jsonToPagination", "return size is"
+					+ pageSize + ": the json is " + jsonStr);
+
+			ArrayList<ActivityDate> list = new ArrayList<ActivityDate>();
+			JSONObject jsonActivityDate = null;
+			ActivityDate activityDate;
+
+			for (int i = 0; i < jaryProducts.length(); i++) {
+				jsonActivityDate = jaryProducts.getJSONObject(i);
+				activityDate = new ActivityDate(jsonActivityDate.getInt("id"));
+				activityDate.setTitle(jsonActivityDate.getString("title"));
+				activityDate.setContent(jsonActivityDate.getString("content"));
+				String time = jsonActivityDate.getString("publish_time");
+				activityDate.setPublishTime(Long.parseLong(time));
+				time = jsonActivityDate.getString("end_time");
+				activityDate.setEndTime(Long.parseLong(time));
+
+				activityDate.setLimitNum(jsonActivityDate.getInt("limit_num"));
+				activityDate.setReadNum(jsonActivityDate.getInt("read_num"));
+				activityDate.setGroupId(jsonActivityDate.getInt("group_id"));
+				activityDate.setImage(jsonActivityDate.getString("image"));
+				activityDate.setEditor(jsonActivityDate.getString("editor"));
+				activityDate.setParticipatorsNum(jsonActivityDate
+						.getInt("participators_num"));
+
+				list.add(activityDate);
+
+				Log.d("jsonToList",
+						"getPublishTime = " + activityDate.getPublishTime()
+								+ " : activityDate.getLimitNum = "
+								+ activityDate.getLimitNum());
+			}
+
+			return list;
+		} catch (JSONException e) {
+			e.printStackTrace();
+			Log.d("debug", "json出问题");
+		}
+		return null;
+	}
+
+	/**
+	 * @param userId
+	 * @return String
+	 */
+	public String participateActivity(String userId, int activityId) {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 1 + "");
+		maps.put("userId", userId);
+		maps.put("activityId", activityId + "");
+
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		Log.d("participateActivity", "jsonStr = " + jsonStr);
+		return jsonStr;
 	}
 }

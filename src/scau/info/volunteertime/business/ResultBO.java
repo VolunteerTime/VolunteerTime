@@ -110,7 +110,6 @@ public class ResultBO {
 			e.printStackTrace();
 		}
 		return null;
-
 	}
 
 	/**
@@ -142,6 +141,7 @@ public class ResultBO {
 				result.setPublishTime(Long.parseLong(time));
 				result.setImage(jsonResult.getString("image"));
 				result.setEditor(jsonResult.getString("editor"));
+				result.setReadNum(jsonResult.getInt("read_num"));
 				list.add(result);
 
 				Log.d("jsonToList",
@@ -164,6 +164,37 @@ public class ResultBO {
 	public String addNewResult(Result newResult) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	/**
+	 * @param string
+	 * @return string
+	 */
+	public String getUpdateDate(String string) {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 3 + "");
+		maps.put("ids", string);
+
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+
+		Log.d("getUpdateDate", "jsonStr = " + jsonStr);
+
+		return jsonStr;
+	}
+
+	/**
+	 * @param id
+	 */
+	public void updateReadNum(int id) {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 4 + "");
+		maps.put("id", id + "");
+
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+
+		Log.d("updateReadNum", "jsonStr = " + jsonStr);
 	}
 
 }

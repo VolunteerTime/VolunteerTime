@@ -18,9 +18,12 @@ public class BOConstant {
 	public static final int USER_NOT_ACTIVATED = -3;// 用户未激活
 	public static final int USER_REGISTER_SUCCESS = 1;// 用户注册成功
 
-	public static final String ROOT_URL = "http://192.168.173.1:8080";
+	public static final String ROOT_URL = "http://192.168.253.1:8080";
 
 	public static final String GET_NEW_RESULTS_DATA_URL = ROOT_URL
 			+ "/VolunteerTimeWeb/VolunteerTimeResultExhibitionServlet";
+
+	public static final String GET_NEW_ACTIVITIES_DATA_URL = ROOT_URL
+			+ "/VolunteerTimeWeb/VolunteerTimeActivityCenterServlet";
 
 }

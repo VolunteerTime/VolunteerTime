@@ -7,6 +7,10 @@ package scau.info.volunteertime.activity.resultsexhibition;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.business.ResultBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
@@ -14,6 +18,7 @@ import scau.info.volunteertime.util.Pagination;
 import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.Result;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -135,13 +140,16 @@ public class ResultsExhibitionFragment extends Fragment {
 
 	private void showResultContent(int position) {
 		Result result = sortedLinkList.get(position - 1);
-	    Log.d("showResultContent", "result.getArticleId" + result.getId());
-	    Intent mIntent = new Intent(activity, ShowResultActivity.class);
-	    Bundle mBundle = new Bundle();
-	    mBundle.putSerializable(ShowResultActivity.SER_KEY, result);
-	    mIntent.putExtras(mBundle);
+		Log.d("showResultContent", "result.getArticleId" + result.getId());
+		Intent mIntent = new Intent(activity, ShowResultActivity.class);
+		Bundle mBundle = new Bundle();
+		mBundle.putSerializable(ShowResultActivity.SER_KEY, result);
+		mIntent.putExtras(mBundle);
 
-	    startActivity(mIntent);
+		startActivity(mIntent);
+
+		new UpdateReadNumDataTask(result.getId()).execute();
+		result.setReadNum(result.getReadNum() + 1);
 	}
 
 	private void initListView() {
@@ -226,6 +234,8 @@ public class ResultsExhibitionFragment extends Fragment {
 
 				resultsListView.onRefreshComplete();
 			}
+
+			new UpdateNowDataTask().execute();
 		}
 
 		/**
@@ -357,12 +367,14 @@ public class ResultsExhibitionFragment extends Fragment {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+
 			results = new ArrayList<Result>();
 			results = (ArrayList<Result>) resultBO.getNewData(currentPageSize);
 			if (results != null) {
 				resultsPagination.getRecords().addAll(results);
 				toSaveDataInDatabase();
 			}
+
 			Log.d("doInBackgroundFunction", "getNewData2");
 		}
 
@@ -374,10 +386,11 @@ public class ResultsExhibitionFragment extends Fragment {
 					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
 			for (Result result : results) {
 				db.execSQL(
-						"REPLACE INTO results(id ,title ,content ,image  ,editor ,publishTime) VALUES(?,?,?,?,?,?)",
+						"REPLACE INTO results(id ,title ,content ,image  ,editor ,publishTime, readNum) VALUES(?,?,?,?,?,?,?)",
 						new Object[] { result.getId(), result.getTitle(),
 								result.getContent(), result.getImage(),
-								result.getEditor(), result.getPublishTime() });
+								result.getEditor(), result.getPublishTime(),
+								result.getReadNum() });
 			}
 			db.close();
 		}
@@ -399,7 +412,8 @@ public class ResultsExhibitionFragment extends Fragment {
 								.getColumnIndex("content")), c.getString(c
 								.getColumnIndex("image")), c.getString(c
 								.getColumnIndex("editor")), c.getLong(c
-								.getColumnIndex("publishTime")));
+								.getColumnIndex("publishTime")), c.getInt(c
+								.getColumnIndex("readNum")));
 				results.add(result);
 				c.moveToNext();
 			}
@@ -496,13 +510,205 @@ public class ResultsExhibitionFragment extends Fragment {
 								.getColumnIndex("content")), c.getString(c
 								.getColumnIndex("image")), c.getString(c
 								.getColumnIndex("editor")), c.getLong(c
-								.getColumnIndex("publishTime")));
+								.getColumnIndex("publishTime")), c.getInt(c
+								.getColumnIndex("readNum")));
 				results.add(result);
 				c.moveToNext();
 			}
 			c.close();
 			db.close();
 			resultsPagination.getRecords().addAll(results);
+		}
+	}
+
+	private class UpdateNowDataTask extends AsyncTask<Void, Void, Void> {
+
+		ArrayList<Result> results = null;
+		private boolean isConnect;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);
+
+			Log.d("UpdateNowDataTask-doInBackground", "isConnect = "
+					+ isConnect);
+			if (!isConnect) {
+				Log.d("doInBackground", "isConnect not");
+				cancel(true);
+				return null;
+			}
+
+			Log.d("UpdateNowDataTask-doInBackground", "in");
+			doInBackgroundFunction();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(Void result) {
+			resultsExhibitionListAdapter.setListData(sortedLinkList.getList());
+
+			resultsExhibitionListAdapter.notifyDataSetChanged();
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+			Log.d("UpdateNowDataTask", "wrong");
+		}
+
+		/**
+		 * 
+		 */
+		private void doInBackgroundFunction() {
+			JSONArray array = new JSONArray();
+			for (Result result : sortedLinkList.getSortedLinkList()) {
+				JSONObject jsonObj = new JSONObject();
+				try {
+					jsonObj.put("id", result.getId());
+				} catch (JSONException e) {
+					Log.d("UpdateNowDataTask",
+							"result.getId() = " + result.getId());
+					e.printStackTrace();
+				}
+				array.put(jsonObj);
+			}
+
+			JSONObject json = new JSONObject();
+			try {
+				json.put("array", array);
+			} catch (JSONException e) {
+				Log.d("UpdateNowDataTask", "array");
+				e.printStackTrace();
+			}
+
+			String jsonResults = resultBO.getUpdateDate(json.toString());
+			SQLiteDatabase db = activity.openOrCreateDatabase(
+					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
+			try {
+
+				JSONObject jsonObject = new JSONObject(jsonResults);
+				JSONArray jsonArray = jsonObject.getJSONArray("array");
+
+				JSONObject jsonResult;
+				int count = 0;
+
+				for (int i = 0; i < jsonArray.length(); i++) {
+					jsonResult = jsonArray.getJSONObject(i);
+					int id = jsonResult.getInt("id");
+					int readNum = jsonResult.getInt("read_num");
+					Log.d("UpdateNowDataTask-doInBackgroundFunction", "i = "
+							+ i + " id = " + id + " readNum = " + readNum);
+
+					if (readNum < 0) {
+						sortedLinkList.getSortedLinkList().remove(i);
+						count--;
+						db.delete("results", "id = ?",
+								new String[] { String.valueOf(id) });
+					} else {
+						sortedLinkList.get(i + count).setReadNum(readNum);
+
+						ContentValues values = new ContentValues();
+						values.put("readNum", readNum);
+
+						db.update("results", values, "id = ?",
+								new String[] { String.valueOf(id) });
+					}
+
+				}
+
+			} catch (JSONException e) {
+				e.printStackTrace();
+			} finally {
+				db.close();
+			}
+
+		}
+	}
+
+	private class UpdateReadNumDataTask extends AsyncTask<Void, Void, Void> {
+
+		private boolean isConnect;
+		private int id;
+
+		public UpdateReadNumDataTask(int id) {
+			this.id = id;
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);
+
+			Log.d("UpdateNowDataTask-doInBackground", "isConnect = "
+					+ isConnect);
+			if (!isConnect) {
+				Log.d("doInBackground", "isConnect not");
+				cancel(true);
+				return null;
+			}
+
+			Log.d("UpdateNowDataTask-doInBackground", "in");
+			doInBackgroundFunction();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(Void result) {
+			resultsExhibitionListAdapter.setListData(sortedLinkList.getList());
+
+			resultsExhibitionListAdapter.notifyDataSetChanged();
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+			Log.d("UpdateNowDataTask", "wrong");
+		}
+
+		/**
+		 * 
+		 */
+		private void doInBackgroundFunction() {
+			resultBO.updateReadNum(id);
 		}
 	}
 

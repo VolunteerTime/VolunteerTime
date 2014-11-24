@@ -37,6 +37,10 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 		return newLinkList;
 	}
 
+	public LinkedList<T> getSortedLinkList() {
+		return sortedLinkList;
+	}
+
 	public boolean remove(VolunteertimeData object) {
 		return sortedLinkList.remove(object);
 	}

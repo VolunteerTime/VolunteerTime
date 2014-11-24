@@ -96,7 +96,7 @@ public class ResultsExhibitionListAdapter extends BaseAdapter {
 
 		holder.articleContent.setText(result.getContent());
 
-		holder.editor.setText(result.getEditor());
+		holder.editor.setText("阅读 "+result.getReadNum());
 
 		holder.publishTime.setText(AgoTimeUtil.getTimeAgoFromCurren(result
 				.getDate()));

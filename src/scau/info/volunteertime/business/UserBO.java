@@ -5,9 +5,6 @@
  */
 package scau.info.volunteertime.business;
 
-import java.util.ArrayList;
-
-import scau.info.volunteertime.vo.ActivityData;
 import android.util.Log;
 
 /**

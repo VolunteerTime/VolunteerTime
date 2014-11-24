@@ -1,19 +1,15 @@
 /**
  * Copyright (c) 华南农业大学信息学院蔡超敏2014版权所有
  * 
- * 文件创建时间：2014-7-23
+ * 文件创建时间：2014-11-21
  */
 package scau.info.volunteertime.vo;
 
-import java.util.List;
-
 /**
- * �ɹ�չʾ��VO
- * 
  * @author 蔡超敏
  * 
  */
-public class Result implements VolunteertimeData {
+public class ActivityDate implements VolunteertimeData {
 
 	private int id;// id
 
@@ -22,20 +18,19 @@ public class Result implements VolunteertimeData {
 	private String image;// 图片
 	private String editor;// 作者
 	private long publishTime;// 时间
-
+	private long endTime; // 结束时间
+	private int limitNum; // 限制人数
 	private int readNum;// 阅读数
-	private int commentNum;// 评论数
-	private String commentIds;// 评价id
+	private int groupId;// 小组id
+	private int participatorsNum;
 
-	private List<String> images;
-
-	public Result() {
-	}
+	private ActivityGroup activityGroup;
 
 	/**
 	 * @param id
 	 */
-	public Result(int id) {
+	public ActivityDate(int id) {
+		super();
 		this.id = id;
 	}
 
@@ -46,30 +41,15 @@ public class Result implements VolunteertimeData {
 	 * @param image
 	 * @param editor
 	 * @param publishTime
-	 */
-	public Result(int id, String title, String content, String image,
-			String editor, long publishTime) {
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.image = image;
-		this.editor = editor;
-		this.publishTime = publishTime;
-	}
-	
-	
-
-	/**
-	 * @param id
-	 * @param title
-	 * @param content
-	 * @param image
-	 * @param editor
-	 * @param publishTime
+	 * @param endTime
+	 * @param limitNum
 	 * @param readNum
+	 * @param groupId
+	 * @param participatorsNum
 	 */
-	public Result(int id, String title, String content, String image,
-			String editor, long publishTime, int readNum) {
+	public ActivityDate(int id, String title, String content, String image,
+			String editor, long publishTime, long endTime, int limitNum,
+			int readNum, int groupId, int participatorsNum) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -77,31 +57,11 @@ public class Result implements VolunteertimeData {
 		this.image = image;
 		this.editor = editor;
 		this.publishTime = publishTime;
+		this.endTime = endTime;
+		this.limitNum = limitNum;
 		this.readNum = readNum;
-	}
-
-	/**
-	 * @param title
-	 * @param content
-	 * @param image
-	 * @param editor
-	 * @param publishTime
-	 */
-	public Result(String title, String content, String image, String editor,
-			long publishTime) {
-		this.title = title;
-		this.content = content;
-		this.image = image;
-		this.editor = editor;
-		this.publishTime = publishTime;
-	}
-
-	public void setImages(List<String> imageList) {
-		this.images = imageList;
-	}
-
-	public List<String> getImages() {
-		return images;
+		this.groupId = groupId;
+		this.participatorsNum = participatorsNum;
 	}
 
 	/**
@@ -117,51 +77,6 @@ public class Result implements VolunteertimeData {
 	 */
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	/**
-	 * @return the readNum
-	 */
-	public int getReadNum() {
-		return readNum;
-	}
-
-	/**
-	 * @param readNum
-	 *            the readNum to set
-	 */
-	public void setReadNum(int readNum) {
-		this.readNum = readNum;
-	}
-
-	/**
-	 * @return the commentNum
-	 */
-	public int getCommentNum() {
-		return commentNum;
-	}
-
-	/**
-	 * @param commentNum
-	 *            the commentNum to set
-	 */
-	public void setCommentNum(int commentNum) {
-		this.commentNum = commentNum;
-	}
-
-	/**
-	 * @return the commentIds
-	 */
-	public String getCommentIds() {
-		return commentIds;
-	}
-
-	/**
-	 * @param commentIds
-	 *            the commentIds to set
-	 */
-	public void setCommentIds(String commentIds) {
-		this.commentIds = commentIds;
 	}
 
 	/**
@@ -239,15 +154,99 @@ public class Result implements VolunteertimeData {
 		this.publishTime = publishTime;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * @return the endTime
 	 */
-	@Override
+	public long getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * @param endTime
+	 *            the endTime to set
+	 */
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
+
+	/**
+	 * @return the limitNum
+	 */
+	public int getLimitNum() {
+		return limitNum;
+	}
+
+	/**
+	 * @param limitNum
+	 *            the limitNum to set
+	 */
+	public void setLimitNum(int limitNum) {
+		this.limitNum = limitNum;
+	}
+
+	/**
+	 * @return the readNum
+	 */
+	public int getReadNum() {
+		return readNum;
+	}
+
+	/**
+	 * @param readNum
+	 *            the readNum to set
+	 */
+	public void setReadNum(int readNum) {
+		this.readNum = readNum;
+	}
+
+	/**
+	 * @return the participatorsNum
+	 */
+	public int getParticipatorsNum() {
+		return participatorsNum;
+	}
+
+	/**
+	 * @param participatorsNum
+	 *            the participatorsNum to set
+	 */
+	public void setParticipatorsNum(int participatorsNum) {
+		this.participatorsNum = participatorsNum;
+	}
+
+	/**
+	 * @return the groupId
+	 */
+	public int getGroupId() {
+		return groupId;
+	}
+
+	/**
+	 * @param groupId
+	 *            the groupId to set
+	 */
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
+
+	/**
+	 * @return the activityGroup
+	 */
+	public ActivityGroup getActivityGroup() {
+		return activityGroup;
+	}
+
+	/**
+	 * @param activityGroup
+	 *            the activityGroup to set
+	 */
+	public void setActivityGroup(ActivityGroup activityGroup) {
+		this.activityGroup = activityGroup;
+	}
+
 	public boolean equals(Object o) {
-		if (o instanceof Result) {
-			if (((Result) o).getId() == this.getId()) {
+		if (o instanceof ActivityDate) {
+			if (((ActivityDate) o).getId() == this.getId()) {
 				return true;
 			}
 		}
@@ -270,8 +269,8 @@ public class Result implements VolunteertimeData {
 	 * @see scau.info.volunteertime.vo.VolunteertimeData#setDate(long)
 	 */
 	@Override
-	public void setDate(long Date) {
-		setPublishTime(Date);
+	public void setDate(long date) {
+		setPublishTime(date);
 	}
 
 }

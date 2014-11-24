@@ -59,9 +59,9 @@ public class LoadActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		
+
 		setContentView(R.layout.activity_load);
 
 		// toShowVideo();
@@ -77,10 +77,10 @@ public class LoadActivity extends Activity {
 
 		// 进行判断
 		if (!isFirstIn) {
-			mHandler.sendEmptyMessageDelayed(GO_HOME,1000);
+			mHandler.sendEmptyMessageDelayed(GO_HOME, 1000);
 		} else {
 			setGuided();
-			mHandler.sendEmptyMessageDelayed(GO_GUIDE,1000);
+			mHandler.sendEmptyMessageDelayed(GO_GUIDE, 1000);
 		}
 
 	}
@@ -116,8 +116,9 @@ public class LoadActivity extends Activity {
 		SQLiteDatabase db = openOrCreateDatabase("volunteertimedatabase.db",
 				Context.MODE_PRIVATE, null);
 		// 建表
-		db.execSQL("CREATE TABLE IF NOT EXISTS results(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, content VARCHAR, image  VARCHAR, editor VARCHAR, publishTime BIGINT)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS results(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, content VARCHAR, image  VARCHAR, editor VARCHAR, publishTime BIGINT, readNum INTEGER)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS activities(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR,  content VARCHAR,  image VARCHAR, editor VARCHAR, publishTime BIGINT, endTime BIGINT, limitNum INTEGER, readNum INTEGER,  groupId INTEGER, participatorsNum INTEGER)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS activity_group(id INTEGER PRIMARY KEY AUTOINCREMENT, principal_id VARCHAR, participators VARCHAR)");
 		db.close();
 	}
-
 }

@@ -5,176 +5,133 @@
  */
 package scau.info.volunteertime.activity.activitycenter;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.LinkedList;
 
 import scau.info.volunteertime.R;
-import scau.info.volunteertime.vo.ActivityData;
+import scau.info.volunteertime.application.Ding9App;
+import scau.info.volunteertime.vo.ActivityDate;
 import android.content.Context;
-import android.graphics.Color;
-import android.os.Handler;
-import android.os.Message;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
-
-import com.nhaarman.supertooltips.ToolTip;
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
-import com.nhaarman.supertooltips.ToolTipView;
+import cn.trinea.android.common.service.impl.ImageCache;
+import cn.trinea.android.common.util.TimeUtils;
 
 /**
  * @author 林锡鑫
- *
+ * 
  */
 public class ActivityAdapter extends BaseAdapter {
 
-	/**
-	 * @param context
-	 * @param data
-	 * @param resource
-	 * @param from
-	 * @param to
-	 */ 
-	private ActivityData data;
-	Handler adapterHandler=new Handler(){ 				//�õ�ActivityCenter����Ϣ���ж��Ƿ�remove���ۿ�
-		@Override
-		public void handleMessage(Message msg) {
-			// TODO Auto-generated method stub
-			if(msg.arg2==3) //֤���Ǵ���λ��Ҫ���ı����ۿ��λ�õ�
-			{ 
-				if(mGreenToolTipView!=null)
-					{mGreenToolTipView.remove(); 
-					mGreenToolTipView=null;} 
-				 
-			}
-		}
-		
-	};
-	
-	private List<ActivityData> info=null;
-	private Map<Integer,View> rowViews=new HashMap<Integer,View>();
-	private Context context=null;
-	commentClickListener commentListener;
-	
-	public Handler getHandler(){ return adapterHandler;}
-	
-	public ActivityAdapter(Context context,List<ActivityData> list,ToolTipRelativeLayout mToolTipFrameLayout)
-	{
-		this.info=list;
-		this.context=context;
-		this.mToolTipFrameLayout=mToolTipFrameLayout;
-		commentListener=new commentClickListener();
-	} 
+	private LayoutInflater inflater;
+	private ImageCache IMAGE_CACHE;// ͼƬ����
+	private Ding9App ding9App;
+	private LinkedList<ActivityDate> linkedList;
+	private Context mContext;
 
-	
-	 
-	
-	/* (non-Javadoc)
-	 * @see android.widget.Adapter#getCount()
-	 */
+	private OnParticipateButtonListener clickListener;
+
+	public ActivityAdapter(Context context, LinkedList<ActivityDate> linkedList) {
+		super();
+		this.inflater = LayoutInflater.from(context);
+		this.linkedList = linkedList;
+		this.ding9App = (Ding9App) context.getApplicationContext();
+		this.IMAGE_CACHE = ding9App.IMAGE_CACHE;
+		this.mContext = context;
+	}
+
+	public void setListData(LinkedList<ActivityDate> linkedList) {
+		this.linkedList = linkedList;
+	}
+
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		System.out.println("�õ�����"+info.size());
-		return info.size();
+		if (linkedList != null) {
+			return linkedList.size();
+		} else {
+			Log.d("ActivityAdapter-getCount", "2");
+			return 0;
+		}
 	}
 
-	/* (non-Javadoc)
-	 * @see android.widget.Adapter#getItem(int)
-	 */
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
-		
-		return info.get(position);
-	}
-
-	/* (non-Javadoc)
-	 * @see android.widget.Adapter#getItemId(int)
-	 */
-	@Override
-	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return position;
 	}
 
-	/* (non-Javadoc)
-	 * @see android.widget.Adapter#getView(int, android.view.View, android.view.ViewGroup)
-	 */
-	
-	View rowView;
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
-		// TODO Auto-generated method stub
-		System.out.println("position "+position);
-		 rowView=rowViews.get(position);
-		if(rowView==null)
-		{System.out.println("qushuju");
-			data=info.get(position);
-			LayoutInflater layoutInflater=LayoutInflater.from(context);
-			
-			
-			rowView=layoutInflater.inflate(R.layout.activity_activity_center_adapter, null);
-			
-			Button commentButton=(Button)rowView.findViewById(R.id.commentButton);
-			ImageButton imageButton=(ImageButton)rowView.findViewById(R.id.imageButton);
-			TextView time=(TextView)rowView.findViewById(R.id.time);
-			TextView content=(TextView)rowView.findViewById(R.id.content);
-			TextView name=(TextView)rowView.findViewById(R.id.name);  
-			
-			TextView comment=(TextView)rowView.findViewById(R.id.commentContent);
-			comment.setText("");
-			commentButton.setTag(position);
-			
-			commentButton.setOnClickListener(commentListener);
-			imageButton.setImageResource(R.drawable.action_help);		//���ͷ��
-			time.setText(data.getTime());								//���ʱ��
-			content.setText(data.getContent());							//��ӻ����
-			name.setText(data.getName());								//��ӷ����˵�����
-			rowViews.put(position, rowView);	//����������Ϊ����
-			  
-		
-		}
-		 
-		return rowView;
-	} 
-	
-	class commentClickListener implements OnClickListener{
-		  
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			 
-			int[] masterViewScreenPosition = new int[2];
-			v.getLocationOnScreen(masterViewScreenPosition); 	//�õ���ť��λ��
-			  
-			 
-			   if (mGreenToolTipView == null) {
-	                addGreenToolTipView(v); 
-	                 
-			   } else {
-	                mGreenToolTipView.remove();
-	                addGreenToolTipView(v); 
-	            } 
-		}
-		
+	public long getItemId(int position) {
+		return position;
 	}
-	ToolTipRelativeLayout mToolTipFrameLayout;
-    private ToolTipView mGreenToolTipView;
-    private void addGreenToolTipView(View v) {
-        ToolTip toolTip = new ToolTip()
-                .withText("Another beautiful Button!")
-                .withColor(Color.GREEN);
 
-        mGreenToolTipView = mToolTipFrameLayout.showToolTipForView(toolTip, v);
-       
-    }
-    
-    
+	@Override
+	public View getView(final int position, View convertView, ViewGroup parent) {
+		View view = convertView;
+		ViewHolder holder;
+
+		Log.d("ActivityAdapter-getView", "position = " + position);
+		final ActivityDate activityCenter = linkedList.get(position);
+		if (view == null) {
+			view = inflater.inflate(R.layout.item_activity_center, null);
+			holder = new ViewHolder();
+			holder.title = (TextView) view.findViewById(R.id.activity_title);
+			holder.readNum = (TextView) view
+					.findViewById(R.id.activity_read_num);
+			holder.time = (TextView) view.findViewById(R.id.activity_time);
+			holder.partLimitNum = (TextView) view
+					.findViewById(R.id.activity_in_num);
+
+			holder.participate = (Button) view.findViewById(R.id.activity_in);
+			holder.participate.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					clickListener.onParticipate(activityCenter.getId(),
+							position);
+				}
+			});
+			view.setTag(holder);
+		} else {
+			holder = (ViewHolder) view.getTag();
+		}
+		holder.title.setText(activityCenter.getTitle());
+
+		holder.readNum.setText("阅读 " + activityCenter.getReadNum());
+
+		holder.time.setText(TimeUtils.getTime(activityCenter.getPublishTime(),
+				TimeUtils.DATE_FORMAT_DATE)
+				+ "~"
+				+ TimeUtils.getTime(activityCenter.getEndTime(),
+						TimeUtils.DATE_FORMAT_DATE));
+
+		holder.partLimitNum.setText("参加人数 "
+				+ activityCenter.getParticipatorsNum() + "/"
+				+ activityCenter.getLimitNum());
+
+		return view;
+
+	}
+
+	public void setParticipateButtonListener(
+			OnParticipateButtonListener listener) {
+		this.clickListener = listener;
+	};
+
+	public interface OnParticipateButtonListener {
+		public void onParticipate(int activityId, int position);
+	}
+
+	static class ViewHolder {
+		TextView title;
+		TextView readNum;
+		TextView time;
+		TextView partLimitNum;
+		Button participate;
+	}
 
 }

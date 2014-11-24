@@ -35,13 +35,6 @@ import com.viewpagerindicator.TitlePageIndicator;
  */
 public class MainActivityFragment extends Fragment {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
-	 */
 
 	private static final int[] ITEM_DRAWABLES = {
 			R.drawable.ab_bottom_solid_maintheme,
@@ -55,20 +48,15 @@ public class MainActivityFragment extends Fragment {
 	LocalActivityManager manager = null;
 	PageIndicator mIndicator;
 
-	private ArrayList<Fragment> fragments = new ArrayList<Fragment>(); // �ų����ÿһ��Fragment
+	private ArrayList<Fragment> fragments = new ArrayList<Fragment>(); 
 
-	private ArrayList<String> title = new ArrayList<String>(); // ÿһ��Fragment��titile
+	private ArrayList<String> title = new ArrayList<String>(); 
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.support.v4.app.Fragment#onCreate(android.os.Bundle)
-	 */
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 
-		System.out.println("����б������𡷡���������������������������");
 		super.onCreate(savedInstanceState);
 	}
 

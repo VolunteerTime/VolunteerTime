@@ -6,337 +6,442 @@
 package scau.info.volunteertime.activity.activitycenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import scau.info.volunteertime.R;
-import scau.info.volunteertime.util.Pagination;
-import scau.info.volunteertime.vo.ActivityData;
+import scau.info.volunteertime.activity.activitycenter.ActivityAdapter.OnParticipateButtonListener;
+import scau.info.volunteertime.activity.resultsexhibition.ShowResultActivity;
+import scau.info.volunteertime.business.ActivityCenterBO;
+import scau.info.volunteertime.util.NetworkStateUtil;
+import scau.info.volunteertime.util.SortedLinkList;
+import scau.info.volunteertime.vo.ActivityDate;
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.view.DragEvent;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.TextView;
-import cn.trinea.android.common.view.DropDownListView;
+import android.widget.ListView;
+import cn.trinea.android.common.util.ToastUtils;
 
-import com.nhaarman.supertooltips.ToolTipRelativeLayout;
+import com.handmark.pulltorefresh.library.ILoadingLayout;
+import com.handmark.pulltorefresh.library.PullToRefreshBase;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.OnRefreshListener;
+import com.handmark.pulltorefresh.library.PullToRefreshBase.State;
+import com.handmark.pulltorefresh.library.PullToRefreshListView;
 
 /**
  * @author 蔡超敏
  * 
  */
 public class ActivityCenter extends Fragment {
+	private SortedLinkList<ActivityDate> sortedLinkList;
 
-	DropDownListView listview;
-	View container;
-	ActivityAdapter adapter;
-	ToolTipRelativeLayout mToolTipFrameLayout;
+	private PullToRefreshListView activityListView;
 
-	private Pagination<ActivityData> resultsPagination;// װ�ص�ǰ����
-	private Pagination<ActivityData> nextResultsPagination;// ��Ϊװ����һҳ���ݵ��н�
+	private ActivityAdapter activityListAdapter;
 
-	List<ActivityData> list = new ArrayList<ActivityData>();
+	private ActivityCenterBO activityCenterBO;
 
+	private boolean hasMore;
+
+	private Activity activity;
+
+	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		Log.d("ResultsExhibition", "create");
+
+		hasMore = true;
+		activity = getActivity();
+
+		activityCenterBO = new ActivityCenterBO();
+		sortedLinkList = new SortedLinkList<ActivityDate>();
+
+		activityListAdapter = new ActivityAdapter(activity,
+				sortedLinkList.getSortedLinkList());
+		activityListAdapter
+				.setParticipateButtonListener(new OnParticipateButtonListener() {
+
+					@Override
+					public void onParticipate(int activityId, int position) {
+						Log.d("ActivityCenter-onCreate-setParticipateButtonListener",
+								"onClick position = " + position);
+						participateActivity(activityId, position);
+					}
+				});
+
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater,
-	 * android.view.ViewGroup, android.os.Bundle)
-	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		View view = inflater.inflate(R.layout.activity_activity_center,
-				container, false);
 
-		listview = (DropDownListView) view.findViewById(R.id.listView);
+		View view = inflater.inflate(R.layout.fragment_activity_center, null);
 
-		// View menu=findViewById(R.id.menu);
-		// menu.startAnimation(animation);
-		mToolTipFrameLayout = (ToolTipRelativeLayout) view
-				.findViewById(R.id.activity_main_tooltipframelayout);
+		activityListView = (PullToRefreshListView) view
+				.findViewById(R.id.activity_center_list);
 
-		ActivityData a1 = new ActivityData("xin",
-				"����21��ȥ�Է���������ˣ��Һ�һ������㣬���ˣ�", "2014-07-22", "eee");
-		ActivityData a2 = new ActivityData("name",
-				"���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�",
-				"2014-07-22", "eee");
-		ActivityData a3 = new ActivityData(
-				"name",
-				"���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����",
-				"2014-07-22", "eee");
-		ActivityData a4 = new ActivityData(
-				"name",
-				"һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���",
-				"2014-07-22", "eee");
-		ActivityData a5 = new ActivityData("name",
-				"1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������",
-				"2009-9-26", "eee");
-		ActivityData a6 = new ActivityData("name",
-				"�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:",
-				"5Сʱǰ", "eee");
-		ActivityData a7 = new ActivityData("xin",
-				"����21��ȥ�Է���������ˣ��Һ�һ������㣬���ˣ�", "2014-07-22", "eee");
-		ActivityData a8 = new ActivityData("name",
-				"���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�",
-				"2014-07-22", "eee");
-		ActivityData a9 = new ActivityData(
-				"name",
-				"���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����",
-				"2014-07-22", "eee");
-		ActivityData a10 = new ActivityData(
-				"name",
-				"һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���",
-				"2014-07-22", "eee");
-		ActivityData a11 = new ActivityData("name",
-				"1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������",
-				"2009-9-26", "eee");
-		ActivityData a12 = new ActivityData("name",
-				"�ʼǱ�˵:�Ҹ���˵��Ц���¡��豭˵:�ð��ð����ʼǱ�˵:��ǰ�и��豭,���ӽ�ˮ�ˡ��豭:",
-				"5Сʱǰ", "eee");
-		ActivityData a13 = new ActivityData("xin",
-				"����21��ȥ�Է���������ˣ��Һ�һ������㣬���ˣ�", "2014-07-22", "eee");
-		ActivityData a14 = new ActivityData("name",
-				"���Ǹ�ʧ����ȥһ�Ҳ����Է����պú�����һ���������������ҵģ��ò����ȡ�",
-				"2014-07-22", "eee");
-		ActivityData a15 = new ActivityData(
-				"name",
-				"���ҿ������ǲ��������ɣ�������Ϊ�����˻���ͷ���ҿ�������Ǯ��Ǯ�����ߣ�����׷���������ֻ�û׷�ϱ�����",
-				"2014-07-22", "eee");
-		ActivityData a16 = new ActivityData(
-				"name",
-				"һ����Ů�ĶԻ����У�Ϊʲô�㿴���Ұ���Ů����Ϊ�㳤��˧���У�˧�ֲ��ܵ����ԡ�Ů�����ǲ�˧�Ļ������Ż�Բ��·���",
-				"2014-07-22", "eee");
-		ActivityData a17 = new ActivityData("name",
-				"1.У����Ӣ����ʦһ��ȥ����ĳ��ѧ����,У�������ý���,Ӣ����ʦ������",
-				"2009-9-26", "eee");
+		activityListView.setAdapter(activityListAdapter);
 
-		list.add(a1);
-
-		adapter = new ActivityAdapter(getActivity(), list, mToolTipFrameLayout);
-
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		activityListView.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			// �򿪶Ի�����ʾ�����
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
-
-				LayoutInflater inflaterDl = LayoutInflater.from(getActivity());
-				View layout = inflaterDl.inflate(
-						R.layout.activity_activity_center_detail, null);
-
-				// �Ի���
-				final ActivityDetail dialog = new ActivityDetail(getActivity());
-				TextView text = (TextView) layout.findViewById(R.id.title);
-
-				dialog.show();
-
+				Log.d("ResultsExhibition-onCreate-setOnItemClickListener",
+						"onItemClick");
+				showActivityDateContent(position);
 			}
-		});
-		listview.setAdapter(adapter);
-		listview.setOnDragListener(new OnDragListener() {
 
-			@Override
-			public boolean onDrag(View v, DragEvent event) {
-				// TODO Auto-generated method stub
-				listview.onDropDownComplete("����");
-				return false;
-			}
 		});
 
-		final Handler adapterHandler = adapter.getHandler();
+		activityListView
+				.setOnRefreshListener(new OnRefreshListener<ListView>() {
 
-		listview.setOnScrollListener(new OnScrollListener() {
+					@Override
+					public void onRefresh(
+							PullToRefreshBase<ListView> refreshView) {
+						new GetDataTask().execute();
+					}
+				});
 
-			@Override
-			public void onScrollStateChanged(AbsListView view, int scrollState) {
-				// TODO Auto-generated method stub
+		initListView();
 
-			}
-
-			int now = 0;
-
-			@Override
-			public void onScroll(AbsListView view, int firstVisibleItem,
-					int visibleItemCount, int totalItemCount) {
-
-				if (now != firstVisibleItem) {
-					Message msg = adapterHandler.obtainMessage();
-					msg.arg2 = 3;
-					msg.arg1 = firstVisibleItem;
-					msg.sendToTarget();
-					now = firstVisibleItem;
-				}
-			}
-		});
-		listview.setOnBottomListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-			}
-		});
+		if (activityListAdapter.getCount() == 0) {
+			Log.d("chao-onCreateView", "setState");
+			new GetLocalDataTask().execute();
+			activityListView.setState(State.REFRESHING, true);
+			activityListView.setHeaderScroll(-84);
+			new GetDataTask().execute();
+		}
 
 		return view;
 	}
 
-	public boolean onCreateOptionsMenu(Menu menu) {
+	private void showActivityDateContent(int position) {
+		ActivityDate activityDate = sortedLinkList.get(position - 1);
+		Log.d("showActivityDateContent",
+				"activityDate.getId" + activityDate.getId());
+		Intent mIntent = new Intent(activity, ShowResultActivity.class);
+		Bundle mBundle = new Bundle();
+		mBundle.putSerializable(ShowResultActivity.SER_KEY, activityDate);
+		mIntent.putExtras(mBundle);
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getActivity().getMenuInflater().inflate(R.menu.activity_center, menu);
-		return true;
+		startActivity(mIntent);
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	private void participateActivity(int activityId, int position) {
+		String userId = geiUserId();
+		new ParticipateAndCheckTask(userId, activityId, position).execute();
 	}
 
 	/**
-	 * A placeholder fragment containing a simple view.
+	 * @return String
 	 */
+	private String geiUserId() {
+		return "201230560202";
+	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.view.View.OnTouchListener#onTouch(android.view.View,
-	 * android.view.MotionEvent)
-	 */
+	private void initListView() {
+		ILoadingLayout startLabels = activityListView.getLoadingLayoutProxy(
+				true, false);
+		startLabels.setPullLabel("下拉刷新");// 刚下拉时，显示的提示
+		startLabels.setRefreshingLabel("正在载入...");// 刷新时
+		startLabels.setReleaseLabel("放开刷新");// 下来达到一定距离时，显示的提示
 
-	// private class GetDataTask extends AsyncTask<Void, Void, Void> {
-	//
-	// private boolean isConnect;
-	// private boolean isDropDown;
-	//
-	// public GetDataTask(boolean isDropDown) {
-	// this.isDropDown = isDropDown;
-	// }
-	//
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see android.os.AsyncTask#doInBackground(Params[])
-	// */
-	// @Override
-	// protected Void doInBackground(Void... params) {
-	// isConnect = NetworkStateUtil.isNetworkAvailable(getActivity());//
-	// ��ȡ����״��
-	// if (!isConnect) {// ��������޸���������ȡ������
-	// Log.d("doInBackground", "isConnect not");
-	// cancel(true);
-	// return null;
-	// }
-	// doInBackgroundFunction();
-	// return null;
-	// }
-	//
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see android.os.AsyncTask#onCancelled()
-	// */
-	// @Override
-	// protected void onCancelled() {
-	// cancelledFunction();
-	// super.onCancelled();
-	// }
-	//
-	// /*
-	// * (non-Javadoc)
-	// *
-	// * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
-	// */
-	// @Override
-	// protected void onPostExecute(Void result) {
-	// if (isCancelled()) {
-	// Log.d("Cancle", "call");
-	// cancelledFunction();
-	// } else {
-	// postFunction(result);
-	// }
-	// super.onPostExecute(result);
-	// }
-	//
-	// /**
-	// * @param result
-	// */
-	// private void postFunction(Void result) {
-	// if (isDropDown) {
-	//
-	// } else {
-	// if (resultsPagination != null
-	// && resultsPagination.getRecords() != null)
-	// Log.d("couponsMessagesAdapter", resultsPagination
-	// .getRecords().size() + "");
-	//
-	//
-	// adapter.notifyDataSetChanged();
-	// Log.d("couponsMessagesAdapter", "2");
-	// // should call onBottomComplete function of DropDownListView at
-	// // end of on bottom complete.
-	// listview.onBottomComplete();
-	// Log.d("couponsMessagesAdapter", "����");
-	// }
-	// }
-	//
-	// /**
-	// *
-	// */
-	// private void cancelledFunction() {
-	// if (!isConnect) {
-	// ToastUtils.show(getActivity(), "�������ӳ�������");
-	// } else if (!hasMore) {
-	// listview.setFooterNoMoreText("û�и��������Ϣ��Ŷ~");
-	// ToastUtils.show(getActivity(), "û�и��������Ϣ��Ŷ~");
-	// }
-	// listview.onBottomComplete();
-	// }
-	//
-	// /**
-	// *
-	// */
-	// private void doInBackgroundFunction() {
-	// if (isDropDown) {
-	//
-	// } else {
-	//
-	// nextResultsPagination=new .getDownData(1);
-	// resultsPagination
-	// .setCurrentPageNumber(nextResultsPagination
-	// .getCurrentPageNumber());
-	// resultsPagination.getRecords().addAll(
-	// nextResultsPagination.getRecords());
-	//
-	//
-	// }
-	// }
-	//
-	// }
+	}
 
+	private class GetDataTask extends AsyncTask<Void, Void, Void> {
+
+		private boolean isConnect;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);
+
+			Log.d("GetDataTask-doInBackground", "isConnect = " + isConnect);
+			if (!isConnect) {
+				Log.d("doInBackground", "isConnect not");
+				cancel(true);
+				return null;
+			}
+
+			Log.d("GetDataTask-doInBackground", "in");
+			doInBackgroundFunction();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(Void result) {
+			activityListAdapter.setListData(sortedLinkList.getSortedLinkList());
+
+			activityListAdapter.notifyDataSetChanged();
+
+			activityListView.onRefreshComplete();
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+			if (!isConnect) {
+				ToastUtils.show(activity, "网络连接不正常");
+			} else if (!hasMore) {
+				ToastUtils.show(activity, "没有更多信息了~");
+			}
+			activityListView.onRefreshComplete();
+		}
+
+		/**
+		 * 
+		 */
+		private void doInBackgroundFunction() {
+			toGetNewDataFromNet();
+		}
+
+		/**
+		 * 
+		 */
+		private void toGetNewDataFromNet() {
+			Log.d("doInBackgroundFunction", "getNewData1");
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			ArrayList<ActivityDate> activityDates = activityCenterBO
+					.getNewData();
+			if (activityDates != null) {
+				sortedLinkList = new SortedLinkList<ActivityDate>();
+				sortedLinkList.addAll(activityDates);
+				toSaveDataInDatabase();
+			}
+			Log.d("doInBackgroundFunction", "getNewData2");
+		}
+
+		/**
+		 * @param results
+		 */
+		private void toSaveDataInDatabase() {
+			SQLiteDatabase db = activity.openOrCreateDatabase(
+					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
+			for (ActivityDate activityDate : sortedLinkList.getList()) {
+				db.execSQL(
+						"REPLACE INTO activities(id , title , content ,  image , editor , publishTime , endTime , limitNum , readNum ,  groupId , participatorsNum ) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
+						new Object[] { activityDate.getId(),
+								activityDate.getTitle(),
+								activityDate.getContent(),
+								activityDate.getImage(),
+								activityDate.getEditor(),
+								activityDate.getPublishTime(),
+								activityDate.getEndTime(),
+								activityDate.getReadNum(),
+								activityDate.getLimitNum(),
+								activityDate.getGroupId(),
+								activityDate.getParticipatorsNum() });
+			}
+			db.close();
+		}
+
+	}
+
+	private class ParticipateAndCheckTask extends AsyncTask<Void, Void, String> {
+
+		private boolean isConnect;
+
+		private String userId;
+
+		private int activityId;
+
+		private int position;
+
+		public ParticipateAndCheckTask(String userId, int activityId,
+				int position) {
+			this.userId = userId;
+			this.activityId = activityId;
+			this.position = position;
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);
+
+			Log.d("GetDataTask-doInBackground", "isConnect = " + isConnect);
+			if (!isConnect) {
+				Log.d("doInBackground", "isConnect not");
+				cancel(true);
+				return "failure";
+			}
+
+			Log.d("GetDataTask-doInBackground", "in");
+
+			return doInBackgroundFunction();
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(String result) {
+			Log.d("postFunction", "result = " + result);
+			if (result.trim().equals("success")) {
+				ToastUtils.show(activity, "参加成功");
+				sortedLinkList.get(position).setParticipatorsNum(
+						sortedLinkList.get(position).getParticipatorsNum() + 1);
+
+				activityListAdapter.notifyDataSetChanged();
+
+				activityListView.onRefreshComplete();
+			} else if (result.trim().equals("failure")) {
+				ToastUtils.show(activity, "参加失败");
+			} else {
+				ToastUtils.show(activity, "参加失败");
+			}
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+			if (!isConnect) {
+				ToastUtils.show(activity, "网络连接不正常");
+			} else if (!hasMore) {
+				ToastUtils.show(activity, "没有更多信息了~");
+			}
+			activityListView.onRefreshComplete();
+		}
+
+		/**
+		 * 
+		 */
+		private String doInBackgroundFunction() {
+			return activityCenterBO.participateActivity(userId, activityId);
+		}
+
+	}
+
+	private class GetLocalDataTask extends AsyncTask<Void, Void, Void> {
+
+		ArrayList<ActivityDate> activityDates = null;
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			doInBackgroundFunction();
+			return null;
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * @param result
+		 */
+		private void postFunction(Void result) {
+			activityListAdapter.setListData(sortedLinkList.getSortedLinkList());
+
+			activityListAdapter.notifyDataSetChanged();
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+		}
+
+		/**
+		 * 
+		 */
+		private void doInBackgroundFunction() {
+			toCheckDatabase();
+		}
+
+		/**
+		 * 
+		 */
+		private void toCheckDatabase() {
+			SQLiteDatabase db = activity.openOrCreateDatabase(
+					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
+			Cursor c = db.rawQuery(
+					"SELECT * FROM activities ORDER BY publishTime DESC", null);
+			activityDates = new ArrayList<ActivityDate>();
+			c.moveToFirst();
+			while (!c.isAfterLast()) {
+				ActivityDate activityDate = new ActivityDate(c.getInt(c
+						.getColumnIndex("id")), c.getString(c
+						.getColumnIndex("title")), c.getString(c
+						.getColumnIndex("content")), c.getString(c
+						.getColumnIndex("image")), c.getString(c
+						.getColumnIndex("editor")), c.getLong(c
+						.getColumnIndex("publishTime")), c.getLong(c
+						.getColumnIndex("endTime")), c.getInt(c
+						.getColumnIndex("limitNum")), c.getInt(c
+						.getColumnIndex("readNum")), c.getInt(c
+						.getColumnIndex("groupId")), c.getInt(c
+						.getColumnIndex("participatorsNum")));
+				activityDates.add(activityDate);
+				c.moveToNext();
+			}
+			c.close();
+			db.close();
+			sortedLinkList.addAll(activityDates);
+		}
+	}
 }

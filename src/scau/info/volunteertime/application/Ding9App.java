@@ -20,9 +20,7 @@ import cn.trinea.android.common.service.impl.ImageMemoryCache.OnImageCallbackLis
  * 
  */
 public class Ding9App extends Application {
-	/** ���建��ͻص��ӿ� */
 	public static final String TAG_CACHE = "image_cache";// �����ʶ
-	/** DEFAULT_CACHE_FOLDER��ͼƬ������Ŀ¼ */
 	/*
 	 * public static final String DEFAULT_CACHE_FOLDER = new StringBuilder()
 	 * .append
@@ -44,7 +42,7 @@ public class Ding9App extends Application {
 	/**
 	 * �û�id
 	 */
-	private int userId;
+	private String userId;
 
 	private String username;
 
@@ -58,11 +56,11 @@ public class Ding9App extends Application {
 		this.userClass = userClass;
 	}
 
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
 
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
