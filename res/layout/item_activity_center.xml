@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:background="#ffffff"
-            android:text="参加"
+            android:text="报名"
             android:textSize="16dp" />
     </RelativeLayout>
 

@@ -10,10 +10,12 @@ import java.util.ArrayList;
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.activitycenter.ActivityAdapter.OnParticipateButtonListener;
 import scau.info.volunteertime.activity.resultsexhibition.ShowResultActivity;
+import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.business.ActivityCenterBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
 import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.ActivityDate;
+import scau.info.volunteertime.vo.ActivityGroup;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.ListView;
 import cn.trinea.android.common.util.ToastUtils;
 
@@ -72,11 +75,20 @@ public class ActivityCenter extends Fragment {
 				.setParticipateButtonListener(new OnParticipateButtonListener() {
 
 					@Override
-					public void onParticipate(int activityId, int position) {
+					public void onParticipate(int activityId, int position,
+							View v) {
 						Log.d("ActivityCenter-onCreate-setParticipateButtonListener",
-								"onClick position = " + position);
-						participateActivity(activityId, position);
+								"onParticipate position = " + position);
+						participateActivity(activityId, position, v);
 					}
+
+					@Override
+					public void onQuit(int activityId, int position, View v) {
+						Log.d("ActivityCenter-onCreate-setParticipateButtonListener",
+								"onQuit position = " + position);
+						quitParticipateActivity(activityId, position, v);
+					}
+
 				});
 
 	}
@@ -139,16 +151,22 @@ public class ActivityCenter extends Fragment {
 		startActivity(mIntent);
 	}
 
-	private void participateActivity(int activityId, int position) {
+	private void participateActivity(int activityId, int position, View v) {
 		String userId = geiUserId();
-		new ParticipateAndCheckTask(userId, activityId, position).execute();
+		new ParticipateAndCheckTask(userId, activityId, position, v).execute();
+	}
+
+	private void quitParticipateActivity(int activityId, int position, View v) {
+		String userId = geiUserId();
+		new QuitParticipateAndCheckTask(userId, activityId, position, v)
+				.execute();
 	}
 
 	/**
 	 * @return String
 	 */
 	private String geiUserId() {
-		return "201230560202";
+		return ((Ding9App) activity.getApplicationContext()).getUserId();
 	}
 
 	private void initListView() {
@@ -267,6 +285,16 @@ public class ActivityCenter extends Fragment {
 								activityDate.getLimitNum(),
 								activityDate.getGroupId(),
 								activityDate.getParticipatorsNum() });
+				if (activityDate.getGroupId() != 0) {
+					db.execSQL(
+							"REPLACE INTO activity_group(id , principal_id , participators) VALUES(?,?,?)",
+							new Object[] {
+									activityDate.getGroupId(),
+									activityDate.getActivityGroup()
+											.getPrincipalId(),
+									activityDate.getActivityGroup()
+											.getParticipators() });
+				}
 			}
 			db.close();
 		}
@@ -283,11 +311,14 @@ public class ActivityCenter extends Fragment {
 
 		private int position;
 
+		private View button;
+
 		public ParticipateAndCheckTask(String userId, int activityId,
-				int position) {
+				int position, View v) {
 			this.userId = userId;
 			this.activityId = activityId;
 			this.position = position;
+			this.button = v;
 		}
 
 		@Override
@@ -329,17 +360,19 @@ public class ActivityCenter extends Fragment {
 		private void postFunction(String result) {
 			Log.d("postFunction", "result = " + result);
 			if (result.trim().equals("success")) {
-				ToastUtils.show(activity, "参加成功");
+				ToastUtils.show(activity, "报名成功");
 				sortedLinkList.get(position).setParticipatorsNum(
 						sortedLinkList.get(position).getParticipatorsNum() + 1);
 
+				if (button instanceof Button) {
+					((Button) button).setText("取消报名");
+				}
 				activityListAdapter.notifyDataSetChanged();
 
-				activityListView.onRefreshComplete();
 			} else if (result.trim().equals("failure")) {
-				ToastUtils.show(activity, "参加失败");
+				ToastUtils.show(activity, "报名失败");
 			} else {
-				ToastUtils.show(activity, "参加失败");
+				ToastUtils.show(activity, "报名失败");
 			}
 		}
 
@@ -360,6 +393,128 @@ public class ActivityCenter extends Fragment {
 		 */
 		private String doInBackgroundFunction() {
 			return activityCenterBO.participateActivity(userId, activityId);
+		}
+
+	}
+
+	private class QuitParticipateAndCheckTask extends
+			AsyncTask<Void, Void, String> {
+
+		private boolean isConnect;
+
+		private String userId;
+
+		private int activityId;
+
+		private int position;
+
+		private View button;
+
+		public QuitParticipateAndCheckTask(String userId, int activityId,
+				int position, View v) {
+			this.userId = userId;
+			this.activityId = activityId;
+			this.position = position;
+			this.button = v;
+		}
+
+		@Override
+		protected String doInBackground(Void... params) {
+			isConnect = NetworkStateUtil.isNetworkAvailable(activity);
+
+			Log.d("GetDataTask-doInBackground", "isConnect = " + isConnect);
+			if (!isConnect) {
+				Log.d("doInBackground", "isConnect not");
+				cancel(true);
+				return "failure";
+			}
+
+			Log.d("GetDataTask-doInBackground", "in");
+
+			return doInBackgroundFunction();
+		}
+
+		@Override
+		protected void onCancelled() {
+			cancelledFunction();
+			super.onCancelled();
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			if (isCancelled()) {
+				Log.d("Cancle", "call");
+				cancelledFunction();
+			} else {
+				postFunction(result);
+			}
+			super.onPostExecute(result);
+		}
+
+		/**
+		 * "success";
+		 * 
+		 * "noIdInActivityGroup";
+		 * 
+		 * "hasReadyQuit";
+		 * 
+		 * "failure";
+		 * 
+		 * @param result
+		 */
+		private void postFunction(String result) {
+			Log.d("postFunction", "result = " + result);
+			if (result.trim().equals("success")) {
+				ToastUtils.show(activity, "取消报名成功");
+				sortedLinkList.get(position).setParticipatorsNum(
+						sortedLinkList.get(position).getParticipatorsNum() - 1);
+
+				if (button instanceof Button) {
+					((Button) button).setText("报名");
+				}
+
+				activityListAdapter.notifyDataSetChanged();
+
+			} else if (result.trim().equals("failure")) {
+				if (button instanceof Button) {
+					((Button) button).setText("报名");
+				}
+				ToastUtils.show(activity, "该活动已注销");
+			} else if (result.trim().equals("noIdInActivityGroup")) {
+				if (button instanceof Button) {
+					((Button) button).setText("报名");
+				}
+				ToastUtils.show(activity, "早已取消报名了");
+			} else if (result.trim().equals("hasReadyQuit")) {
+				if (button instanceof Button) {
+					((Button) button).setText("报名");
+				}
+				ToastUtils.show(activity, "早已取消报名了");
+			} else {
+				if (button instanceof Button) {
+					((Button) button).setText("报名");
+				}
+				ToastUtils.show(activity, "取消报名");
+			}
+		}
+
+		/**
+		 * 
+		 */
+		private void cancelledFunction() {
+			if (!isConnect) {
+				ToastUtils.show(activity, "网络连接不正常");
+			} else if (!hasMore) {
+				ToastUtils.show(activity, "没有更多信息了~");
+			}
+			activityListView.onRefreshComplete();
+		}
+
+		/**
+		 * 
+		 */
+		private String doInBackgroundFunction() {
+			return activityCenterBO.quitParticipateActivity(userId, activityId);
 		}
 
 	}
@@ -424,6 +579,7 @@ public class ActivityCenter extends Fragment {
 			activityDates = new ArrayList<ActivityDate>();
 			c.moveToFirst();
 			while (!c.isAfterLast()) {
+				int groupId = c.getInt(c.getColumnIndex("groupId"));
 				ActivityDate activityDate = new ActivityDate(c.getInt(c
 						.getColumnIndex("id")), c.getString(c
 						.getColumnIndex("title")), c.getString(c
@@ -433,9 +589,22 @@ public class ActivityCenter extends Fragment {
 						.getColumnIndex("publishTime")), c.getLong(c
 						.getColumnIndex("endTime")), c.getInt(c
 						.getColumnIndex("limitNum")), c.getInt(c
-						.getColumnIndex("readNum")), c.getInt(c
-						.getColumnIndex("groupId")), c.getInt(c
+						.getColumnIndex("readNum")), groupId, c.getInt(c
 						.getColumnIndex("participatorsNum")));
+				Log.d("toCheckDatabase", "groupId = " + groupId);
+				if (groupId != 0) {
+					Cursor c2 = db.rawQuery(
+							"SELECT * FROM activity_group where id = "
+									+ groupId, null);
+					c2.moveToFirst();
+					if (!c2.isAfterLast()) {
+						ActivityGroup activityGroup = new ActivityGroup(
+								groupId,
+								c2.getString(c2.getColumnIndex("principal_id")),
+								c2.getString(c2.getColumnIndex("participators")));
+						activityDate.setActivityGroup(activityGroup);
+					}
+				}
 				activityDates.add(activityDate);
 				c.moveToNext();
 			}

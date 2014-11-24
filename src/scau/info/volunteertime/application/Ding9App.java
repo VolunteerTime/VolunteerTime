@@ -57,7 +57,7 @@ public class Ding9App extends Application {
 	}
 
 	public String getUserId() {
-		return userId;
+		return "201230560202";
 	}
 
 	public void setUserId(String userId) {
@@ -80,11 +80,6 @@ public class Ding9App extends Application {
 		this.logoImageUrl = logoImageUrl;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see android.app.Application#onCreate()
-	 */
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub

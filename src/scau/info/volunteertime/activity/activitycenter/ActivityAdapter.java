@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.vo.ActivityDate;
+import scau.info.volunteertime.vo.ActivityGroup;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -91,8 +92,14 @@ public class ActivityAdapter extends BaseAdapter {
 
 				@Override
 				public void onClick(View v) {
-					clickListener.onParticipate(activityCenter.getId(),
-							position);
+					String text = (String) ((Button) v).getText();
+					Log.d("getView-setOnClickListener", "text = " + text);
+					if (text.trim().equals("报名"))
+						clickListener.onParticipate(activityCenter.getId(),
+								position, v);
+					else
+						clickListener.onQuit(activityCenter.getId(), position,
+								v);
 				}
 			});
 			view.setTag(holder);
@@ -113,8 +120,25 @@ public class ActivityAdapter extends BaseAdapter {
 				+ activityCenter.getParticipatorsNum() + "/"
 				+ activityCenter.getLimitNum());
 
+		if (activityCenter.getGroupId() != 0
+				&& checkGroup(activityCenter.getActivityGroup())) {
+			holder.participate.setText("取消报名");
+		}
+
 		return view;
 
+	}
+
+	/**
+	 * @param activityGroup
+	 * @return boolean
+	 */
+	private boolean checkGroup(ActivityGroup activityGroup) {
+		String userId = ding9App.getUserId();
+		if (activityGroup.getParticipators().contains(userId)) {
+			return true;
+		}
+		return false;
 	}
 
 	public void setParticipateButtonListener(
@@ -123,7 +147,11 @@ public class ActivityAdapter extends BaseAdapter {
 	};
 
 	public interface OnParticipateButtonListener {
-		public void onParticipate(int activityId, int position);
+		public boolean isPartIn = true;
+
+		public void onParticipate(int activityId, int position, View v);
+
+		public void onQuit(int activityId, int position, View v);
 	}
 
 	static class ViewHolder {

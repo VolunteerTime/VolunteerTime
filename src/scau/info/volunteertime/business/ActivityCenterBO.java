@@ -15,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import scau.info.volunteertime.vo.ActivityDate;
+import scau.info.volunteertime.vo.ActivityGroup;
 import android.util.Log;
 import cn.trinea.android.common.util.HttpUtils;
 
@@ -71,11 +72,19 @@ public class ActivityCenterBO {
 
 				activityDate.setLimitNum(jsonActivityDate.getInt("limit_num"));
 				activityDate.setReadNum(jsonActivityDate.getInt("read_num"));
-				activityDate.setGroupId(jsonActivityDate.getInt("group_id"));
+				int groupId = jsonActivityDate.getInt("group_id");
+				activityDate.setGroupId(groupId);
 				activityDate.setImage(jsonActivityDate.getString("image"));
 				activityDate.setEditor(jsonActivityDate.getString("editor"));
 				activityDate.setParticipatorsNum(jsonActivityDate
 						.getInt("participators_num"));
+
+				if (groupId != 0) {
+					ActivityGroup activityGroup = new ActivityGroup(groupId,
+							jsonActivityDate.getString("principal_id"),
+							jsonActivityDate.getString("participators"));
+					activityDate.setActivityGroup(activityGroup);
+				}
 
 				list.add(activityDate);
 
@@ -106,6 +115,23 @@ public class ActivityCenterBO {
 		String jsonStr = HttpUtils.httpPostString(
 				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
 		Log.d("participateActivity", "jsonStr = " + jsonStr);
+		return jsonStr;
+	}
+
+	/**
+	 * @param userId
+	 * @param activityId
+	 * @return
+	 */
+	public String quitParticipateActivity(String userId, int activityId) {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 2 + "");
+		maps.put("userId", userId);
+		maps.put("activityId", activityId + "");
+
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		Log.d("quitParticipateActivity", "jsonStr = " + jsonStr);
 		return jsonStr;
 	}
 }
