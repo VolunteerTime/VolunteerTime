@@ -6,6 +6,7 @@
 package scau.info.volunteertime.activity.login;
 
 import scau.info.volunteertime.R;
+import scau.info.volunteertime.activity.LoadActivity;
 import scau.info.volunteertime.activity.MainActivity;
 import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.business.BOConstant;
@@ -14,6 +15,8 @@ import scau.info.volunteertime.util.NetworkStateUtil;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -41,6 +44,7 @@ public class Login extends ActionBarActivity {
 	private Activity mActivity;
 
 	private UserBO userBO;
+	private SharedPreferences preferences;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +83,18 @@ public class Login extends ActionBarActivity {
 	private void toNextActivity() {
 		Log.d("login", "toNextActivity1");
 		((Ding9App) getApplicationContext()).setUserId(useridValue);
+
+		preferences = getSharedPreferences(LoadActivity.SHAREDPREFERENCES_NAME,
+				MODE_PRIVATE);
+
+		Editor editor = preferences.edit();
+
+		editor.putBoolean(LoadActivity.SHARE_ISCHECK, true);
+
+		editor.putString(LoadActivity.SHARE_USERNAME, useridValue);
+		editor.putString(LoadActivity.SHARE_PASSWORD, passwordValue);
+
+		editor.commit();
 
 		Intent intent = new Intent(this, MainActivity.class);
 		startActivity(intent);

@@ -37,19 +37,19 @@ public class LoadActivity extends Activity {
 	// �ӳ�3��
 	// private static final long SPLASH_DELAY_MILLIS = 1500;
 
-	private static final String SHAREDPREFERENCES_NAME = "first_start_info";
+	public static final String SHAREDPREFERENCES_NAME = "first_start_info";
 
-	private static final String KEY_IS_FIRST_START = "isFirstStart";
+	public static final String KEY_IS_FIRST_START = "isFirstStart";
 
-	private static final String SHARE_ISCHECK = "ISCHECK";
+	public static final String SHARE_ISCHECK = "ISCHECK";
 
 	private static final int GO_LOGIN = 1002;
 
 	private static final int GO_CHECK_LOGIN = 1003;
 
-	private static final String SHARE_USERNAME = "USER_NAME";
+	public static final String SHARE_USERNAME = "USER_NAME";
 
-	private static final String SHARE_PASSWORD = "PASSWORD";
+	public static final String SHARE_PASSWORD = "PASSWORD";
 
 	SharedPreferences preferences;
 
