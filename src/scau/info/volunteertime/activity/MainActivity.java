@@ -109,27 +109,10 @@ public class MainActivity extends BaseActionBarActivity {
 
 		actionItems.add(new ActionItem(this, "个人信息",
 				R.drawable.mm_title_btn_receiver_normal));
-
-		actionItems.add(new ActionItem(this, "设置",
-				R.drawable.mm_title_btn_set_normal));
-
 		actionItems.add(new ActionItem(this, "我的活动",
 				R.drawable.mm_title_btn_share_normal));
-
-		actionItems.add(new ActionItem(this, "管理权限",
+		actionItems.add(new ActionItem(this, "设置",
 				R.drawable.mm_title_btn_set_normal));
-
-		actionItems.add(new ActionItem(this, "管理成员",
-				R.drawable.mm_title_btn_share_normal));
-
-		actionItems.add(new ActionItem(this, "管理活动",
-				R.drawable.mm_title_btn_set_normal));
-
-		actionItems.add(new ActionItem(this, "管理成果",
-				R.drawable.mm_title_btn_set_normal));
-
-		actionItems.add(new ActionItem(this, "管理投票",
-				R.drawable.mm_title_btn_share_normal));
 
 		titlePopup = new PopupMainMenu(this, LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT);
@@ -148,12 +131,12 @@ public class MainActivity extends BaseActionBarActivity {
 					toPersonInfo();
 					break;
 				case 1:
-					Log.d("MainActivity-setItemOnClickListener", "设置");
-					toSetting();
-					break;
-				case 2:
 					Log.d("MainActivity-setItemOnClickListener", "我的活动");
 					toMyActivityManagement();
+					break;
+				case 2:
+					Log.d("MainActivity-setItemOnClickListener", "设置");
+					toSetting();
 					break;
 				case 3:
 					Log.d("MainActivity-setItemOnClickListener", "管理权限");

@@ -57,7 +57,7 @@ public class Ding9App extends Application {
 	}
 
 	public String getUserId() {
-		return "201230560202";
+		return userId;
 	}
 
 	public void setUserId(String userId) {

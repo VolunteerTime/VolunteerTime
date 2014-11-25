@@ -26,4 +26,10 @@ public class BOConstant {
 	public static final String GET_NEW_ACTIVITIES_DATA_URL = ROOT_URL
 			+ "/VolunteerTimeWeb/VolunteerTimeActivityCenterServlet";
 
+	public static final int USER_HAS_EXIST = 10;
+	public static final int REPASSWORD_ERROR = 11;
+	public static final int REGISTER_SUCCESS = 12;
+	public static final String GET_USER_INFO_URL = ROOT_URL
+			+ "/VolunteerTimeWeb/VolunteerTimeUserInfoServlet";
+
 }

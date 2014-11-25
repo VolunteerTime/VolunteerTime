@@ -6,11 +6,14 @@
 package scau.info.volunteertime.activity.login;
 
 import scau.info.volunteertime.R;
+import scau.info.volunteertime.activity.MainActivity;
+import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.business.BOConstant;
 import scau.info.volunteertime.business.UserBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,7 +34,7 @@ import android.widget.Toast;
 public class Login extends ActionBarActivity {
 
 	private EditText etUserid, etPassword;
-	private Button btLogin;
+	private Button btLogin, btRegister;
 
 	private String useridValue, passwordValue;
 
@@ -49,6 +52,7 @@ public class Login extends ActionBarActivity {
 		etPassword = (EditText) findViewById(R.id.login_password_edit);
 
 		btLogin = (Button) findViewById(R.id.signin_button);
+		btRegister = (Button) findViewById(R.id.register_button);
 
 		mActivity = this;
 		userBO = new UserBO();
@@ -60,33 +64,50 @@ public class Login extends ActionBarActivity {
 				toLogin();
 			}
 		});
+		btRegister.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				toRegister();
+			}
+		});
 	}
 
 	/**
-	 * ��ת���漰ȫ�ֱ����ı���
+	 * 
 	 */
 	private void toNextActivity() {
-
 		Log.d("login", "toNextActivity1");
+		((Ding9App) getApplicationContext()).setUserId(useridValue);
+
+		Intent intent = new Intent(this, MainActivity.class);
+		startActivity(intent);
 		finish();
 
 	}
 
 	/**
-	 * ���е�½����
+	 * 
 	 */
 	private void toLogin() {
 		useridValue = etUserid.getText().toString().trim();
 		passwordValue = etPassword.getText().toString().trim();
 		Log.d("toLogin", ":" + useridValue + ":" + passwordValue);
 		if (useridValue == null || useridValue.equals("")) {
-			Toast.makeText(mActivity, "�û�������Ϊ��", Toast.LENGTH_LONG).show();
+			Toast.makeText(mActivity, "用户名不能为空", Toast.LENGTH_LONG).show();
 		} else if (passwordValue == null || passwordValue.equals("")) {
-			Toast.makeText(mActivity, "���벻��Ϊ��", Toast.LENGTH_LONG).show();
+			Toast.makeText(mActivity, "密码不能为空", Toast.LENGTH_LONG).show();
 		} else {
 			String[] str2 = { useridValue, passwordValue };
 			new CheckDataTask().execute(str2);
 		}
+	}
+
+	private void toRegister() {
+		Log.d("login", "toRegister");
+		Intent intent = new Intent(this, RegisterActivity.class);
+		startActivity(intent);
+		finish();
 	}
 
 	@Override
@@ -116,8 +137,8 @@ public class Login extends ActionBarActivity {
 		public CheckDataTask() {
 			mDialog = new ProgressDialog(mActivity);
 
-			mDialog.setTitle("��½");
-			mDialog.setMessage("���ڵ�½�����������Ժ�...");
+			mDialog.setTitle("提示");
+			mDialog.setMessage("正在登陆验证中...");
 			mDialog.show();
 		}
 
@@ -128,8 +149,8 @@ public class Login extends ActionBarActivity {
 		 */
 		@Override
 		protected Integer doInBackground(String[]... arg0) {
-			isConnect = NetworkStateUtil.isNetworkAvailable(mActivity);// ��ȡ����״��
-			if (!isConnect) {// ��������޸���������ȡ������
+			isConnect = NetworkStateUtil.isNetworkAvailable(mActivity);
+			if (!isConnect) {
 				Log.d("doInBackground", "hasMore or isConnect not");
 				cancel(true);
 				return null;
@@ -162,8 +183,7 @@ public class Login extends ActionBarActivity {
 
 		private void cancelledFunction() {
 			if (!isConnect) {
-				Toast.makeText(mActivity, "�������ӳ�������", Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(mActivity, "网络连接不正常", Toast.LENGTH_SHORT).show();
 			}
 			Log.d("onCancelled", "1");
 			mDialog.dismiss();
@@ -176,20 +196,17 @@ public class Login extends ActionBarActivity {
 			mDialog.dismiss();
 			Log.d("onPostExecute", result + "");
 			if (result == BOConstant.USER_NOT_EXIST) {
-				Toast.makeText(mActivity, "�˺���������", Toast.LENGTH_SHORT).show();
+				Toast.makeText(mActivity, "用户名不存在", Toast.LENGTH_SHORT).show();
 			} else if (result == BOConstant.PASSWORD_ERROR) {
-				Toast.makeText(mActivity, "�������", Toast.LENGTH_SHORT).show();
-			} else if (result > 0) {
-				Toast.makeText(mActivity, "��¼�ɹ�", Toast.LENGTH_SHORT).show();
-				// ��ת����
+				Toast.makeText(mActivity, "密码错误", Toast.LENGTH_SHORT).show();
+			} else if (result == BOConstant.USER_REGISTER_SUCCESS) {
+				Log.d("登陆", "成功");
 				toNextActivity();
-				Log.d("btnlogin", "��ת����");
 			} else if (result == BOConstant.USER_NOT_ACTIVATED) {
-				Toast.makeText(mActivity, "���û���δ����", Toast.LENGTH_LONG).show();
+				Toast.makeText(mActivity, "错误不明", Toast.LENGTH_LONG).show();
 			} else {
-				Log.d("postFunction", "δ֪������");
-				Toast.makeText(mActivity, "��½���������µ�¼", Toast.LENGTH_LONG)
-						.show();
+				Log.d("postFunction", "else");
+				Toast.makeText(mActivity, "错误不明", Toast.LENGTH_LONG).show();
 			}
 		}
 

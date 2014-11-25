@@ -21,6 +21,10 @@ public class UserInfo {
 	private String address;// ��ַ
 	private String gradeAndMajor;// �꼶��רҵ
 
+	private String sex;
+	private String qq;
+	private String wechant;
+
 	/**
 	 * ����һ�����췽��
 	 * 
@@ -47,6 +51,51 @@ public class UserInfo {
 		this.telephone = telephone;
 		this.address = address;
 		this.gradeAndMajor = gradeAndMajor;
+	}
+
+	/**
+	 * @return the sex
+	 */
+	public String getSex() {
+		return sex;
+	}
+
+	/**
+	 * @param sex
+	 *            the sex to set
+	 */
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	/**
+	 * @return the qq
+	 */
+	public String getQq() {
+		return qq;
+	}
+
+	/**
+	 * @param qq
+	 *            the qq to set
+	 */
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+
+	/**
+	 * @return the wechant
+	 */
+	public String getWechant() {
+		return wechant;
+	}
+
+	/**
+	 * @param wechant
+	 *            the wechant to set
+	 */
+	public void setWechant(String wechant) {
+		this.wechant = wechant;
 	}
 
 	/**
