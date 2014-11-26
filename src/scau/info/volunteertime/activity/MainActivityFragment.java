@@ -37,11 +37,9 @@ public class MainActivityFragment extends Fragment {
 
 
 	private static final int[] ITEM_DRAWABLES = {
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme,
-			R.drawable.ab_bottom_solid_maintheme };
+			R.drawable.abc_ab_bottom_solid_light_holo,
+			R.drawable.content_new_picture,
+			R.drawable.ab_bottom_solid_maintheme,};
 	View mView;
 	private ViewPager viewFlow;
 	private ListView listView;

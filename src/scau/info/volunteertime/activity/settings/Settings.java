@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 
 /**
  * @author 蔡超敏
- *
+ * 
  */
 public class Settings extends ActionBarActivity {
 
@@ -26,9 +26,13 @@ public class Settings extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setTitle("设置");
+
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
+					.add(R.id.container, new SettingsFragment()).commit();
 		}
 	}
 
@@ -46,8 +50,8 @@ public class Settings extends ActionBarActivity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
+		if (id == android.R.id.home) {
+			finish();
 		}
 		return super.onOptionsItemSelected(item);
 	}

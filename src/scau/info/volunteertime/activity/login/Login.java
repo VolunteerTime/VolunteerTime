@@ -12,6 +12,7 @@ import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.business.BOConstant;
 import scau.info.volunteertime.business.UserBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
+import scau.info.volunteertime.util.Util;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -92,7 +93,8 @@ public class Login extends ActionBarActivity {
 		editor.putBoolean(LoadActivity.SHARE_ISCHECK, true);
 
 		editor.putString(LoadActivity.SHARE_USERNAME, useridValue);
-		editor.putString(LoadActivity.SHARE_PASSWORD, passwordValue);
+		editor.putString(LoadActivity.SHARE_PASSWORD,
+				Util.getMD5Str(passwordValue.trim()));
 
 		editor.commit();
 
@@ -114,7 +116,7 @@ public class Login extends ActionBarActivity {
 		} else if (passwordValue == null || passwordValue.equals("")) {
 			Toast.makeText(mActivity, "密码不能为空", Toast.LENGTH_LONG).show();
 		} else {
-			String[] str2 = { useridValue, passwordValue };
+			String[] str2 = { useridValue, Util.getMD5Str(passwordValue.trim()) };
 			new CheckDataTask().execute(str2);
 		}
 	}

@@ -23,6 +23,9 @@
     <string name="loginusername">账号名</string>
     <string name="loginpassword">账号密码</string>
     <string name="loginrepassword">再次确认账号密码</string>
+    <string name="orignpassword">原密码</string>
+    <string name="newpassword">新密码</string>
+    <string name="newrepassword">再次输入密码</string>
     <string name="loginTopIcon">华农</string>
     <string name="loginbutton">登陆</string>
     <string name="registerbutton">注册</string>
@@ -44,5 +47,21 @@
     <string name="title_activity_show_result">ShowResultActivity</string>
     <string name="title_activity_show_activity">ShowActivityActivity</string>
     <string name="title_activity_register">RegisterActivity</string>
+    <string name="title_activity_about">AboutActivity</string>
+    <string name="volunteer_info">志愿者是指志愿贡献个人的时间及精力，在不为任何物质报酬的情况下，为改善社会服务，促进社会进步而提供服务的人。志愿工作具有志愿性、无偿性、公益性、组织性四大特征。参与志愿工作既是“助人”，亦是“自助”，既是“乐人”，同时也“乐己”。参与志愿工作，既是在帮助他人、服务社会，同时也是在传递爱心和传播文明。志愿服务个人化、人性化的特征，可以有效地拉近人与人之间的心灵距离，减少疏远感，对缓解社会矛盾，促进社会稳定有一定的积极作用。</string>
+    <string name="title_activity_apk_update_manager">ApkUpdateManager</string>
+    <string name="title_activity_feed_back">FeedBackActivity</string>
+    <string name="ask_login_tips">请先登录哦~</string>
+    <string name="server_delete_error_tips">服务器出错，删除失败~</string>
+    <string name="server_post_error_tips">服务器出错，发表失败~~</string>
+    <string name="post_success_tips">发表成功~~</string>
+    <string name="delete_success_tips">删除成功~</string>
+    <string name="feed_back_success_tips">感谢您的意见~</string>
+    <string name="ask_comment_tips">说两句吧亲~</string>
+    <string name="network_error_tips">网络连接出现问题</string>
+    <string name="title_activity_send_message">SendMessageActivity</string>
+    <string name="title_activity_messages">MessagesActivity</string>
+    <string name="title_activity_show_message">ShowMessageActivity</string>
+    <string name="title_activity_reset_password">ResetPasswordActivity</string>
 
 </resources>

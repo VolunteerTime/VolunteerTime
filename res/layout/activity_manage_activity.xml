@@ -1,8 +1,13 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="scau.info.volunteertime.activity.manageactivity.ManageActivity"
-    tools:ignore="MergeRootFrame" />
+    tools:context="scau.info.volunteertime.activity.manageactivity.ManageActivity" >
 
+    <com.handmark.pulltorefresh.library.PullToRefreshListView
+        android:id="@+id/activity_center_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

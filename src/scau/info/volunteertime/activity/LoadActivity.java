@@ -170,6 +170,7 @@ public class LoadActivity extends Activity {
 		db.execSQL("CREATE TABLE IF NOT EXISTS results(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR, content VARCHAR, image  VARCHAR, editor VARCHAR, publishTime BIGINT, readNum INTEGER)");
 		db.execSQL("CREATE TABLE IF NOT EXISTS activities(id INTEGER PRIMARY KEY AUTOINCREMENT, title VARCHAR,  content VARCHAR,  image VARCHAR, editor VARCHAR, publishTime BIGINT, endTime BIGINT, limitNum INTEGER, readNum INTEGER,  groupId INTEGER, participatorsNum INTEGER)");
 		db.execSQL("CREATE TABLE IF NOT EXISTS activity_group(id INTEGER PRIMARY KEY AUTOINCREMENT, principal_id VARCHAR, participators VARCHAR)");
+		db.execSQL("CREATE TABLE IF NOT EXISTS messages(id INTEGER PRIMARY KEY AUTOINCREMENT, receive_user_id VARCHAR, launch_user_id VARCHAR, title VARCHAR, content VARCHAR , launch_time BIGINT, is_send INTEGER)");
 		db.close();
 	}
 
@@ -231,7 +232,7 @@ public class LoadActivity extends Activity {
 			if (result == BOConstant.PASSWORD_ERROR) {// 密码不合法
 				Toast.makeText(mContext, "密码过期", Toast.LENGTH_SHORT).show();
 				goToLogin();
-			} else if (result == BOConstant.REGISTER_SUCCESS) {
+			} else if (result == BOConstant.USER_REGISTER_SUCCESS) {
 				Toast.makeText(mContext, "登录成功", Toast.LENGTH_SHORT).show();
 				goHome();
 			} else if (result == BOConstant.USER_NOT_EXIST) {// 用户不存在
@@ -241,7 +242,7 @@ public class LoadActivity extends Activity {
 				Toast.makeText(mContext, "用户名密码为空", Toast.LENGTH_SHORT).show();
 				goToLogin();
 			} else {
-				Toast.makeText(mContext, "用户名或密码错误，请重新登录", Toast.LENGTH_LONG)
+				Toast.makeText(mContext, "离上次登录时间过长，请重新登录", Toast.LENGTH_LONG)
 						.show();
 				goToLogin();
 			}

@@ -148,4 +148,25 @@ public class ActivityCenterBO {
 
 		Log.d("updateReadNum", "jsonStr = " + jsonStr);
 	}
+
+	/**
+	 * @param userId
+	 * @return
+	 */
+	public ArrayList<ActivityDate> getNewData(String userId) {
+		Map<String, String> maps = new HashMap<String, String>();
+		maps.put("action_type", 4 + "");
+		maps.put("userId", userId);
+
+		String jsonStr = HttpUtils.httpPostString(
+				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+
+		try {
+			return jsonToList(jsonStr);
+		} catch (ParseException e) {
+			Log.d("ActivityCenterBO-getNewData", "ParseException-err");
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

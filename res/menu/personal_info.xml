@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="scau.info.volunteertime.PersonalInfo" >
+    tools:context="scau.info.volunteertime.PersonalInfoActivity" >
 
     <item
         android:id="@+id/action_settings"

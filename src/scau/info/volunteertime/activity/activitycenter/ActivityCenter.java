@@ -6,6 +6,12 @@
 package scau.info.volunteertime.activity.activitycenter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.activitycenter.ActivityAdapter.OnParticipateButtonListener;
@@ -177,7 +183,6 @@ public class ActivityCenter extends Fragment {
 		startLabels.setPullLabel("下拉刷新");// 刚下拉时，显示的提示
 		startLabels.setRefreshingLabel("正在载入...");// 刷新时
 		startLabels.setReleaseLabel("放开刷新");// 下来达到一定距离时，显示的提示
-
 	}
 
 	private class GetDataTask extends AsyncTask<Void, Void, Void> {
@@ -260,20 +265,28 @@ public class ActivityCenter extends Fragment {
 			ArrayList<ActivityDate> activityDates = activityCenterBO
 					.getNewData();
 			if (activityDates != null) {
+				toSaveDataInDatabase(activityDates);
 				sortedLinkList = new SortedLinkList<ActivityDate>();
 				sortedLinkList.addAll(activityDates);
-				toSaveDataInDatabase();
 			}
 			Log.d("doInBackgroundFunction", "getNewData2");
 		}
 
 		/**
+		 * @param activityDates
 		 * @param results
 		 */
-		private void toSaveDataInDatabase() {
+		private void toSaveDataInDatabase(ArrayList<ActivityDate> activityDates) {
+
+			ArrayList<Integer> integers = new ArrayList<Integer>();
+
+			for (ActivityDate activityDate : sortedLinkList.getSortedLinkList()) {
+				integers.add(activityDate.getId());
+			}
+
 			SQLiteDatabase db = activity.openOrCreateDatabase(
 					"volunteertimedatabase.db", Context.MODE_PRIVATE, null);
-			for (ActivityDate activityDate : sortedLinkList.getList()) {
+			for (ActivityDate activityDate : activityDates) {
 				db.execSQL(
 						"REPLACE INTO activities(id , title , content ,  image , editor , publishTime , endTime , limitNum , readNum ,  groupId , participatorsNum ) VALUES(?,?,?,?,?,?,?,?,?,?,?)",
 						new Object[] { activityDate.getId(),
@@ -283,8 +296,8 @@ public class ActivityCenter extends Fragment {
 								activityDate.getEditor(),
 								activityDate.getPublishTime(),
 								activityDate.getEndTime(),
-								activityDate.getReadNum(),
 								activityDate.getLimitNum(),
+								activityDate.getReadNum(),
 								activityDate.getGroupId(),
 								activityDate.getParticipatorsNum() });
 				if (activityDate.getGroupId() != 0) {
@@ -297,8 +310,23 @@ public class ActivityCenter extends Fragment {
 									activityDate.getActivityGroup()
 											.getParticipators() });
 				}
+				if (integers.contains(activityDate.getId())) {
+					integers.remove(Integer.valueOf(activityDate.getId()));
+				}
 			}
+
+			for (Integer id : integers) {
+				db.delete("activities", "id = ?",
+						new String[] { String.valueOf(id) });
+				Log.d("toSaveDataInDatabase", "id = " + id);
+			}
+
 			db.close();
+			/*
+			 * 
+			 * db.delete("results", "id = ?", new String[] { String.valueOf(id)
+			 * });
+			 */
 		}
 
 	}
@@ -362,6 +390,22 @@ public class ActivityCenter extends Fragment {
 		private void postFunction(String result) {
 			Log.d("postFunction", "result = " + result);
 			if (result.trim().equals("success")) {
+				try {
+					JSONObject json;
+					json = new JSONObject(sortedLinkList.get(position)
+							.getActivityGroup().getParticipators());
+					JSONArray array = json.getJSONArray("userIds");
+
+					JSONObject jsonObj = new JSONObject();
+					jsonObj.put("userId", userId);
+					array.put(jsonObj);
+					json.put("userIds", array);
+					sortedLinkList.get(position).getActivityGroup()
+							.setParticipators(json.toString());
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+
 				ToastUtils.show(activity, "报名成功");
 				sortedLinkList.get(position).setParticipatorsNum(
 						sortedLinkList.get(position).getParticipatorsNum() + 1);
@@ -467,13 +511,26 @@ public class ActivityCenter extends Fragment {
 		private void postFunction(String result) {
 			Log.d("postFunction", "result = " + result);
 			if (result.trim().equals("success")) {
-				ToastUtils.show(activity, "取消报名成功");
-				sortedLinkList.get(position).setParticipatorsNum(
-						sortedLinkList.get(position).getParticipatorsNum() - 1);
 
+				String json = sortedLinkList.get(position).getActivityGroup()
+						.getParticipators();
+				json = json.replace(",{\"userId\":\"chao2\"},", "");
+				json = json.replace("{\"userId\":\"chao2\"},", "");
+				json = json.replace(",{\"userId\":\"chao2\"}", "");
+				json = json.replace("{\"userId\":\"chao2\"}", "");
+				Log.d("postFunction", "json 1 " + json);
+
+				sortedLinkList.get(position).getActivityGroup()
+						.setParticipators(json);
+
+				ToastUtils.show(activity, "取消报名成功");
+				Log.d("postFunction", "success 1");
 				if (button instanceof Button) {
+					Log.d("postFunction", "success 2");
 					((Button) button).setText("报名");
 				}
+				sortedLinkList.get(position).setParticipatorsNum(
+						sortedLinkList.get(position).getParticipatorsNum() - 1);
 
 				activityListAdapter.notifyDataSetChanged();
 

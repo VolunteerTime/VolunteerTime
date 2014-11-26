@@ -1,9 +1,13 @@
 package scau.info.volunteertime.activity.login;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.business.BOConstant;
 import scau.info.volunteertime.business.UserBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
+import scau.info.volunteertime.util.Util;
 import scau.info.volunteertime.vo.UserInfo;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -15,6 +19,8 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -80,8 +86,9 @@ public class RegisterActivity extends ActionBarActivity {
 					Toast.makeText(mActivity, "两次密码不一致", Toast.LENGTH_SHORT)
 							.show();
 				} else {
-					String[] str2 = { useridValue, passwordValue,
-							repasswordValue };
+					String[] str2 = { useridValue,
+							Util.getMD5Str(passwordValue.trim()),
+							Util.getMD5Str(repasswordValue.trim()) };
 					new CheckUserTask().execute(str2);
 				}
 			}
@@ -97,7 +104,7 @@ public class RegisterActivity extends ActionBarActivity {
 		// Create new fragment and transaction
 		PlaceholderFragment newFragment = new PlaceholderFragment();
 		newFragment.setUserId(useridValue);
-		newFragment.setPassword(passwordValue);
+		newFragment.setPassword(Util.getMD5Str(passwordValue.trim()));
 		FragmentTransaction transaction = getSupportFragmentManager()
 				.beginTransaction();
 		// Replace whatever is in the fragment_container view with this
@@ -106,10 +113,6 @@ public class RegisterActivity extends ActionBarActivity {
 		transaction.replace(R.id.Linear, newFragment);
 		// Commit the transaction
 		transaction.commit();
-		etUserid.setEnabled(false);
-		etPassword.setEnabled(false);
-		etRepassword.setEnabled(false);
-		btRegister.setEnabled(false);
 		Handler mHandler = new Handler();
 		mHandler.postDelayed(new Runnable() {
 			@Override
@@ -117,6 +120,10 @@ public class RegisterActivity extends ActionBarActivity {
 				scrollView.fullScroll(ScrollView.FOCUS_DOWN);
 			}
 		}, 500);
+		etUserid.setEnabled(false);
+		etPassword.setEnabled(false);
+		etRepassword.setEnabled(false);
+		btRegister.setEnabled(false);
 	}
 
 	@Override
@@ -146,8 +153,6 @@ public class RegisterActivity extends ActionBarActivity {
 		// String userId, String password
 
 		private Activity mContext;
-
-		private ScrollView scrollView;
 
 		private String userId, password;
 
@@ -180,11 +185,11 @@ public class RegisterActivity extends ActionBarActivity {
 			Log.d("PlaceholderFragment", "onCreateView");
 			View rootView = inflater.inflate(R.layout.fragment_register,
 					container, false);
-			scrollView = (ScrollView) rootView.findViewById(R.id.scrollView);
 
 			etName = (EditText) rootView.findViewById(R.id.register_name_edit);
 			etClass = (EditText) rootView
 					.findViewById(R.id.register_class_name_edit);
+
 			etLongPhone = (EditText) rootView
 					.findViewById(R.id.register_long_cell_phone_edit);
 			etBriefPhone = (EditText) rootView
@@ -225,7 +230,122 @@ public class RegisterActivity extends ActionBarActivity {
 				}
 			});
 
+			init();
+
 			return rootView;
+		}
+
+		/**
+		 * 
+		 */
+		private void init() {
+			etClass.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
+					// TODO Auto-generated method stub
+
+				}
+
+				private boolean checkString(String s) {
+					return s.matches("[0-9]*[级]?[\u4E00-\u9FA5]*[0-9]*[班]?");
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
+					System.out.println(s.toString());
+					if (s.length() > 0 && !checkString(s.toString()))
+						s.delete(s.length() - 1, s.length());
+					else {
+						Pattern p = Pattern
+								.compile("([0-9]*)([级]?)([\u4E00-\u9FA5]*)([0,9]*)([班]?)");
+						Matcher m = p.matcher(s.toString());
+						boolean found = m.find();
+
+						if (found) {
+							String group1 = m.group(1);
+							if (s.length() > 0 && group1.equals("")) {
+								s.delete(s.length() - 1, s.length());
+								return;
+							}
+							String group2 = m.group(2);
+
+							String group3 = m.group(3);
+							if (!group3.equals("")) {
+								if (group2.equals(""))
+									s.insert(group1.length(), "级");
+							}
+
+						}
+					}
+				}
+			});
+
+			etName.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
+					// TODO Auto-generated method stub
+
+				}
+
+				private boolean checkString(String s) {
+					return s.matches("[\u4E00-\u9FA5]+");
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
+					if (s.length() > 0 && !checkString(s.toString()))
+						s.delete(s.length() - 1, s.length());
+
+				}
+			});
+
+			etLongPhone.addTextChangedListener(new TextWatcher() {
+
+				@Override
+				public void onTextChanged(CharSequence s, int start,
+						int before, int count) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void beforeTextChanged(CharSequence s, int start,
+						int count, int after) {
+					// TODO Auto-generated method stub
+
+				}
+
+				@Override
+				public void afterTextChanged(Editable s) {
+					// TODO Auto-generated method stub
+					if (s.length() > 11) {
+						s.delete(s.length() - 1, s.length());
+						return;
+					}
+
+				}
+			});
+
 		}
 
 		private void checkAndCommitData() {

@@ -9,10 +9,19 @@ import java.util.ArrayList;
 
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.activity.PopupMainMenu.OnItemOnClickListener;
+import scau.info.volunteertime.activity.manageactivity.ManageActivity;
+import scau.info.volunteertime.activity.manageactivity.MessagesActivity;
 import scau.info.volunteertime.activity.manageresult.ManageResult;
 import scau.info.volunteertime.activity.manageresult.ManageResultsExhibitionFragment;
 import scau.info.volunteertime.activity.personalinfo.PersonalInfo;
+import scau.info.volunteertime.activity.personalinfo.PersonalInfoActivity;
+import scau.info.volunteertime.activity.settings.MessagesService;
+import scau.info.volunteertime.activity.settings.Settings;
+import scau.info.volunteertime.activity.settings.SlideSwitch;
+import scau.info.volunteertime.application.Ding9App;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentManager.OnBackStackChangedListener;
@@ -84,6 +93,7 @@ public class MainActivity extends BaseActionBarActivity {
 
 		init();
 
+		setPushState();
 		fragmentManager
 				.addOnBackStackChangedListener(new OnBackStackChangedListener() {
 
@@ -94,6 +104,32 @@ public class MainActivity extends BaseActionBarActivity {
 					}
 				});
 
+	}
+
+	/**
+	 * 设置是否开启推送
+	 */
+	private void setPushState() {
+		SharedPreferences sharedPreferences = getSharedPreferences(
+				LoadActivity.SHAREDPREFERENCES_NAME, Context.MODE_PRIVATE);
+
+		int messageStatus = sharedPreferences.getInt("PUSH_STATUS",
+				SlideSwitch.SWITCH_ON);
+
+		if (messageStatus == SlideSwitch.SWITCH_ON) {
+			if (!sharedPreferences.contains("PUSH_STATUS")) {
+				// 独立sharePreference
+				sharedPreferences.edit()
+						.putInt("PUSH_STATUS", SlideSwitch.SWITCH_ON).commit();
+			}
+			// 设置信息推送打开
+			Intent intent = new Intent(this, MessagesService.class);
+			startService(intent);
+		} else {
+			// // 设置信息推送关闭
+			Intent intent = new Intent(this, MessagesService.class);
+			stopService(intent);
+		}
 	}
 
 	/**
@@ -111,6 +147,8 @@ public class MainActivity extends BaseActionBarActivity {
 				R.drawable.mm_title_btn_receiver_normal));
 		actionItems.add(new ActionItem(this, "我的活动",
 				R.drawable.mm_title_btn_share_normal));
+		actionItems.add(new ActionItem(this, "我的消息",
+				R.drawable.mm_title_btn_set_normal));
 		actionItems.add(new ActionItem(this, "设置",
 				R.drawable.mm_title_btn_set_normal));
 
@@ -135,12 +173,12 @@ public class MainActivity extends BaseActionBarActivity {
 					toMyActivityManagement();
 					break;
 				case 2:
-					Log.d("MainActivity-setItemOnClickListener", "设置");
-					toSetting();
+					Log.d("MainActivity-setItemOnClickListener", "个人信息");
+					toManageMessage();
 					break;
 				case 3:
-					Log.d("MainActivity-setItemOnClickListener", "管理权限");
-					toManageAuthority();
+					Log.d("MainActivity-setItemOnClickListener", "设置");
+					toSetting();
 					break;
 				case 4:
 					Log.d("MainActivity-setItemOnClickListener", "管理成员");
@@ -169,21 +207,28 @@ public class MainActivity extends BaseActionBarActivity {
 	}
 
 	private void toPersonInfo() {
-
-		fragmentTransaction = fragmentManager.beginTransaction();
-		fragmentTransaction
-				.replace(R.id.mainActivityFragmentLayout, personalInfo)
-				.addToBackStack(null).commit();
+		Log.d("MainActivity-toMyActivityManagement", "start");
+		Intent intent = new Intent(this, PersonalInfoActivity.class);
+		startActivity(intent);
 	}
 
 	private void toSetting() {
-		// TODO Auto-generated method stub
-
+		((Ding9App) getApplicationContext()).setMainActivity(this);
+		Log.d("MainActivity-toSetting", "start");
+		Intent intent = new Intent(this, Settings.class);
+		startActivity(intent);
 	}
 
 	private void toMyActivityManagement() {
-		// TODO Auto-generated method stub
+		Log.d("MainActivity-toMyActivityManagement", "start");
+		Intent intent = new Intent(this, ManageActivity.class);
+		startActivity(intent);
+	}
 
+	private void toManageMessage() {
+		Log.d("MainActivity-toManageMessage", "start");
+		Intent intent = new Intent(this, MessagesActivity.class);
+		startActivity(intent);
 	}
 
 	private void toManageAuthority() {

@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    tools:context="scau.info.volunteertime.activity.manageactivity.SendMessageActivity"
+    tools:ignore="MergeRootFrame" >
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:focusable="false" >
+
+        <LinearLayout
+            android:id="@+id/Linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/login_div"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dip"
+                android:padding="15dip" >
+
+                <EditText
+                    android:id="@+id/receiver"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:hint="收信人"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/message_title"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/receiver"
+                    android:layout_marginTop="16dp"
+                    android:hint="标题"
+                    android:inputType="text" />
+
+                <EditText
+                    android:id="@+id/send_message"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/message_title"
+                    android:layout_marginTop="16dp"
+                    android:ems="10"
+                    android:hint="请输入内容"
+                    android:inputType="textMultiLine" />
+
+                <Button
+                    android:id="@+id/send_message_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/send_message"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/bg_alibuybutton_login"
+                    android:text="@string/confirmbutton" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

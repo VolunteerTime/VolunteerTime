@@ -31,5 +31,12 @@ public class BOConstant {
 	public static final int REGISTER_SUCCESS = 12;
 	public static final String GET_USER_INFO_URL = ROOT_URL
 			+ "/VolunteerTimeWeb/VolunteerTimeUserInfoServlet";
+	public static final String ANDROID_VERSION_URL = ROOT_URL
+			+ "/VolunteerTimeWeb/VolunteerTimeVersionServlet";
+	public static final String FEED_BACK_URL = ROOT_URL
+			+ "/VolunteerTimeWeb/VolunteerTimeFeedBackServlet";
+	public static final String MESSAGES_URL = ROOT_URL
+			+ "/VolunteerTimeWeb/VolunteerTimeMessagesServlet";
+	public static int CHANGE_SUCCESS = 2;
 
 }

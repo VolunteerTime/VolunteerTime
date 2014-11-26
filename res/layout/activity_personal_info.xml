@@ -1,72 +1,375 @@
-<?xml version="1.0" encoding="utf-8"?> 
-<PreferenceScreen 
-  xmlns:android="http://schemas.android.com/apk/res/android"
- 
-  > 
-    <PreferenceCategory android:title="个人信息">   
-    <EditTextPreference android:key="edit_0" 
-        android:title="id"  
-         > 
-    </EditTextPreference> 
-          
-     <EditTextPreference android:key="edit_1" 
-        android:title="学生号"  
-        
-        android:defaultValue="请输入信息" 
-        android:dialogTitle="输入框"/> 
-        
-     <EditTextPreference android:key="edit_2" 
-        android:title="email"  
-        android:defaultValue="请输入信息" 
-         android:dialogTitle="输入框">
-        </EditTextPreference> 
- 
-     <EditTextPreference android:key="edit_3" 
-        android:title="cellPhone"  
-        android:defaultValue="请输入信息" 
-        android:dialogTitle="输入框">
-        
-        </EditTextPreference> 
-        
-                  
-      <EditTextPreference android:key="edit_4" 
-        android:title="briefPhone"  
-        android:defaultValue="请输入信息" 
-        android:dialogTitle="输入框"> 
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#eee"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <!--
+    <RelativeLayout 
+        android:id="@+id/profile_top_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/mmtitle_bg">
          
-    </EditTextPreference> 
-    
-       <EditTextPreference android:key="edit_5" 
-        android:title="固定电话"  
-        android:defaultValue="请输入信息" 
-        android:dialogTitle="输入框"> 
-         
-    </EditTextPreference> 
-     
-    
-       <EditTextPreference android:key="edit_6" 
-        android:title="固定电话"  
-        android:defaultValue="请输入信息" 
-        android:dialogTitle="输入框"> 
-         
-    </EditTextPreference> 
-     
-    
-       <Preference android:key="edit_7" 
-        android:title="地址 "  
-        android:defaultValue="请输入信息" 
-        android:dialogTitle="输入框"> 
-          </Preference>
-          
-       <Preference
-		android:layout="@layout/personal_preference"
-		android:title="加载了一张自定义布局A"
-		android:key="pref_key_0"
-		>
-	</Preference>
-	
-       
-       
-    </PreferenceCategory> 
-</PreferenceScreen> 
- 
+        <Button
+            android:id="@+id/profile_reback_btn"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="返回"
+            android:textSize="14sp"
+            android:textColor="#fff"
+            android:background="@drawable/appkefu_title_btn_back"/>
+            
+           
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#ffffff"
+            android:text="个人资料"/>  
+    </RelativeLayout>
+    -->
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/profile_top_layout"
+        android:fadingEdge="none" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <!--
+                  <RelativeLayout 
+                android:id="@+id/layout_personal_headview"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:background="@drawable/preference_first_item"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="change_avatar">
+                
+             <TextView
+                    android:id="@+id/personal_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_centerVertical="true"
+                    android:text="头像:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <ImageView
+                    android:id="@+id/personal_head_imageview"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_toLeftOf="@+id/right_arrow"
+                    android:padding="8dp"
+                    android:gravity="right"
+                    android:src="@drawable/app_panel_friendcard_icon"/>
+                
+                <ImageView
+                    android:id="@+id/right_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu" />
+                
+            </RelativeLayout>
+            -->
+
+            <RelativeLayout
+                android:id="@+id/layout_personal_username"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/preference_item"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/personal_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="用户名:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/personal_username_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/right_arrow"
+                    android:layout_toRightOf="@+id/personal_username"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/right_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_personal_sex"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/preference_item"
+                android:clickable="true"
+                android:gravity="center_vertical" >
+
+                <TextView
+                    android:id="@+id/personal_detail_sex_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:padding="8dp"
+                    android:text="您的性别为:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true" >
+
+                    <RadioGroup
+                        android:id="@+id/sexRadioGroup"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@+id/personal_detail_sex_txt"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal" >
+
+                        <RadioButton
+                            android:id="@+id/male"
+                            android:paddingRight="20dp"
+                            android:text="男" />
+
+                        <RadioButton
+                            android:id="@+id/female"
+                            android:text="女" />
+                    </RadioGroup>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_personal_class"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/preference_item"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="change_class" >
+
+                <TextView
+                    android:id="@+id/personal_class"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="班级:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/personal_class_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/right_arrow"
+                    android:layout_toRightOf="@+id/personal_class"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@id/right_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_personal_lnumber"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/preference_item"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="change_lnumber" >
+
+                <TextView
+                    android:id="@+id/personal_lnumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="长号:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/personal_lnumber_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/right_arrow"
+                    android:layout_toRightOf="@+id/personal_lnumber"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@id/right_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_personal_snumber"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/preference_item"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="change_snumber" >
+
+                <TextView
+                    android:id="@+id/personal_snumber"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="短号:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/personal_snumber_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/right_arrow_1"
+                    android:layout_toRightOf="@+id/personal_snumber"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/right_arrow_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_personal_qq"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/preference_item"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="change_qq" >
+
+                <TextView
+                    android:id="@+id/personal_qq"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="QQ:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/personal_qq_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/right_arrow_2"
+                    android:layout_toRightOf="@+id/personal_qq"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/right_arrow_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_personal_weixin"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/preference_last_item"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="change_weixin" >
+
+                <TextView
+                    android:id="@+id/personal_weixin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:text="weixinhao:"
+                    android:textColor="#000"
+                    android:textSize="17sp" />
+
+                <TextView
+                    android:id="@+id/personal_weixin_detail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_toLeftOf="@+id/right_arrow_3"
+                    android:layout_toRightOf="@id/personal_weixin"
+                    android:ellipsize="end"
+                    android:gravity="right"
+                    android:padding="8dp"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/right_arrow_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:scaleType="matrix"
+                    android:src="@drawable/mm_submenu" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

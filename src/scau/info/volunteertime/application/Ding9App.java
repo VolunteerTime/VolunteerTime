@@ -5,6 +5,7 @@
  */
 package scau.info.volunteertime.application;
 
+import scau.info.volunteertime.activity.MainActivity;
 import android.app.Application;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -48,6 +49,8 @@ public class Ding9App extends Application {
 
 	private String logoImageUrl;
 
+	private MainActivity mainActivity;
+
 	public int getUserClass() {
 		return userClass;
 	}
@@ -78,6 +81,14 @@ public class Ding9App extends Application {
 
 	public void setLogoImageUrl(String logoImageUrl) {
 		this.logoImageUrl = logoImageUrl;
+	}
+
+	public MainActivity getMainActivity() {
+		return mainActivity;
+	}
+
+	public void setMainActivity(MainActivity mainActivity) {
+		this.mainActivity = mainActivity;
 	}
 
 	@Override

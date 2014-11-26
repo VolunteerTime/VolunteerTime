@@ -37,6 +37,8 @@ public class ActivityAdapter extends BaseAdapter {
 
 	private OnParticipateButtonListener clickListener;
 
+	private String userId;
+
 	public ActivityAdapter(Context context, LinkedList<ActivityDate> linkedList) {
 		super();
 		this.inflater = LayoutInflater.from(context);
@@ -44,6 +46,7 @@ public class ActivityAdapter extends BaseAdapter {
 		this.ding9App = (Ding9App) context.getApplicationContext();
 		this.IMAGE_CACHE = ding9App.IMAGE_CACHE;
 		this.mContext = context;
+		userId = ding9App.getUserId();
 	}
 
 	public void setListData(LinkedList<ActivityDate> linkedList) {
@@ -88,20 +91,7 @@ public class ActivityAdapter extends BaseAdapter {
 					.findViewById(R.id.activity_in_num);
 
 			holder.participate = (Button) view.findViewById(R.id.activity_in);
-			holder.participate.setOnClickListener(new OnClickListener() {
 
-				@Override
-				public void onClick(View v) {
-					String text = (String) ((Button) v).getText();
-					Log.d("getView-setOnClickListener", "text = " + text);
-					if (text.trim().equals("报名"))
-						clickListener.onParticipate(activityCenter.getId(),
-								position, v);
-					else
-						clickListener.onQuit(activityCenter.getId(), position,
-								v);
-				}
-			});
 			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) view.getTag();
@@ -120,8 +110,30 @@ public class ActivityAdapter extends BaseAdapter {
 				+ activityCenter.getParticipatorsNum() + "/"
 				+ activityCenter.getLimitNum());
 
+		if (activityCenter.getEndTime() < System.currentTimeMillis()
+				|| activityCenter.getActivityGroup().getPrincipalId().trim()
+						.equals(userId)) {
+			holder.participate.setEnabled(false);
+		} else {
+			holder.participate.setOnClickListener(new OnClickListener() {
+
+				@Override
+				public void onClick(View v) {
+					String text = (String) ((Button) v).getText();
+					Log.d("getView-setOnClickListener", "text = " + text);
+					if (text.trim().equals("报名"))
+						clickListener.onParticipate(activityCenter.getId(),
+								position, v);
+					else
+						clickListener.onQuit(activityCenter.getId(), position,
+								v);
+				}
+			});
+
+		}
 		if (activityCenter.getGroupId() != 0
 				&& checkGroup(activityCenter.getActivityGroup())) {
+			Log.d("getView", "checkGroup = true = 取消报名 position = " + position);
 			holder.participate.setText("取消报名");
 		}
 
@@ -134,8 +146,10 @@ public class ActivityAdapter extends BaseAdapter {
 	 * @return boolean
 	 */
 	private boolean checkGroup(ActivityGroup activityGroup) {
-		String userId = ding9App.getUserId();
-		if (activityGroup.getParticipators().contains(userId)) {
+		Log.d("checkGroup",
+				"userId = " + userId + " activityGroup.getParticipators() = "
+						+ activityGroup.getParticipators());
+		if (activityGroup.getParticipators().contains("\"" + userId + "\"")) {
 			return true;
 		}
 		return false;
