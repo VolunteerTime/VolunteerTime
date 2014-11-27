@@ -411,6 +411,7 @@ public class ActivityCenter extends Fragment {
 
 				if (button instanceof Button) {
 					((Button) button).setText("取消报名");
+					((Button) button).setBackgroundResource(R.drawable.unbaoming);
 				}
 				activityListAdapter.notifyDataSetChanged();
 
@@ -527,6 +528,7 @@ public class ActivityCenter extends Fragment {
 				if (button instanceof Button) {
 					Log.d("postFunction", "success 2");
 					((Button) button).setText("报名");
+					((Button) button).setBackgroundResource(R.drawable.baoming);
 				}
 				sortedLinkList.get(position).setParticipatorsNum(
 						sortedLinkList.get(position).getParticipatorsNum() - 1);
@@ -536,21 +538,28 @@ public class ActivityCenter extends Fragment {
 			} else if (result.trim().equals("failure")) {
 				if (button instanceof Button) {
 					((Button) button).setText("报名");
+					 
+					((Button) button).setBackgroundResource(R.drawable.baoming);
+					System.out.println("baoaaoaoaoaooaoaoaooaoaoaoa");
+				 
 				}
 				ToastUtils.show(activity, "该活动已注销");
 			} else if (result.trim().equals("noIdInActivityGroup")) {
 				if (button instanceof Button) {
 					((Button) button).setText("报名");
+					((Button) button).setBackgroundResource(R.drawable.baoming);
 				}
 				ToastUtils.show(activity, "早已取消报名了");
 			} else if (result.trim().equals("hasReadyQuit")) {
 				if (button instanceof Button) {
 					((Button) button).setText("报名");
+					((Button) button).setBackgroundResource(R.drawable.baoming);
 				}
 				ToastUtils.show(activity, "早已取消报名了");
 			} else {
 				if (button instanceof Button) {
 					((Button) button).setText("报名");
+					((Button) button).setBackgroundResource(R.drawable.baoming);
 				}
 				ToastUtils.show(activity, "取消报名");
 			}
