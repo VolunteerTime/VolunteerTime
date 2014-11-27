@@ -8,6 +8,7 @@ package scau.info.volunteertime.activity.manageactivity;
 import java.util.LinkedList;
 
 import scau.info.volunteertime.R;
+import scau.info.volunteertime.activity.activitycenter.Mycamera;
 import scau.info.volunteertime.application.Ding9App;
 import scau.info.volunteertime.vo.ActivityDate;
 import scau.info.volunteertime.vo.ActivityGroup;
@@ -16,6 +17,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
@@ -117,7 +120,32 @@ public class ManageActivityAdapter extends BaseAdapter {
 			holder.participate.setOnClickListener(new OnClickListener() {
 
 				@Override
-				public void onClick(View v) {
+				public void onClick(final View v) {
+					
+					Mycamera animation = new Mycamera(true); //设置报名特效]
+					 
+					animation.setAnimationListener(new AnimationListener() {
+						
+						@Override
+						public void onAnimationStart(Animation animation) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onAnimationRepeat(Animation animation) {
+							// TODO Auto-generated method stub
+							
+						}
+						
+						@Override
+						public void onAnimationEnd(Animation animation) {
+							// TODO Auto-generated method stub
+							v.startAnimation(new Mycamera(false));
+						}
+					});
+					v.startAnimation(animation);	
+					
 					String text = (String) ((Button) v).getText();
 					Log.d("getView-setOnClickListener", "text = " + text);
 					if (text.trim().equals("报名"))
@@ -131,13 +159,16 @@ public class ManageActivityAdapter extends BaseAdapter {
 		}
 		if (activityCenter.getGroupId() != 0
 				&& checkGroup(activityCenter.getActivityGroup())) {
+			holder.participate.setBackgroundResource(R.drawable.unbaoming);
 			holder.participate.setText("取消报名");
-		}
+		}else
+			holder.participate.setBackgroundResource(R.drawable.baoming);
 		Log.d("getView", "activityCenter.getActivityGroup().getPrincipalId() ="
 				+ activityCenter.getActivityGroup().getPrincipalId());
 		if (activityCenter.getActivityGroup().getPrincipalId().trim()
 				.equals(userId)) {
 			Log.d("getView", "发通知");
+			holder.participate.setBackgroundResource(R.drawable.baominfasong);
 			holder.participate.setText("发通知");
 			holder.participate.setEnabled(true);
 			holder.participate.setOnClickListener(new OnClickListener() {

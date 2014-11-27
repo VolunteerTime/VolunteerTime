@@ -13,11 +13,15 @@ import scau.info.volunteertime.util.AgoTimeUtil;
 import scau.info.volunteertime.vo.Message;
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.trinea.android.common.service.impl.ImageCache;
 
@@ -88,13 +92,27 @@ public class MessagesAdapter extends BaseAdapter {
 			holder.title = (TextView) view.findViewById(R.id.message_title);
 			holder.sender = (TextView) view.findViewById(R.id.message_sender);
 			holder.time = (TextView) view.findViewById(R.id.message_time);
+			//holder.iconitemactivitybook=(ImageView)view.findViewById(R.id.iconitemactivitybook2);
+			
+			
 			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 
 		String checkStr = message.getIs_send() == 2 ? "[已查看]" : "[未查看]";
-
+		
+		RelativeLayout layout = (RelativeLayout) view.findViewById(R.id.manage_coupon_div);
+				
+		if(checkStr.equals("[未查看]")) 
+			{
+			//System.out.println("asdfasdfasjhdflkasjdflkasjdflaskdjf  "+holder.iconitemactivitybook);
+		//	holder.iconitemactivitybook.setImageResource(R.drawable.iconbook2);
+			layout.setBackgroundResource(R.drawable.background_login_div_bg2);//未查看标有颜色
+			}
+		else 
+			layout.setBackgroundResource(R.drawable.background_login_div_bg);
+		
 		holder.title.setText(checkStr + message.getTitle());
 
 		holder.sender.setText(message.getLaunch_user_id());
@@ -110,6 +128,7 @@ public class MessagesAdapter extends BaseAdapter {
 		TextView title;
 		TextView sender;
 		TextView time;
+		ImageView iconitemactivitybook;
 	}
 
 }
