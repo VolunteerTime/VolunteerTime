@@ -13,14 +13,18 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import cn.trinea.android.common.util.ToastUtils;
 
 public class SendMessageActivity extends ActionBarActivity {
@@ -37,7 +41,20 @@ public class SendMessageActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_send_message);
-
+		
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		RelativeLayout actionView = (RelativeLayout) getLayoutInflater().inflate(
+				R.layout.action_bar_title_sendmessage, null);
+		
+		getSupportActionBar().setCustomView(
+				actionView,
+				new ActionBar.LayoutParams(LayoutParams.MATCH_PARENT,
+						LayoutParams.MATCH_PARENT));
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayShowCustomEnabled(true);
+		
+		
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		principalId = bundle.getString("principalId");
@@ -100,13 +117,7 @@ public class SendMessageActivity extends ActionBarActivity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.send_message, menu);
-		return true;
-	}
+ 
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
