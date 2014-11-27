@@ -137,6 +137,11 @@ public class ActivityAdapter extends BaseAdapter {
 			holder.participate.setText("取消报名");
 		}
 
+		if (activityCenter.getPublishTime() > System.currentTimeMillis()) {
+			holder.participate.setEnabled(false);
+			holder.participate.setText("期待报名");
+		}
+
 		return view;
 
 	}
