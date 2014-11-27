@@ -10,14 +10,18 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 public class ResetPasswordActivity extends ActionBarActivity {
@@ -31,7 +35,21 @@ public class ResetPasswordActivity extends ActionBarActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_reset_password);
-
+		
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		RelativeLayout actionView = (RelativeLayout) getLayoutInflater().inflate(
+				R.layout.action_bar_title_resetpasswordactivity, null);
+		
+		
+		getSupportActionBar().setCustomView(
+				actionView,
+				new ActionBar.LayoutParams(LayoutParams.MATCH_PARENT,
+						LayoutParams.MATCH_PARENT));
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayShowCustomEnabled(true);
+		
+		
 		mActivity = this;
 
 		etOrignPassword = (EditText) findViewById(R.id.orign_password_edit);
@@ -68,14 +86,7 @@ public class ResetPasswordActivity extends ActionBarActivity {
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.reset_password, menu);
-		return true;
-	}
-
+ 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
