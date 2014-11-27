@@ -176,8 +176,8 @@ public class myArrayAdapter extends ArrayAdapter<VoteData> {
 			progress.setLayoutParams(layoutParams);
 
 			TextView pen = new TextView(context);
-
-			pen.setText(votes * 100 / allVotes + "%");
+			if(allVotes==0) pen.setText("0%");
+			else pen.setText(votes * 100 / allVotes + "%");
 			pen.setTextSize(14);
 			pen.setPadding(0, -8, 0, 0);
 			layout.addView(progress);
