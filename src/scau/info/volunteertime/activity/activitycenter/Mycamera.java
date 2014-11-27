@@ -23,7 +23,7 @@ public class Mycamera extends Animation {
 		
 		centerX = width / 2;
 		centerY = height / 2;
-		setDuration(400); 
+		setDuration(200); 
 		setFillAfter(true); 
 		setInterpolator(new DecelerateInterpolator()); 
 	}

@@ -124,7 +124,8 @@ public class ActivityAdapter extends BaseAdapter {
 				public void onClick(final View v) {
 					
 
-					Mycamera animation = new Mycamera(true); //设置报名特效
+					Mycamera animation = new Mycamera(true); //设置报名特效]
+					 
 					animation.setAnimationListener(new AnimationListener() {
 						
 						@Override
@@ -162,9 +163,10 @@ public class ActivityAdapter extends BaseAdapter {
 		}
 		if (activityCenter.getGroupId() != 0
 				&& checkGroup(activityCenter.getActivityGroup())) {
+			holder.participate.setBackgroundResource(R.drawable.unbaoming);
 			Log.d("getView", "checkGroup = true = 取消报名 position = " + position);
 			holder.participate.setText("取消报名");
-			holder.participate.setBackgroundResource(R.drawable.unbaoming);
+			
 		}else 
 			holder.participate.setBackgroundResource(R.drawable.baoming);
 
