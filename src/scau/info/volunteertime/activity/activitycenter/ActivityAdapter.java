@@ -111,7 +111,8 @@ public class ActivityAdapter extends BaseAdapter {
 				+ activityCenter.getLimitNum());
 
 		if (activityCenter.getEndTime() < System.currentTimeMillis()
-				|| activityCenter.getActivityGroup().getPrincipalId().trim()
+				|| activityCenter.getActivityGroup() != null
+				&& activityCenter.getActivityGroup().getPrincipalId().trim()
 						.equals(userId)) {
 			holder.participate.setEnabled(false);
 		} else {
