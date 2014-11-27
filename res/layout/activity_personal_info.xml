@@ -91,10 +91,11 @@
             -->
 
             <RelativeLayout
+                android:layout_marginTop="20dp"
                 android:id="@+id/layout_personal_username"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/preference_item"
+                android:background="@drawable/preference_first_item"
                 android:clickable="true"
                 android:gravity="center_vertical" >
 
