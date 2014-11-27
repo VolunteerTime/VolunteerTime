@@ -12,11 +12,13 @@ import scau.info.volunteertime.vo.Message;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,9 +26,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import cn.trinea.android.common.util.ToastUtils;
 
 import com.handmark.pulltorefresh.library.ILoadingLayout;
@@ -50,13 +56,25 @@ public class MessagesActivity extends ActionBarActivity {
 	private Activity activity;
 
 	private String userId;
-
+	private RelativeLayout actionView;// ActionBar的view
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_messages);
 		initData();
-
+		
+ 
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		actionView = (RelativeLayout) getLayoutInflater().inflate(
+				R.layout.action_bar_title_manager, null);
+		getSupportActionBar().setCustomView(
+				actionView,
+				new ActionBar.LayoutParams(LayoutParams.MATCH_PARENT,
+						LayoutParams.MATCH_PARENT));
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayShowCustomEnabled(true);
+		
 		activityListView = (PullToRefreshListView) findViewById(R.id.activity_center_list);
 
 		activityListView.setAdapter(messagesAdapter);
@@ -132,15 +150,8 @@ public class MessagesActivity extends ActionBarActivity {
 				sortedLinkList.getSortedLinkList());
 
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.messages, menu);
-		return true;
-	}
-
+ 
+ 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
