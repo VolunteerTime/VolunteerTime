@@ -23,6 +23,105 @@ public class VoteData implements VolunteertimeData {
 	public boolean isChange = false; // 判断是否按下了按键，如果按下了那么会变成true，变成true画面会改变，但很快又会变成false
 	public long date; // 更新时间
 
+	public long endTime;
+
+	public String userIds;
+	public String choiceStr;
+	public String voteStr;
+
+	private int type;
+
+	
+	
+	/**
+	 * @return the endTime
+	 */
+	public long getEndTime() {
+		return endTime;
+	}
+
+	/**
+	 * @param endTime the endTime to set
+	 */
+	public void setEndTime(long endTime) {
+		this.endTime = endTime;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public int getType() {
+		return type;
+	}
+
+	/**
+	 * @param type
+	 *            the type to set
+	 */
+	public void setType(int type) {
+		this.type = type;
+	}
+
+	/**
+	 * @return the choiceStr
+	 */
+	public String getChoiceStr() {
+		return choiceStr;
+	}
+
+	/**
+	 * @param choiceStr
+	 *            the choiceStr to set
+	 */
+	public void setChoiceStr(String choiceStr) {
+		this.choiceStr = choiceStr;
+	}
+
+	/**
+	 * @return the voteStr
+	 */
+	public String getVoteStr() {
+		return voteStr;
+	}
+
+	/**
+	 * @param voteStr
+	 *            the voteStr to set
+	 */
+	public void setVoteStr(String voteStr) {
+		this.voteStr = voteStr;
+	}
+
+	/**
+	 * @return the isChange
+	 */
+	public boolean isChange() {
+		return isChange;
+	}
+
+	/**
+	 * @param isChange
+	 *            the isChange to set
+	 */
+	public void setChange(boolean isChange) {
+		this.isChange = isChange;
+	}
+
+	/**
+	 * @return the userIds
+	 */
+	public String getUserIds() {
+		return userIds;
+	}
+
+	/**
+	 * @param userIds
+	 *            the userIds to set
+	 */
+	public void setUserIds(String userIds) {
+		this.userIds = userIds;
+	}
+
 	public void setChecked(boolean checked) {
 		this.checked = checked;
 	}
@@ -78,6 +177,15 @@ public class VoteData implements VolunteertimeData {
 	@Override
 	public long getDate() {
 		return date;
+	}
+
+	public boolean equals(Object o) {
+		if (o instanceof ActivityDate) {
+			if (((VoteData) o).getId() == this.getId()) {
+				return true;
+			}
+		}
+		return super.equals(o);
 	}
 
 	public int setDate() {

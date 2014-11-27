@@ -74,7 +74,8 @@ public class ActivityCenterBO {
 				activityDate.setReadNum(jsonActivityDate.getInt("read_num"));
 				int groupId = jsonActivityDate.getInt("group_id");
 				activityDate.setGroupId(groupId);
-				activityDate.setImage(jsonActivityDate.getString("image"));
+				activityDate.setImage(BOConstant.IMAGE_PATH_URL
+						+ jsonActivityDate.getString("image"));
 				activityDate.setEditor(jsonActivityDate.getString("editor"));
 				activityDate.setParticipatorsNum(jsonActivityDate
 						.getInt("participators_num"));

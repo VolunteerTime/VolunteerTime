@@ -139,7 +139,8 @@ public class ResultBO {
 				result.setContent(jsonResult.getString("content"));
 				String time = jsonResult.getString("publishTime");
 				result.setPublishTime(Long.parseLong(time));
-				result.setImage(jsonResult.getString("image"));
+				result.setImage(BOConstant.IMAGE_PATH_URL
+						+ jsonResult.getString("image"));
 				result.setEditor(jsonResult.getString("editor"));
 				result.setReadNum(jsonResult.getInt("read_num"));
 				list.add(result);

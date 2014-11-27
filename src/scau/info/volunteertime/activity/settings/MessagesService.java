@@ -139,7 +139,7 @@ public class MessagesService extends Service {
 	}
 
 	/**
-	 * 这里以此方法为服务器demo，仅作示例
+	 * \ isCheck 这里以此方法为服务器demo，仅作示例
 	 * 
 	 * @return 返回服务器要推送的消息，否则如果为空的话，不推送
 	 */
