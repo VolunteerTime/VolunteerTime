@@ -96,7 +96,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData> {
 			TextView text = (TextView) view.findViewById(R.id.voteTitle);
 			text.setTextSize(TITLE_FONT_SIZE);
 			text.setPadding(5, 5, 5, 0);
-			text.setText(votedata.get(position).getTitle());
+			text.setText("    "+votedata.get(position).getTitle());
 			TextView voteSum = (TextView) view.findViewById(R.id.voteSum);
 			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
 			voteSum.setText(getAllVotes(votedata.get(position).getVotes()) + "人已经投票  "+format.format(new Date(votedata.get(position).getEndTime()))+" 结束");
@@ -116,7 +116,7 @@ public class myArrayAdapter extends ArrayAdapter<VoteData> {
 					.findViewById(R.id.expandable);
 
 			TextView text = (TextView) view.findViewById(R.id.voteTitle);
-			text.setText(votedata.get(position).getTitle() + "\n");
+			text.setText("    "+votedata.get(position).getTitle() );
 			text.setTextSize(TITLE_FONT_SIZE);
 			text.setPadding(5, 5, 5, 0);
 
