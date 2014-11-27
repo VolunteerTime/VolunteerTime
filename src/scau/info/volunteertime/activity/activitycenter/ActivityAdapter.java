@@ -172,7 +172,7 @@ public class ActivityAdapter extends BaseAdapter {
 
 		if (activityCenter.getPublishTime() > System.currentTimeMillis()) {
 			holder.participate.setEnabled(false);
-			holder.participate.setBackgroundResource(R.drawable.baoming);
+			holder.participate.setBackgroundResource(R.drawable.baoming3);
 			holder.participate.setText("期待报名");
 		}
 
