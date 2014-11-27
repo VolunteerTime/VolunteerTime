@@ -8,10 +8,14 @@ import scau.info.volunteertime.vo.UserInfo;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.WindowManager;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.RelativeLayout;
 
 public class PersonalInfoActivity extends ActionBarActivity {
 
@@ -20,18 +24,24 @@ public class PersonalInfoActivity extends ActionBarActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		getWindow().setSoftInputMode(
+				WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		RelativeLayout actionView = (RelativeLayout) getLayoutInflater().inflate(
+				R.layout.action_bar_title_perinfo, null);
+		getSupportActionBar().setCustomView(
+				actionView,
+				new ActionBar.LayoutParams(LayoutParams.MATCH_PARENT,
+						LayoutParams.MATCH_PARENT));
+		getSupportActionBar().setDisplayShowHomeEnabled(false);
+		getSupportActionBar().setDisplayShowCustomEnabled(true);
+		
 		setContentView(R.layout.activity_personal_info2);
 		mContext = this;
 		new getUserInfoDataTask().execute();
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.personal_info, menu);
-		return true;
-	}
+ 
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
