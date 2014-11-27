@@ -5,7 +5,9 @@
  */
 package scau.info.volunteertime.activity.votecenter;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -88,11 +90,17 @@ public class myArrayAdapter extends ArrayAdapter<VoteData> {
 				|| votedata.get(position).getChecked()) {
 
 			view = this.inflater.inflate(layout, parent, false);
+			view.findViewById(R.id.expandable_toggle_button).setBackgroundResource(R.drawable.buttonvote3);
+			view.findViewById(R.id.expandable_toggle_button).setTag("forbidden");
+			
 			TextView text = (TextView) view.findViewById(R.id.voteTitle);
 			text.setTextSize(TITLE_FONT_SIZE);
 			text.setPadding(5, 5, 5, 0);
-			text.setText(votedata.get(position).getTitle() + "\n          "
-					+ getAllVotes(votedata.get(position).getVotes()) + "人");
+			text.setText(votedata.get(position).getTitle());
+			TextView voteSum = (TextView) view.findViewById(R.id.voteSum);
+			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+			voteSum.setText(getAllVotes(votedata.get(position).getVotes()) + "人已经投票  "+format.format(new Date(votedata.get(position).getEndTime()))+" 结束");
+			
 			ViewGroup expandable = (ViewGroup) view
 					.findViewById(R.id.expandable);
 
@@ -108,11 +116,14 @@ public class myArrayAdapter extends ArrayAdapter<VoteData> {
 					.findViewById(R.id.expandable);
 
 			TextView text = (TextView) view.findViewById(R.id.voteTitle);
-			text.setText(votedata.get(position).getTitle() + "\n"
-					+ getAllVotes(votedata.get(position).getVotes()) + "人");
+			text.setText(votedata.get(position).getTitle() + "\n");
 			text.setTextSize(TITLE_FONT_SIZE);
 			text.setPadding(5, 5, 5, 0);
 
+			TextView voteSum = (TextView) view.findViewById(R.id.voteSum);
+			SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+			voteSum.setText(getAllVotes(votedata.get(position).getVotes()) + "人已经投票  "+format.format(new Date(votedata.get(position).getEndTime()))+" 结束");
+			
 			if (votedata.get(position).getSingle())
 				setUncheckView(expandable, position, parent);
 			else
