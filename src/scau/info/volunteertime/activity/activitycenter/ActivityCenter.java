@@ -6,8 +6,6 @@
 package scau.info.volunteertime.activity.activitycenter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -391,9 +389,10 @@ public class ActivityCenter extends Fragment {
 			Log.d("postFunction", "result = " + result);
 			if (result.trim().equals("success")) {
 				try {
-					JSONObject json;
-					json = new JSONObject(sortedLinkList.get(position)
-							.getActivityGroup().getParticipators());
+					JSONObject json = new JSONObject();
+					if (sortedLinkList.get(position).getActivityGroup() != null)
+						json = new JSONObject(sortedLinkList.get(position)
+								.getActivityGroup().getParticipators());
 					JSONArray array = json.getJSONArray("userIds");
 
 					JSONObject jsonObj = new JSONObject();
