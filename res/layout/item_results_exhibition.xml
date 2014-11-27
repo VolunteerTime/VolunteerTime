@@ -23,6 +23,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
+                android:textSize="14dp"
+                android:textColor="@color/blue"
                 android:text="[title]" />
 
             <TextView
@@ -30,26 +32,52 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
+                android:textSize="13dp"
                 android:ellipsize="end"
                 android:singleLine="true"
+                android:textColor="@color/black"
                 android:text="results_exhibition_content" />
         </LinearLayout>
-
+		  <ImageView             
+		      android:id="@+id/iconbook"
+            android:layout_width="17dp"
+            android:layout_height="17dp" 
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="1dp"
+            android:paddingRight="2dp"
+            
+             android:layout_alignParentLeft="true"
+            android:src="@drawable/iconbook"
+            />
         <TextView
             android:id="@+id/results_exhibition_editor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/iconbook"
             android:layout_below="@id/linear"
+            
             android:text="editor" />
+        
 
+		  
         <TextView
             android:id="@+id/results_exhibition_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
             android:layout_below="@id/linear"
             android:text="time" />
+        <ImageView             
+            android:layout_width="12dp"
+            android:layout_height="12dp" 
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="2dp"
+            android:paddingRight="2dp"
+            android:layout_toLeftOf="@+id/results_exhibition_time"
+            android:layout_below="@id/linear"
+            android:src="@drawable/icontime"
+            />
     </RelativeLayout>
 
 </LinearLayout>
