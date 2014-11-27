@@ -13,6 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:singleLine="true"
+        android:textSize="17dp"
+        android:textColor="@color/black"
         android:text="[title]" />
 
     <RelativeLayout
@@ -23,7 +25,20 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal" >
 
+        <ImageView             
+		    android:id="@+id/iconitemactivitybook2"
+            android:layout_width="17dp"
+            android:layout_height="17dp" 
+            android:layout_alignParentBottom="true"
+            android:paddingBottom="1dp"
+            android:paddingRight="2dp"
+            
+             android:layout_alignParentLeft="true"
+            android:src="@drawable/iconbook"
+            />
+        		  
         <TextView
+            android:layout_toRightOf="@+id/iconitemactivitybook2"
             android:id="@+id/activity_read_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -49,9 +64,20 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal" >
 
+        <ImageView             
+		    android:id="@+id/iconvoteren"
+            android:layout_width="19dp"
+            android:layout_height="19dp"  
+            android:paddingRight="2dp" 
+            android:layout_centerVertical="true"
+             android:layout_alignParentLeft="true"
+            android:src="@drawable/iconren"
+            />
         <TextView
             android:id="@+id/activity_in_num"
             android:layout_width="wrap_content"
+            android:layout_toRightOf="@+id/iconvoteren"
+            android:layout_alignParentBottom="true"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:singleLine="true"

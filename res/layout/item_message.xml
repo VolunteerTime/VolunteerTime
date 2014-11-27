@@ -12,9 +12,20 @@
         android:background="@drawable/background_login_div_bg"
         android:padding="10dip" >
 
+        <ImageView             
+		    android:id="@+id/iconbookitem_message"
+            android:layout_width="17dp"
+            android:layout_height="17dp" 
+            android:paddingRight="5dp"
+            android:layout_alignParentLeft="true"
+            
+            android:src="@drawable/iconbook"
+            />
+                
         <TextView
             android:id="@+id/message_title"
             android:layout_width="match_parent"
+            android:layout_toRightOf="@+id/iconbookitem_message"
             android:layout_height="wrap_content"
             android:text="[未查看]title" />
 
@@ -26,14 +37,34 @@
             android:layout_marginTop="5dp"
             android:orientation="horizontal" >
 
+            <ImageView             
+		    android:id="@+id/iconvoterenitem_message"
+            android:layout_width="22dp"
+            android:paddingRight="5dp"
+            android:layout_height="22dp"   
+            android:layout_centerVertical="true"
+             android:layout_alignParentLeft="true"
+            android:src="@drawable/iconren"
+            />
+                    
             <TextView
                 android:id="@+id/message_sender"
+                android:layout_toRightOf="@+id/iconvoterenitem_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:singleLine="true"
                 android:text="阅读 10" />
-
+            
+           <ImageView             
+		    android:id="@+id/icontimeitem_message"
+            android:layout_width="17dp"
+            android:layout_height="17dp"   
+            android:layout_centerVertical="true"
+            android:paddingRight="5dp"
+            android:layout_toLeftOf="@+id/message_time"
+            android:src="@drawable/icontime"
+            />
             <TextView
                 android:id="@+id/message_time"
                 android:layout_width="wrap_content"

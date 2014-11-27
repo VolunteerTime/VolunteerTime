@@ -27,17 +27,20 @@
                 android:padding="15dip" >
 
                 <EditText
+                    android:drawableLeft="@drawable/editicon"
                     android:id="@+id/receiver"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent" 
                     android:layout_marginTop="16dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_edittext"  
                     android:hint="收信人"
                     android:inputType="text" />
 
                 <EditText
                     android:id="@+id/message_title"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
+                    android:background="@drawable/rounded_edittext"  
                     android:layout_below="@id/receiver"
                     android:layout_marginTop="16dp"
                     android:hint="标题"
@@ -45,10 +48,13 @@
 
                 <EditText
                     android:id="@+id/send_message"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent" 
                     android:layout_below="@id/message_title"
                     android:layout_marginTop="16dp"
+                    android:layout_height="200dp"
+                    android:background="@drawable/rounded_edittext"  
+                    android:gravity="top"
+                    android:minLines="5"
                     android:ems="10"
                     android:hint="请输入内容"
                     android:inputType="textMultiLine" />
