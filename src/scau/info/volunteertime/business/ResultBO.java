@@ -5,6 +5,7 @@
  */
 package scau.info.volunteertime.business;
 
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,14 +48,21 @@ public class ResultBO {
 		maps.put("currentPageSize", currentPageSize + "");
 		maps.put("endTime", endTime);
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		Log.d("getDownData", "page size is " + currentPageSize
 				+ ": the json is " + jsonStr);
 
 		try {
-			return jsonToList(jsonStr);
+			if (jsonStr != null)
+				return jsonToList(jsonStr);
 		} catch (ParseException e) {
 			Log.d("ResultBO-getDownData", "ParseException-err");
 			e.printStackTrace();
@@ -74,14 +82,21 @@ public class ResultBO {
 		maps.put("currentPageSize", currentPageSize + "");
 		maps.put("firstTime", firstTime);
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		Log.d("getDownData", "page size is " + currentPageSize
 				+ ": the json is " + jsonStr);
 
 		try {
-			return jsonToList(jsonStr);
+			if (jsonStr != null)
+				return jsonToList(jsonStr);
 		} catch (ParseException e) {
 			Log.d("ResultBO-getDropDownData", "ParseException-err");
 			e.printStackTrace();
@@ -100,11 +115,18 @@ public class ResultBO {
 		maps.put("action_type", 0 + "");
 		maps.put("currentPageSize", currentPageSize + "");
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
-			return jsonToList(jsonStr);
+			if (jsonStr != null)
+				return jsonToList(jsonStr);
 		} catch (ParseException e) {
 			Log.d("ResultBO-getNewData", "ParseException-err");
 			e.printStackTrace();
@@ -176,8 +198,14 @@ public class ResultBO {
 		maps.put("action_type", 3 + "");
 		maps.put("ids", string);
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Log.d("getUpdateDate", "jsonStr = " + jsonStr);
 
@@ -192,8 +220,14 @@ public class ResultBO {
 		maps.put("action_type", 4 + "");
 		maps.put("id", id + "");
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_RESULTS_DATA_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Log.d("updateReadNum", "jsonStr = " + jsonStr);
 	}

@@ -352,24 +352,7 @@ public class VoteCenter extends Fragment {
 		// }
 	}
 
-	class myAsynctask extends AsyncTask<Integer, Integer, Integer> {
 
-		@Override
-		protected Integer doInBackground(Integer... params) {
-			// TODO Auto-generated method stub
-			System.out.println("准备取数据");
-			votesDate.addAll(new voteCenterBO().getVotesData(0));
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Integer result) {
-			// TODO Auto-generated method stub
-			listAdapter.notifyDataSetChanged();
-			super.onPostExecute(result);
-		}
-
-	}
 
 	private ArrayList<VoteData> getData() {
 

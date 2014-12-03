@@ -5,6 +5,7 @@
  */
 package scau.info.volunteertime.business;
 
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,8 +40,13 @@ public class MessageBO {
 		maps.put("message", message);
 		maps.put("title", title);
 
-		String jsonStr = HttpUtils
-				.httpPostString(BOConstant.MESSAGES_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.MESSAGES_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Log.d("sendMessages", "jsonStr = " + jsonStr);
 		return jsonStr;
@@ -55,12 +61,18 @@ public class MessageBO {
 		maps.put("action_type", 1 + "");
 		maps.put("userId", userId);
 
-		String jsonStr = HttpUtils
-				.httpPostString(BOConstant.MESSAGES_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.MESSAGES_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		Log.d("MessageBO-getNewData", "jsonStr = " + jsonStr);
 		try {
-			return jsonToList(jsonStr);
+			if (jsonStr != null)
+				return jsonToList(jsonStr);
 		} catch (ParseException e) {
 			Log.d("MessageBO-getNewData", "ParseException-err");
 			e.printStackTrace();
@@ -119,8 +131,13 @@ public class MessageBO {
 		maps.put("action_type", 2 + "");
 		maps.put("id", id + "");
 
-		String jsonStr = HttpUtils
-				.httpPostString(BOConstant.MESSAGES_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.MESSAGES_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Log.d("updateReadNum", "jsonStr = " + jsonStr);
 	}
@@ -136,19 +153,25 @@ public class MessageBO {
 		maps.put("userId", userNameValue);
 		maps.put("password", passwordValue);
 
-		String jsonStr = HttpUtils
-				.httpPostString(BOConstant.MESSAGES_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.MESSAGES_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		Log.d("MessageBO-getNewData", "jsonStr = " + jsonStr);
 		try {
-			return jsonToMessage(jsonStr);
+			if (jsonStr != null)
+				return jsonToMessage(jsonStr);
 		} catch (ParseException e) {
 			Log.d("MessageBO-getNewData", "ParseException-err");
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	/**
 	 * @param id
 	 */
@@ -157,8 +180,15 @@ public class MessageBO {
 		maps.put("action_type", 4 + "");
 		maps.put("id", id + "");
 
-		String jsonStr = HttpUtils
-				.httpPostString(BOConstant.MESSAGES_URL, maps);
+		String jsonStr = null;
+		try {
+			if (jsonStr != null)
+				jsonStr = HttpUtils.httpPostString(BOConstant.MESSAGES_URL,
+						maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Log.d("updateReadNum", "jsonStr = " + jsonStr);
 	}

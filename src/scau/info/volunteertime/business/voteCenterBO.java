@@ -9,6 +9,7 @@ package scau.info.volunteertime.business;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.SocketTimeoutException;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -36,81 +37,6 @@ public class voteCenterBO {
 	public static String VoteCenterAddress = BOConstant.ROOT_URL
 			+ "/VolunteerTimeWeb/VolunteerTimeVoteCenterServlet";
 
-	public ArrayList<VoteData> getVotesData(int lastId) {
-		// TODO Auto-generated method stub
-
-		URL url;
-		String allData = "";
-		try {
-			url = new URL(VoteCenterAddress + "?lastId=" + lastId);
-			HttpURLConnection con = (HttpURLConnection) url.openConnection();
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					con.getInputStream()));
-			String data;
-
-			while ((data = br.readLine()) != null) {
-				allData = allData + data;
-			}
-			br.close();
-			con.disconnect();
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("拿到数据吗" + allData);
-		ArrayList<VoteData> list = new ArrayList<VoteData>();
-		try {
-			JSONArray array = new JSONArray(allData);
-
-			for (int i = 0; i < array.length(); i++) { // 把json数据全部转换成vo数据
-
-				JSONObject jsonObject = array.getJSONObject(i);
-				VoteData s = new VoteData();
-
-				if (jsonObject.get("single").equals("1"))
-					s.setSingle(true);
-				else
-					s.setSingle(false);
-
-				s.setTitle((String) jsonObject.get("title"));
-
-				s.setId(Integer.valueOf((String) jsonObject.get("id")));
-
-				String choices = (String) jsonObject.get("choice");
-				String[] cho = choices.split("\\|");
-
-				ArrayList<String> choiceList = new ArrayList<String>();
-				for (int j = 0; j < cho.length; j++)
-					choiceList.add(cho[j]);
-				s.setChoice(choiceList);
-
-				String vote = (String) jsonObject.get("vote");
-
-				String[] votes = vote.split("\\|");
-				ArrayList<Integer> voteList = new ArrayList<Integer>();
-				System.out.println("----  " + vote + "   " + votes.length);
-				for (int j = 0; j < votes.length; j++) {
-					voteList.add(Integer.valueOf(votes[j]));
-				}
-				s.setVotes(voteList);
-
-				System.out.println(jsonObject.get("id"));
-				System.out.println(jsonObject.get("single"));
-				System.out.println(jsonObject.get("title"));
-				System.out.println(jsonObject.get("choice"));
-				System.out.println(jsonObject.get("vote"));
-
-				list.add(s);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("votesCenter的json解析出错");
-		}
-		return list;
-	}
-
 	/**
 	 * @param userId
 	 * @return
@@ -119,10 +45,17 @@ public class voteCenterBO {
 		Map<String, String> maps = new HashMap<String, String>();
 		maps.put("action_type", 0 + "");
 
-		String jsonStr = HttpUtils.httpPostString(BOConstant.VOTES_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.VOTES_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
-			return jsonToList(jsonStr, userId);
+			if (jsonStr != null)
+				return jsonToList(jsonStr, userId);
 		} catch (ParseException e) {
 			Log.d("ResultBO-getNewData", "ParseException-err");
 			e.printStackTrace();
@@ -233,7 +166,13 @@ public class voteCenterBO {
 		maps.put("votes", votes);
 		maps.put("id", id + "");
 
-		String jsonStr = HttpUtils.httpPostString(BOConstant.VOTES_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.VOTES_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Log.d("commitData", "jsonStr = " + jsonStr);
 		return jsonStr;
 	}

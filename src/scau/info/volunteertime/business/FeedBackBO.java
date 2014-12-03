@@ -5,6 +5,7 @@
  */
 package scau.info.volunteertime.business;
 
+import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,8 +32,14 @@ public class FeedBackBO {
 		maps.put("action_type", 0 + "");
 		maps.put("content", content);
 		maps.put("userId", userId);
-		String jstrFeedBack = HttpUtils.httpPostString(
-				BOConstant.FEED_BACK_URL, maps);
+		String jstrFeedBack = null;
+		try {
+			jstrFeedBack = HttpUtils.httpPostString(
+					BOConstant.FEED_BACK_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		Log.d("postFeedBack", "jstrFeedBack = " + jstrFeedBack);
 
 		int temp = 0;

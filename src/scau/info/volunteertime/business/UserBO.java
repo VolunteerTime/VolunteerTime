@@ -5,6 +5,7 @@
  */
 package scau.info.volunteertime.business;
 
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -46,19 +47,27 @@ public class UserBO {
 		maps.put("action_type", 0 + "");
 		maps.put("userId", userId);
 		maps.put("password", password);
-		String servletStr = HttpUtils.httpPostString(
-				BOConstant.GET_USER_INFO_URL, maps);
-		servletStr = servletStr.trim();
-		Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
-		if (servletStr.length() < 10) {
-			if (servletStr.equals("-2"))// 用户不存在
-				return BOConstant.USER_NOT_EXIST;
-			else if (servletStr.equals("-1"))// 密码不合法
-				return BOConstant.PASSWORD_ERROR;
-			else if (servletStr.equals("0"))// 帐号密码为空
-				return BOConstant.REP_VAR_PARA_ERR;
-			else if (servletStr.equals("1"))// 用户注册成功
-				return BOConstant.USER_REGISTER_SUCCESS;
+		String servletStr = null;
+		try {
+			servletStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
+					maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (servletStr != null) {
+			servletStr = servletStr.trim();
+			Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
+			if (servletStr.length() < 10) {
+				if (servletStr.equals("-2"))// 用户不存在
+					return BOConstant.USER_NOT_EXIST;
+				else if (servletStr.equals("-1"))// 密码不合法
+					return BOConstant.PASSWORD_ERROR;
+				else if (servletStr.equals("0"))// 帐号密码为空
+					return BOConstant.REP_VAR_PARA_ERR;
+				else if (servletStr.equals("1"))// 用户注册成功
+					return BOConstant.USER_REGISTER_SUCCESS;
+			}
 		}
 		return BOConstant.REP_VAR_PARA_ERR;// 其他错误。
 
@@ -89,15 +98,23 @@ public class UserBO {
 		maps.put("action_type", 1 + "");
 		maps.put("userId", userId);
 		maps.put("password", password);
-		String servletStr = HttpUtils.httpPostString(
-				BOConstant.GET_USER_INFO_URL, maps);
-		servletStr = servletStr.trim();
-		Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
-		if (servletStr.length() < 10) {
-			if (servletStr.equals("10"))// 用户名已存在
-				return BOConstant.USER_HAS_EXIST;
-			else if (servletStr.equals("12"))// 成功
-				return BOConstant.REGISTER_SUCCESS;
+		String servletStr = null;
+		try {
+			servletStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
+					maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (servletStr != null) {
+			servletStr = servletStr.trim();
+			Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
+			if (servletStr.length() < 10) {
+				if (servletStr.equals("10"))// 用户名已存在
+					return BOConstant.USER_HAS_EXIST;
+				else if (servletStr.equals("12"))// 成功
+					return BOConstant.REGISTER_SUCCESS;
+			}
 		}
 		return BOConstant.REP_VAR_PARA_ERR;// 其他错误。
 
@@ -137,15 +154,23 @@ public class UserBO {
 		maps.put("qq", qq);
 		maps.put("wechant", wechant);
 
-		String servletStr = HttpUtils.httpPostString(
-				BOConstant.GET_USER_INFO_URL, maps);
-		servletStr = servletStr.trim();
-		Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
-		if (servletStr.length() < 10) {
-			if (servletStr.equals("10"))// 用户名已存在
-				return BOConstant.USER_HAS_EXIST;
-			else if (servletStr.equals("12"))// 成功
-				return BOConstant.REGISTER_SUCCESS;
+		String servletStr = null;
+		try {
+			servletStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
+					maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (servletStr != null) {
+			servletStr = servletStr.trim();
+			Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
+			if (servletStr.length() < 10) {
+				if (servletStr.equals("10"))// 用户名已存在
+					return BOConstant.USER_HAS_EXIST;
+				else if (servletStr.equals("12"))// 成功
+					return BOConstant.REGISTER_SUCCESS;
+			}
 		}
 		return BOConstant.REP_VAR_PARA_ERR;// 其他错误。
 	}
@@ -159,12 +184,19 @@ public class UserBO {
 		maps.put("action_type", 3 + "");
 		maps.put("userId", userId);
 
-		String jsonStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
-				maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
+					maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		Log.d("MessageBO-getNewData", "jsonStr = " + jsonStr);
 		try {
-			return jsonToUserInfo(jsonStr);
+			if (jsonStr != null)
+				return jsonToUserInfo(jsonStr);
 		} catch (ParseException e) {
 			Log.d("MessageBO-getNewData", "ParseException-err");
 			e.printStackTrace();
@@ -232,8 +264,14 @@ public class UserBO {
 		maps.put("key", key);
 		maps.put("value", value);
 
-		String jsonStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
-				maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
+					maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Log.d("MessageBO-getNewData", "jsonStr = " + jsonStr);
 		return jsonStr;
@@ -253,15 +291,23 @@ public class UserBO {
 		maps.put("userId", userId);
 		maps.put("orignPassword", orignPassword);
 		maps.put("newPassword", newPassword);
-		String servletStr = HttpUtils.httpPostString(
-				BOConstant.GET_USER_INFO_URL, maps);
-		servletStr = servletStr.trim();
-		Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
-		if (servletStr.length() < 10) {
-			if (servletStr.equals("2"))
-				return BOConstant.CHANGE_SUCCESS;
-			else if (servletStr.equals("-1"))
-				return BOConstant.PASSWORD_ERROR;
+		String servletStr = null;
+		try {
+			servletStr = HttpUtils.httpPostString(BOConstant.GET_USER_INFO_URL,
+					maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if (servletStr != null) {
+			servletStr = servletStr.trim();
+			Log.d("CheckUserLoginResult", "servletStr = " + servletStr);
+			if (servletStr.length() < 10) {
+				if (servletStr.equals("2"))
+					return BOConstant.CHANGE_SUCCESS;
+				else if (servletStr.equals("-1"))
+					return BOConstant.PASSWORD_ERROR;
+			}
 		}
 		return BOConstant.REP_VAR_PARA_ERR;// 其他错误。
 	}

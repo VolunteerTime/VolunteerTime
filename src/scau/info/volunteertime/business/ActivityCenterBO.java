@@ -5,6 +5,7 @@
  */
 package scau.info.volunteertime.business;
 
+import java.net.SocketTimeoutException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,11 +33,18 @@ public class ActivityCenterBO {
 		Map<String, String> maps = new HashMap<String, String>();
 		maps.put("action_type", 0 + "");
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
-			return jsonToList(jsonStr);
+			if (jsonStr != null)
+				return jsonToList(jsonStr);
 		} catch (ParseException e) {
 			Log.d("ActivityCenterBO-getNewData", "ParseException-err");
 			e.printStackTrace();
@@ -113,8 +121,14 @@ public class ActivityCenterBO {
 		maps.put("userId", userId);
 		maps.put("activityId", activityId + "");
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Log.d("participateActivity", "jsonStr = " + jsonStr);
 		return jsonStr;
 	}
@@ -130,8 +144,14 @@ public class ActivityCenterBO {
 		maps.put("userId", userId);
 		maps.put("activityId", activityId + "");
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		Log.d("quitParticipateActivity", "jsonStr = " + jsonStr);
 		return jsonStr;
 	}
@@ -144,8 +164,14 @@ public class ActivityCenterBO {
 		maps.put("action_type", 3 + "");
 		maps.put("id", id + "");
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		} catch (SocketTimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		Log.d("updateReadNum", "jsonStr = " + jsonStr);
 	}
@@ -159,11 +185,18 @@ public class ActivityCenterBO {
 		maps.put("action_type", 4 + "");
 		maps.put("userId", userId);
 
-		String jsonStr = HttpUtils.httpPostString(
-				BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		String jsonStr = null;
+		try {
+			jsonStr = HttpUtils.httpPostString(
+					BOConstant.GET_NEW_ACTIVITIES_DATA_URL, maps);
+		} catch (SocketTimeoutException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		try {
-			return jsonToList(jsonStr);
+			if (jsonStr != null)
+				return jsonToList(jsonStr);
 		} catch (ParseException e) {
 			Log.d("ActivityCenterBO-getNewData", "ParseException-err");
 			e.printStackTrace();
