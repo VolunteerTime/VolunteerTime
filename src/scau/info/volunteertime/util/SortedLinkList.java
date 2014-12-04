@@ -24,7 +24,7 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 	LinkedList<T> sortedLinkList = new LinkedList<T>();
 
 	/**
-	 * ����ȫ�µ�list
+	 * 完全拿出一个新的List
 	 * 
 	 * @return LinkedList<T>
 	 */
@@ -39,6 +39,19 @@ public class SortedLinkList<T extends VolunteertimeData> implements
 
 	public LinkedList<T> getSortedLinkList() {
 		return sortedLinkList;
+	}
+
+	public List<T> getsubList(int size) {
+		if (size > sortedLinkList.size()) {
+			List<T> list = sortedLinkList.subList(0, sortedLinkList.size());
+			sortedLinkList = new LinkedList<T>();
+			return list;
+		}
+		List<T> list = sortedLinkList.subList(0, size);
+		LinkedList<T> temp = sortedLinkList;
+		sortedLinkList = new LinkedList<T>();
+		sortedLinkList.addAll(temp.subList(size, temp.size()));
+		return list;
 	}
 
 	public boolean remove(VolunteertimeData object) {

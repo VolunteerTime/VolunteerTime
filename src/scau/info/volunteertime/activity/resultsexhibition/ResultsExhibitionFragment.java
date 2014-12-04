@@ -14,7 +14,6 @@ import org.json.JSONObject;
 import scau.info.volunteertime.R;
 import scau.info.volunteertime.business.ResultBO;
 import scau.info.volunteertime.util.NetworkStateUtil;
-import scau.info.volunteertime.util.Pagination;
 import scau.info.volunteertime.util.SortedLinkList;
 import scau.info.volunteertime.vo.Result;
 import android.app.Activity;
@@ -48,7 +47,7 @@ import com.handmark.pulltorefresh.library.PullToRefreshListView;
 public class ResultsExhibitionFragment extends Fragment {
 
 	private SortedLinkList<Result> sortedLinkList;
-	private Pagination<Result> resultsPagination;// 临时数据的分页类
+	private SortedLinkList<Result> resultsStorage;// 临时数据的分页类
 
 	private int currentPageSize = 8;
 	private int currentPageNumber = 1;
@@ -72,10 +71,9 @@ public class ResultsExhibitionFragment extends Fragment {
 		hasMore = true;// �и������ʾ��û������ʾ
 		activity = getActivity();
 
-		resultBO = new ResultBO();// ȡ��resultBO
-		resultsPagination = new Pagination<Result>();
-		resultsPagination.setCurrentPageNumber(currentPageNumber);
-		resultsPagination.setPageSize(currentPageSize);
+		resultBO = new ResultBO();
+
+		resultsStorage = new SortedLinkList<Result>();
 		sortedLinkList = new SortedLinkList<Result>();
 
 		resultsExhibitionListAdapter = new ResultsExhibitionListAdapter(
@@ -259,8 +257,6 @@ public class ResultsExhibitionFragment extends Fragment {
 		 * 
 		 */
 		private void doInBackgroundFunction() {
-			Log.d("doInBackgroundFunction",
-					"getSumPage = " + resultsPagination.getSumPage());
 			if (isDropDown) {
 				if (sortedLinkList.isEmpty()) {
 					toGetNewDataFromNet();
@@ -276,18 +272,15 @@ public class ResultsExhibitionFragment extends Fragment {
 				}
 				if (sortedLinkList.isEmpty()) {
 					toCheckDatabase();
-					if (resultsPagination.getAmountOfRecorders() == 0) {
+					if (resultsStorage.isEmpty()) {
 						toGetNewDataFromNet();
 					}
 					toAddDataFromPagination();
-				} else if (resultsPagination.getCurrentPageNumber() <= resultsPagination
-						.getSumPage()) {
+				} else if (!resultsStorage.isEmpty()) {
 					toAddDataFromPagination();
-				} else if (resultsPagination.getCurrentPageNumber() > resultsPagination
-						.getSumPage()) {
+				} else if (resultsStorage.isEmpty()) {
 					toGetDataFromNet();
-					if (resultsPagination.getCurrentPageNumber() <= resultsPagination
-							.getSumPage())
+					if (!resultsStorage.isEmpty())
 						toAddDataFromPagination();
 				}
 			}
@@ -326,14 +319,13 @@ public class ResultsExhibitionFragment extends Fragment {
 				e.printStackTrace();
 			}
 			results = new ArrayList<Result>();
-			endTime = resultsPagination.getLastData().getPublishTime() + "";
+			endTime = sortedLinkList.get(sortedLinkList.size() - 1).getPublishTime() + "";
 			Log.d("doInBackgroundFunction-toGetDataFromNet", "endTime ="
 					+ endTime);
 			results = (ArrayList<Result>) resultBO.getDownData(endTime,
 					currentPageSize);
 			if (results != null && results.size() != 0) {
-				resultsPagination.setRecords(results);
-				resultsPagination.setCurrentPageNumber(currentPageNumber);
+				resultsStorage.addAll(results);
 				toSaveDataInDatabase();
 			} else {
 				Log.d("Cancel", "no more data");
@@ -346,14 +338,9 @@ public class ResultsExhibitionFragment extends Fragment {
 		 * 
 		 */
 		private void toAddDataFromPagination() {
-			Log.d("doInBackgroundFunction",
-					"toAddDataFromPagination PageNumber="
-							+ resultsPagination.getCurrentPageNumber());
-			if (resultsPagination.getAmountOfRecorders() != 0) {
+			if (!resultsStorage.isEmpty()) {
 				sortedLinkList
-						.addAll(resultsPagination.getcurrentPageRecords());
-				resultsPagination.setCurrentPageNumber(resultsPagination
-						.getCurrentPageNumber() + 1);
+						.addAll(resultsStorage.getsubList(currentPageSize));
 			}
 		}
 
@@ -371,7 +358,7 @@ public class ResultsExhibitionFragment extends Fragment {
 			results = new ArrayList<Result>();
 			results = (ArrayList<Result>) resultBO.getNewData(currentPageSize);
 			if (results != null) {
-				resultsPagination.getRecords().addAll(results);
+				resultsStorage.addAll(results);
 				toSaveDataInDatabase();
 			}
 
@@ -423,7 +410,7 @@ public class ResultsExhibitionFragment extends Fragment {
 					"firstTime = " + firstTime + "; endTime = " + endTime);
 			c.close();
 			db.close();
-			resultsPagination.getRecords().addAll(results);
+			resultsStorage.addAll(results);
 		}
 	}
 
@@ -473,8 +460,7 @@ public class ResultsExhibitionFragment extends Fragment {
 		 * 
 		 */
 		private void doInBackgroundFunction() {
-			Log.d("doInBackgroundFunction",
-					"getSumPage = " + resultsPagination.getSumPage());
+			Log.d("doInBackgroundFunction", "size = " + resultsStorage.size());
 			toCheckDatabase();
 			toAddDataFromPagination();
 		}
@@ -483,14 +469,11 @@ public class ResultsExhibitionFragment extends Fragment {
 		 * 
 		 */
 		private void toAddDataFromPagination() {
-			Log.d("doInBackgroundFunction",
-					"toAddDataFromPagination PageNumber="
-							+ resultsPagination.getCurrentPageNumber());
-			if (resultsPagination.getAmountOfRecorders() != 0) {
-				sortedLinkList
-						.addAll(resultsPagination.getcurrentPageRecords());
-				resultsPagination.setCurrentPageNumber(resultsPagination
-						.getCurrentPageNumber() + 1);
+			Log.d("doInBackgroundFunction-toAddDataFromPagination", "size = "
+					+ resultsStorage.size());
+			if (!resultsStorage.isEmpty()) {
+				sortedLinkList.addAll(resultsStorage
+						.getsubList(currentPageSize));
 			}
 		}
 
@@ -517,7 +500,7 @@ public class ResultsExhibitionFragment extends Fragment {
 			}
 			c.close();
 			db.close();
-			resultsPagination.getRecords().addAll(results);
+			resultsStorage.addAll(results);
 		}
 	}
 
@@ -620,7 +603,8 @@ public class ResultsExhibitionFragment extends Fragment {
 							+ i + " id = " + id + " readNum = " + readNum);
 
 					if (readNum < 0) {
-						sortedLinkList.getSortedLinkList().remove(i);
+						sortedLinkList.getSortedLinkList().remove(i + count);
+
 						count--;
 						db.delete("results", "id = ?",
 								new String[] { String.valueOf(id) });

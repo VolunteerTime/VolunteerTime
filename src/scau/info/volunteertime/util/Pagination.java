@@ -8,6 +8,8 @@ package scau.info.volunteertime.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
+
 /**
  * @author 蔡超敏
  * 
@@ -27,12 +29,19 @@ public class Pagination<VolunteertimeData> {
 	}
 
 	public List<VolunteertimeData> getcurrentPageRecords() {
-		if (currentPageNumber * pageSize > records.size()) {
+		Log.d("Pagination", "getcurrentPageRecords : currentPageNumber"
+				+ currentPageNumber + ": records.size()+" + records.size());
+		if (currentPageNumber * pageSize > records.size()
+				&& (currentPageNumber - 1) * pageSize < records.size()) {
+			List<VolunteertimeData> list = records.subList(
+					(currentPageNumber - 1) * pageSize, records.size());
+			return list;
+		} else if (currentPageNumber * pageSize < records.size()) {
 			return records.subList((currentPageNumber - 1) * pageSize,
-					records.size());
+					currentPageNumber * pageSize);
+		} else {
+			return null;
 		}
-		return records.subList((currentPageNumber - 1) * pageSize,
-				currentPageNumber * pageSize);
 	}
 
 	public VolunteertimeData getLastData() {
